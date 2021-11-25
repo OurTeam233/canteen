@@ -1,15 +1,15 @@
 <template>
   <div class="container">
     
-    <el-form ref="form" :model="form" class="login-box">
+    <el-form ref="form" :model="form" :rules="rules" class="login-box">
       <h2>欢迎登录食堂管理系统</h2>
-      <el-form-item label="账号">
+      <el-form-item label="账号" prop="name">
         <el-input type="text" placeholder="请输入用户名" v-model="form.name"></el-input>
       </el-form-item>
-      <el-form-item label="密码">
+      <el-form-item label="密码" prop="password">
         <el-input type="password" placeholder="请输入密码" v-model="form.password"></el-input>
       </el-form-item>
-      <el-button type="primary" @click="onSubmit">登录</el-button>
+      <el-button type="primary" @click="submitForm('form')">登录</el-button>
 
     </el-form>
     
@@ -25,15 +25,46 @@
         form: {
           name: '',
           password: ''
+        },
+        rules: {
+          name: [{ 
+              required: true,
+              message: '请输入用户名', 
+              trigger: 'blur' 
+            },
+            
+          ],
+          password: [{ 
+              required: true, 
+              message: '请输入密码', 
+              trigger: 'blur' 
+            },
+            
+          ]
+
         }
       }
     },
     methods: {
-      onSubmit() {
-        console.log("submit!");
-      },
       
-    },
+      submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.$router.push('/main');
+          } else {
+            this.$message({
+              showClose: true,
+              message: '请输入用户名或密码！',
+              type: 'error'
+            });
+            return false;
+          }
+        });
+      },
+      resetForm(formName) {
+        this.$refs[formName].resetFields();
+      }
+    }
   };
 
 </script>
