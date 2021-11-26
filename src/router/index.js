@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import Login from '../views/Login.vue'
 import Ordering from "../Layout/Ordering";
 import Main from '../views/Main.vue';
+import NewOrders from '../views/OrderForm/NewOrders.vue';
  
  
 Vue.use(Router)
@@ -26,7 +27,14 @@ const routes = [
         //首页
         path:'/main',
         name:'Main',
-        component: Main
+        component: Main,
+        children:[
+            {
+                path:'/orderform/neworders',
+                name:'NewOrders',
+                compoment: NewOrders
+            }
+        ]
     }
 ]
 

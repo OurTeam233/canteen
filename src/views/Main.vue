@@ -26,7 +26,9 @@
          
           <el-submenu index="1">
             <template slot="title"><i class="el-icon-message"></i>订单管理</template>
-              <el-menu-item index="1-1">新增订单</el-menu-item>
+              <el-menu-item index="1-1">
+                <router-link to="/orderform/neworders">新增订单</router-link>
+              </el-menu-item>
               <el-menu-item index="1-2">待取餐订单</el-menu-item>
               <el-menu-item index="1-3">已完成订单</el-menu-item>
               <el-menu-item index="1-4">违规订单</el-menu-item>
@@ -59,14 +61,10 @@
       </el-aside>
 
       <!-- 主体内容(嵌套路由) -->
-
+      <el-main>
+        <router-view />
+      </el-main>
       
-
-
-
-
-
-
 
 
     </el-container>
