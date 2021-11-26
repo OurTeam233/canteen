@@ -23,6 +23,9 @@ export default {
 
 body{
   background-color: rgb(121,187,255);
+  margin: 0;
+  padding: 0;
+  border: 0;
 }
 
 #app {
@@ -31,7 +34,8 @@ body{
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  
+  /* margin-top: 60px; */
 }
 
 </style>
