@@ -20,6 +20,7 @@ export default {
 </script>
 
 <style>
+
 body{
   background-color: rgb(121,187,255);
 }
