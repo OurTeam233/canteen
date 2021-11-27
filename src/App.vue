@@ -25,6 +25,9 @@ export default {
 <style>
 body{
   background-color: rgb(121,187,255);
+  margin: 0;
+  padding: 0;
+  border: 0;
 }
 
 #app {
