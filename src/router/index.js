@@ -1,13 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Ordering from "../Layout/Ordering";
 import Main from '../views/Main.vue';
-import NewOrders from '../views/OrderForm/NewOrders.vue';
+import New from '../views/Order/New.vue';
+import Finish from '../views/Order/Finish.vue';
  
- 
-Vue.use(Router)
+Vue.use(Router);
 
 //将路由单独抽出来
 const routes = [
@@ -30,16 +29,23 @@ const routes = [
         component: Main,
         children:[
             {
-                path:'/orderform/neworders',
-                name:'NewOrders',
-                compoment: NewOrders
+                // 新增订单
+                path:'/order/new',
+                name:'New',
+                compoment: New
+            },
+            {
+                // 已完成订单
+                path:'/order/finish',
+                name:'Finish',
+                compoment: Finish
             }
         ]
     }
-]
+]   
 
  
-Vue.use(Router);
+
 
 export default new Router({
 	routes,

@@ -7,17 +7,20 @@
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
 import Login from './views/Login.vue';
 import Ordering from "./Layout/Ordering";
-
+import Main from "./views/Main.vue";
+import New from "./views/Order/New.vue";
+import Finish from "./views/Order/Finish.vue";
 
 export default {
   name: 'app',
   components: {
-    HelloWorld,
     Login,
+    Main,
     Ordering,
+    New,
+    Finish,
   }
 }
 </script>

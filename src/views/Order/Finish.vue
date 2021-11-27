@@ -1,19 +1,18 @@
 <template>
   <div>
-    我是新增订单界面
+    我是已完成订单
   </div>
 </template>
 
 
 <script>
-
+  export default{
+    name:'Finish'
+  }
 </script>
 
 
 
 <style scoped>
 
-
 </style>
-
-
