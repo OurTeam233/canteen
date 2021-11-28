@@ -46,31 +46,36 @@
 
           <el-submenu index="3">
             <template slot="title"><i class="el-icon-message"></i>店铺</template>
-              <el-menu-item index="2-1">新增订单</el-menu-item>
-              <el-menu-item index="2-2">待取餐订单</el-menu-item>
-              <el-menu-item index="2-3">已完成订单</el-menu-item>
-              <el-menu-item index="2-4">违规订单</el-menu-item>
+              <el-menu-item index="3-1">新增订单</el-menu-item>
+              <el-menu-item index="3-2">待取餐订单</el-menu-item>
+              <el-menu-item index="3-3">已完成订单</el-menu-item>
+              <el-menu-item index="3-4">违规订单</el-menu-item>
           </el-submenu>
 
           <el-submenu index="4">
             <template slot="title"><i class="el-icon-message"></i>统计</template>
-              <el-menu-item index="2-1">新增订单</el-menu-item>
-              <el-menu-item index="2-2">待取餐订单</el-menu-item>
-              <el-menu-item index="2-3">已完成订单</el-menu-item>
-              <el-menu-item index="2-4">违规订单</el-menu-item>
+              <el-menu-item index="4-1">新增订单</el-menu-item>
+              <el-menu-item index="4-2">待取餐订单</el-menu-item>
+              <el-menu-item index="4-3">已完成订单</el-menu-item>
+              <el-menu-item index="4-4">违规订单</el-menu-item>
           </el-submenu>
         </el-menu>
       </el-aside>
 
       <!-- 主体内容(嵌套路由) -->
       <el-main>
-        <router-view />
+          <router-view />
       </el-main>
       
       
 
 
     </el-container>
+
+    
+    
+
+
   </div>
 </template>
 

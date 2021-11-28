@@ -1,6 +1,6 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Login from '../views/Login.vue'
+import Vue from 'vue';
+import Router from 'vue-router';
+import Login from '../views/Login.vue';
 import Ordering from "../Layout/Ordering";
 import Main from '../views/Main.vue';
 import New from '../views/Order/New.vue';
@@ -27,6 +27,7 @@ const routes = [
         path:'/main',
         name:'Main',
         component: Main,
+        
         children:[
             {
                 // 新增订单
@@ -39,7 +40,8 @@ const routes = [
                 path:'/order/finish',
                 name:'Finish',
                 compoment: Finish
-            }
+            },
+            
         ]
     }
 ]   
@@ -49,4 +51,5 @@ const routes = [
 
 export default new Router({
 	routes,
+    
 })
