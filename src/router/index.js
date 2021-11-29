@@ -5,6 +5,7 @@ import Ordering from "../Layout/Ordering";
 import Main from '../views/Main.vue';
 import New from '../views/Order/New.vue';
 import Finish from '../views/Order/Finish.vue';
+import Statistics from '../views/Statistics/Statistics.vue';
  
 Vue.use(Router);
 
@@ -27,20 +28,25 @@ const routes = [
         path:'/main',
         name:'Main',
         component: Main,
-        
         children:[
             {
                 // 新增订单
-                path:'/order/new',
+                path:'new',
                 name:'New',
                 compoment: New
             },
             {
                 // 已完成订单
-                path:'/order/finish',
+                path:'finish',
                 name:'Finish',
                 compoment: Finish
             },
+            {
+                // 统计
+                path:'statistics',
+                name:'Statistics',
+                compoment: Statistics
+            }
             
         ]
     }
@@ -51,5 +57,6 @@ const routes = [
 
 export default new Router({
 	routes,
+    mode:'history',
     
 })
