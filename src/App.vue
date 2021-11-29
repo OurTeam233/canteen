@@ -1,7 +1,9 @@
 <template>
   <div id="app">
 
-    <router-view />
+<!--    <router-link to="login" tag="button" active-class="active">首页</router-link>-->
+<!--    <router-view></router-view>-->
+      <router-view></router-view>
   </div>
 
 </template>
@@ -10,19 +12,41 @@
 import HelloWorld from './components/HelloWorld.vue';
 import Login from './views/Login.vue';
 import Ordering from "./Layout/Ordering";
-
+import NewOrders from "./components/NewOrders";
+import IllegalOrders from "./components/IllegalOrders";
+import GetOrders from "./components/GetOrders";
+import CompleteOrders from "./components/CompleteOrders";
 
 export default {
-  name: 'app',
-  components: {
-    HelloWorld,
-    Login,
-    Ordering,
-  }
+        name: 'app',
+        components: {
+          HelloWorld,
+          Login,
+          Ordering,
+          NewOrders,
+          IllegalOrders,
+          CompleteOrders,
+          GetOrders,
+        },
+        methods:{
+        loginClick(){
+          //通过代码修改路径 vue-router
+          this.$router.push('/login')
+        },
+        orderingClick(){
+            this.$router.push('/ordering')
+        }
+  },
+
 }
 </script>
 
 <style>
+
+  .active{
+   /*更改样式*/
+    color: #E9EEF3;
+  }
 body{
   background-color: rgb(121,187,255);
   margin: 0;
