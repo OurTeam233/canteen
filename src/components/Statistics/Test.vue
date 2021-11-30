@@ -1,15 +1,13 @@
 <template>
   <div>
-    统计界面
+    我是测试界面
   </div>
-
 </template>
-  
 
 
 <script>
 export default {
-  name: 'Statistics'
+  name: 'Test'
 }
 </script>
 

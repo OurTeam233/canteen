@@ -9,38 +9,32 @@
 import Login from './views/Login.vue';
 import Ordering from "./Layout/Ordering";
 
-import Main from "./views/Main.vue";
-import New from "./views/Order/New.vue";
-import Finish from "./views/Order/Finish.vue";
-
-
 import NewOrders from "./components/NewOrders";
 import IllegalOrders from "./components/IllegalOrders";
 import GetOrders from "./components/GetOrders";
 import CompleteOrders from "./components/CompleteOrders";
+import Test from "./components/Statistics/Test";
 
 export default {
-        name: 'app',
-        components: {
-          HelloWorld,
-          Login,
-          Main,
-          New,
-          Finish,
-          Ordering,
-          NewOrders,
-          IllegalOrders,
-          CompleteOrders,
-          GetOrders,
-        },
-        methods:{
-        loginClick(){
-          //通过代码修改路径 vue-router
-          this.$router.push('/login')
-        },
-        orderingClick(){
-            this.$router.push('/ordering')
-        }
+  name: 'app',
+  components: {
+    
+    Login,
+    Ordering,
+    NewOrders,
+    IllegalOrders,
+    CompleteOrders,
+    GetOrders,
+    Test,
+  },
+  methods:{
+    loginClick(){
+      //通过代码修改路径 vue-router
+      this.$router.push('/login')
+    },
+    orderingClick(){
+        this.$router.push('/ordering')
+    }
   },
 
 
