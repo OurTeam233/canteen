@@ -52,8 +52,10 @@ const routes = [
                 component: IllegalOrders,
             },
             {
-                path:'Test',
+                path:'Test/:id',
+                name: 'Test',
                 component: Test,
+                props:true,
             }
             
         ]

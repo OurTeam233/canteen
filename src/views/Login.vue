@@ -50,7 +50,12 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            this.$router.push('/main');
+            this.$router.push({
+              name:'Ordering',
+              params:{
+                name:this.form.name
+              }
+            });
           } else {
             this.$message({
               showClose: true,

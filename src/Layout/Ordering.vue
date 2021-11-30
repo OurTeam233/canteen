@@ -15,7 +15,7 @@
           >
           </el-cascader>
         </div>
-        <p class="name">三食堂三楼</p>
+        <p class="name">{{$route.params.name}}</p>
         <el-avatar
           class="el-avatar-state"
           shape="circle"
@@ -67,8 +67,9 @@
                   <span>统计</span>
                 </template>
                 <el-menu-item-group>
-                  <el-menu-item index="3-1" @click="test">
-                    当天收益
+                  <el-menu-item index="3-1" >
+                    <router-link :to="{name:'Test', params:{id:3}}">当天收益</router-link>
+                    
                   </el-menu-item>
                   <el-menu-item index="3-2">本周收益</el-menu-item>
                   <el-menu-item index="3-3">本月收益</el-menu-item>
