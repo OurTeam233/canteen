@@ -67,7 +67,7 @@
                     name: '王小虎',
                     details: '清蒸鱼 白菜豆腐 米饭',
                     price:'12',
-                    illegal:'违规',
+                    illegal:'正常',
                 }, {
                     number: '05-02-3',
                     orderdata: '2016-05-02-11:11',
@@ -75,7 +75,7 @@
                     name: '王小虎',
                     details: '佛跳墙 香煎小菜 米线',
                     price:'12',
-                    illegal:'违规',
+                    illegal:'正常',
                 }, {
                     number: '05-02-4',
                     orderdata: '2016-05-02-11:11',

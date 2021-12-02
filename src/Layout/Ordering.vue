@@ -1,6 +1,6 @@
 <template>
     <div class="big">
-        <el-container>
+        <el-container style=" background-color: #545c64">
             <el-header>
                 <!--头部导航-->
 
@@ -48,8 +48,8 @@
                                     <span>菜谱</span>
                                 </template>
                                 <el-menu-item-group>
-                                    <el-menu-item index="2-1">荤菜</el-menu-item>
-                                    <el-menu-item index="2-2">花荤</el-menu-item>
+                                    <el-menu-item index="2-1" @click="meat">荤菜</el-menu-item>
+                                    <el-menu-item index="2-2" @click="meatVegetables">花荤</el-menu-item>
                                     <el-menu-item index="2-3">素菜</el-menu-item>
                                     <el-menu-item index="2-4">主食</el-menu-item>
                                 </el-menu-item-group>
@@ -60,8 +60,8 @@
                                     <span>统计</span>
                                 </template>
                                 <el-menu-item-group>
-                                    <el-menu-item index="3-1">当天收益</el-menu-item>
-                                    <el-menu-item index="3-2">本周收益</el-menu-item>
+                                    <el-menu-item index="3-1" @click="enDayStat">当天收益</el-menu-item>
+                                    <el-menu-item index="3-2" @click="weekStat">本周收益</el-menu-item>
                                     <el-menu-item index="3-3">本月收益</el-menu-item>
                                     <el-menu-item index="3-4">上月收益</el-menu-item>
                                 </el-menu-item-group>
@@ -84,7 +84,7 @@
 
 
                 <el-main>
-                                        <router-view></router-view>
+                    <router-view></router-view>
 
                 </el-main>
             </el-container>
@@ -142,6 +142,18 @@
             illegalOrders(){
                 this.$router.push('/Ordering/IllegalOrders')
             },
+            meat(){
+                this.$router.push('/Ordering/Meat')
+            },
+            meatVegetables(){
+                this.$router.push('/Ordering/MeatVegetables')
+            },
+            enDayStat(){
+                this.$router.push('/Ordering/EnDayStat')
+            },
+            weekStat(){
+                this.$router.push('/Ordering/WeekStat')
+            }
         },
     }
 </script>

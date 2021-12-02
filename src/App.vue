@@ -6,36 +6,44 @@
       <router-view></router-view>
   </div>
 
-</template>
+</template>         
 
 <script>
 import HelloWorld from './components/HelloWorld.vue';
 import Login from './views/Login.vue';
 import Ordering from "./Layout/Ordering";
-import NewOrders from "./components/NewOrders";
-import IllegalOrders from "./components/IllegalOrders";
-import GetOrders from "./components/GetOrders";
-import CompleteOrders from "./components/CompleteOrders";
+import NewOrders from "./components/AllOrder/NewOrders";
+import IllegalOrders from "./components/AllOrder/IllegalOrders";
+import GetOrders from "./components/AllOrder/GetOrders";
+import CompleteOrders from "./components/AllOrder/CompleteOrders";
+import Meat from "./components/AllMenu/Meat";
+import MeatVegetables from "./components/AllMenu/MeatVegetables";
+import EnDayStat from "./components/Statistics/EnDayStat";
+import WeekStat from "./components/Statistics/WeekStat";
 
 export default {
         name: 'app',
         components: {
-          HelloWorld,
-          Login,
-          Ordering,
-          NewOrders,
-          IllegalOrders,
-          CompleteOrders,
-          GetOrders,
+            HelloWorld,
+            Login,
+            Ordering,
+            NewOrders,
+            IllegalOrders,
+            CompleteOrders,
+            GetOrders,
+            Meat,
+            MeatVegetables,
+            EnDayStat,
+            WeekStat,
         },
         methods:{
-        loginClick(){
-          //通过代码修改路径 vue-router
-          this.$router.push('/login')
-        },
-        orderingClick(){
-            this.$router.push('/ordering')
-        }
+            loginClick(){
+                //通过代码修改路径 vue-router
+                this.$router.push('/login')
+            },
+            orderingClick(){
+                this.$router.push('/ordering')
+            },
   },
 
 }

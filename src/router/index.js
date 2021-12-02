@@ -1,19 +1,32 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
-import Ordering from "../Layout/Ordering";
 import Main from '../views/Main.vue';
-import NewOrders from "../components/NewOrders";
-import GetOrders from "../components/GetOrders";
-import CompleteOrders from "../components/CompleteOrders";
-import IllegalOrders from "../components/IllegalOrders";
- 
- 
+//订餐
+import Ordering from "../Layout/Ordering";
+import NewOrders from "../components/AllOrder/NewOrders";
+import GetOrders from "../components/AllOrder/GetOrders";
+import CompleteOrders from "../components/AllOrder/CompleteOrders";
+import IllegalOrders from "../components/AllOrder/IllegalOrders";
+
+ //菜谱
+import Meat from "../components/AllMenu/Meat";
+import MeatVegetables from "../components/AllMenu/MeatVegetables";
+
+//统计
+import EnDayStat from "../components/Statistics/EnDayStat";
+import WeekStat from "../components/Statistics/WeekStat";
+
 Vue.use(Router)
 
 //将路由单独抽出来
 const routes = [
+    {
+        //首页
+        path:'/main',
+        name:'Main',
+        component: Main
+    },
     {
         //默认首页
         path: '',
@@ -33,30 +46,41 @@ const routes = [
         name: 'Ordering',
         component: Ordering,
         children:[
+            // 订餐
             {
-                path:'NewOrders',
+                path:'newOrders',
                 component:NewOrders,
             },
             {
-                path:'GetOrders',
+                path:'getOrders',
                 component:GetOrders,
             },
             {
-                path:'CompleteOrders',
+                path:'completeOrders',
                 component:CompleteOrders,
             },
             {
-                path:'IllegalOrders' ,
+                path:'illegalOrders' ,
                 component: IllegalOrders,
+            },
+            {
+                path: 'meat',
+                component: Meat,
+            },
+            {
+                path: 'meatVegetables',
+                component: MeatVegetables,
+            },
+            {
+                path: 'enDayStat',
+                component: EnDayStat,
+            },
+            {
+                path: 'weekStat',
+                component: WeekStat,
             }
         ]
     },
-    {
-        //首页
-        path:'/main',
-        name:'Main',
-        component: Main
-    }
 ]
 
 
