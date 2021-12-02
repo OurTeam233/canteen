@@ -9,12 +9,18 @@
         <div id="data">
           <p>Hi,已为您细分各版块数据。</p>
           <div class="data-plate">
-            <div class="test"></div>
-            <div class="test"></div>
-            <div class="test"></div>
-            <div class="test"></div>
-            <div class="test"></div>
-            <div class="test"></div>
+
+            <div v-for="n in 6" :key="n" class="test">
+              <div class="test-icon"></div>
+              <div class="test-text">
+                <p style="width:130px">累计订单</p>
+                <div>
+                  <p style="float:left; font-size:22px; font-weight:bold;">300</p>
+                  <p style="float: right; color:green">新增 +91</p>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </el-card>
@@ -25,7 +31,15 @@
     <div class="right-box new">
       <el-card class="new">
         <p>新增订单</p>
-
+        <p>今日 本周 本月</p>
+        <div v-for="n in 8" :key="n" class="new-info">
+          <div >
+            <p class="userName">用户名</p>
+            <p class="pay">付款：15.00</p>
+          </div>
+          
+          <p class="new-time">6分钟前</p>
+        </div>
 
       </el-card>
     </div>
@@ -141,13 +155,16 @@ export default {
 <style scoped>
 
 p{
-  float:left;
+  /* float:left; */
+  text-align: left;
   line-height: 20px;
   font-size:16px;
-  font-weight:bold;
-  /* margin:0; */
+  /* font-weight:bold; */
+  margin:10px 0 5px 0;
 
 }
+
+
 
 
 .box{
@@ -163,26 +180,37 @@ p{
   margin-bottom:10px;
 
 }
-
+/* 
 #charts{
   clear:both;
-}
+} */
 
 
 .data-plate{
-  clear:both;
+  /* clear:both; */
   display:flex;
   flex-wrap:wrap;
 }
 
 .test{
-  background-color:gray;
+  /* background-color:gray; */
   width:30%;
-  height:100px;
-  margin:5px;
+  height:80px;
+  margin:10px;
+  display:flex;
   
 }
 
+.test-icon{
+  background-color:red;
+  width:60px;
+  height:60px;
+  margin:10px;
+}
+
+.test-text{
+  display:block;
+}
 
 
 
@@ -191,6 +219,44 @@ p{
   width:33%;
   margin:10px 10px 10px 0;
 }
+
+.new-info{
+  width:100%;
+  height:70px;
+  background-color:rgba(1,1,1,0.1);
+  border-radius:10px;
+  display:flex;
+  margin-bottom: 10px;
+}
+
+.new-info div{
+  width:80%;
+}
+
+.new-time{
+  width:20%;
+  line-height:63px;
+}
+
+
+
+.userName, .pay{
+  padding:8px 0 0 10px;
+  
+  margin:5px 0;
+  line-height: 20px;
+}
+
+.userName{
+  font-weight: bold;
+}
+
+.pay{
+  font-size:13px;
+}
+
+
+
 
 
 
