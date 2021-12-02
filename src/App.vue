@@ -14,7 +14,7 @@ import IllegalOrders from "./components/IllegalOrders";
 import GetOrders from "./components/GetOrders";
 import CompleteOrders from "./components/CompleteOrders";
 import Test from "./components/Statistics/Test";
-
+import OverallStatistics from "./components/Statistics/OverallStatistics";
 export default {
   name: 'app',
   components: {
@@ -26,6 +26,7 @@ export default {
     CompleteOrders,
     GetOrders,
     Test,
+    OverallStatistics,
   },
   methods:{
     loginClick(){
@@ -50,6 +51,7 @@ export default {
 
 body{
   background-color: rgb(121,187,255);
+
   margin: 0;
   padding: 0;
   border: 0;

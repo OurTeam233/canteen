@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Login from '../views/Login.vue';
 import Ordering from "../Layout/Ordering";
-
+import NotFound from "../views/NotFound";
 
 
 import NewOrders from "../components/NewOrders";
@@ -10,7 +10,7 @@ import GetOrders from "../components/GetOrders";
 import CompleteOrders from "../components/CompleteOrders";
 import IllegalOrders from "../components/IllegalOrders";
 import Test from "../components/Statistics/Test";
- 
+import OverallStatistics from "../components/Statistics/OverallStatistics";
 
 
 //将路由单独抽出来
@@ -27,6 +27,12 @@ const routes = [
         path: '/login',
         name: 'Login',
         component:Login
+    },
+    {
+        // 404页面
+        path:'*',
+        name:'NotFound',
+        component:NotFound
     },
     
     {
@@ -56,6 +62,12 @@ const routes = [
                 name: 'Test',
                 component: Test,
                 props:true,
+            },
+            {
+                path:'OverallStatistics',
+                name: 'OverallStatistics',
+                component: OverallStatistics,
+                
             }
             
         ]

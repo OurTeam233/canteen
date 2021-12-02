@@ -71,7 +71,9 @@
                     <router-link :to="{name:'Test', params:{id:3}}">当天收益</router-link>
                     
                   </el-menu-item>
-                  <el-menu-item index="3-2">本周收益</el-menu-item>
+                  <el-menu-item index="3-2">
+                    <router-link :to="{name:'OverallStatistics'}">总体统计</router-link>
+                  </el-menu-item>
                   <el-menu-item index="3-3">本月收益</el-menu-item>
                   <el-menu-item index="3-4">上月收益</el-menu-item>
                 </el-menu-item-group>
