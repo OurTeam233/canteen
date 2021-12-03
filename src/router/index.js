@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '../views/Login.vue'
 import Main from '../views/Main.vue';
+import NotFound from "../views/NotFound";
 //订餐
 import Ordering from "../Layout/Ordering";
 import NewOrders from "../components/AllOrder/NewOrders";
@@ -16,22 +17,12 @@ import MeatVegetables from "../components/AllMenu/MeatVegetables";
 //统计
 import EnDayStat from "../components/Statistics/EnDayStat";
 import WeekStat from "../components/Statistics/WeekStat";
+import Test from "../components/Statistics/Test";
+import OverallStatistics from "../components/Statistics/OverallStatistics";
 
 Vue.use(Router)
 
-import Vue from 'vue';
-import Router from 'vue-router';
-import Login from '../views/Login.vue';
-import Ordering from "../Layout/Ordering";
-import NotFound from "../views/NotFound";
 
-
-import NewOrders from "../components/NewOrders";
-import GetOrders from "../components/GetOrders";
-import CompleteOrders from "../components/CompleteOrders";
-import IllegalOrders from "../components/IllegalOrders";
-import Test from "../components/Statistics/Test";
-import OverallStatistics from "../components/Statistics/OverallStatistics";
 
 
 

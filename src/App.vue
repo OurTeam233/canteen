@@ -16,28 +16,23 @@ import Meat from "./components/AllMenu/Meat";
 import MeatVegetables from "./components/AllMenu/MeatVegetables";
 import EnDayStat from "./components/Statistics/EnDayStat";
 import WeekStat from "./components/Statistics/WeekStat";
-import NewOrders from "./components/NewOrders";
-import IllegalOrders from "./components/IllegalOrders";
-import GetOrders from "./components/GetOrders";
-import CompleteOrders from "./components/CompleteOrders";
 import Test from "./components/Statistics/Test";
 import OverallStatistics from "./components/Statistics/OverallStatistics";
 
 export default {
   name: 'app',
   components: {
-      HelloWorld,
-      Login,
-      Ordering,
-      NewOrders,
-      IllegalOrders,
-      CompleteOrders,
-      GetOrders,
-      Meat,
-      MeatVegetables,
-      EnDayStat,
-      WeekStat,
-      Test,
+    Login,
+    Ordering,
+    NewOrders,
+    IllegalOrders,
+    CompleteOrders,
+    GetOrders,
+    Meat,
+    MeatVegetables,
+    EnDayStat,
+    WeekStat,
+    Test,
     OverallStatistics,
   },
   methods:{
