@@ -50,7 +50,12 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            this.$router.push('/main');
+            this.$router.push({
+              name:'Ordering',
+              params:{
+                name:this.form.name
+              }
+            });
           } else {
             this.$message({
               showClose: true,
@@ -70,8 +75,8 @@
 </script>
 
 
-<style  scoped>
-  
+
+<style  scoped>  
   
 
   .login-box {
@@ -82,6 +87,7 @@
     border: 1px solid #DCDFE6;
     border-radius: 15px;
     /* box-shadow: 0 0 30px #DCDFE6; */
+    box-shadow: 0 0 50px 0 rgba(146, 146, 146, 0.63);
     background-color: #fff;
     
   }

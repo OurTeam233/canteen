@@ -6,11 +6,18 @@ import 'element-ui/lib/theme-chalk/index.css';
 // 让Vue使用这个路由
 import VueRouter from 'vue-router';
 // Vue实例中使用的路由
+
 import router from './router/index.js';
-// 引入echarts
-import echarts from 'echarts';
+
 //在vue中设置Echart
 Vue.prototype.$echarts = echarts;
+
+// 实验一下echarts(全局导入)
+import echarts from "echarts";
+Vue.prototype.$echarts = echarts;
+
+ 
+
 /* 让vue使用elementUI */
 Vue.use(ElementUI);
 /* 让vue使用router */

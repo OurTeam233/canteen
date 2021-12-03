@@ -19,6 +19,22 @@ import WeekStat from "../components/Statistics/WeekStat";
 
 Vue.use(Router)
 
+import Vue from 'vue';
+import Router from 'vue-router';
+import Login from '../views/Login.vue';
+import Ordering from "../Layout/Ordering";
+import NotFound from "../views/NotFound";
+
+
+import NewOrders from "../components/NewOrders";
+import GetOrders from "../components/GetOrders";
+import CompleteOrders from "../components/CompleteOrders";
+import IllegalOrders from "../components/IllegalOrders";
+import Test from "../components/Statistics/Test";
+import OverallStatistics from "../components/Statistics/OverallStatistics";
+
+
+
 //将路由单独抽出来
 const routes = [
     {
@@ -40,6 +56,13 @@ const routes = [
         name: 'Login',
         component:Login
     },
+    {
+        // 404页面
+        path:'*',
+        name:'NotFound',
+        component:NotFound
+    },
+    
     {
         //订餐页面
         path: '/ordering',
@@ -78,15 +101,29 @@ const routes = [
             {
                 path: 'weekStat',
                 component: WeekStat,
+            },
+            {
+                path:'Test/:id',
+                name: 'Test',
+                component: Test,
+                props:true,
+            },
+            {
+                path:'OverallStatistics',
+                name: 'OverallStatistics',
+                component: OverallStatistics,
+                
             }
+            
         ]
     },
+
 ]
 
-
-Vue.use(Router);
 
 export default new Router({
 	routes,
     mode:'history',
+
+
 })
