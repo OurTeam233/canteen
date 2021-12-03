@@ -223,7 +223,7 @@ p{
 .new-info{
   width:100%;
   height:70px;
-  background-color:rgba(1,1,1,0.1);
+  background-color:rgba(1,1,1,0.05);
   border-radius:10px;
   display:flex;
   margin-bottom: 10px;
