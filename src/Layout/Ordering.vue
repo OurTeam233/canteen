@@ -4,16 +4,16 @@
             <el-header>
                 <!--头部导航-->
 
-                <img class="logo" src="url">
+                <img class="logo" src="../assets/DingTang.png" style="border-radius: 50%">
                 <p class="logo-name">智慧餐口</p>
 
-                <div class="block el-cascader-state">
-                    <el-cascader
-                            v-model="value"
-                            :options="options"
-                            @change="handleChange">
-                    </el-cascader>
-                </div>
+<!--                <div class="block el-cascader-state">-->
+<!--                    <el-cascader-->
+<!--                            v-model="value"-->
+<!--                            :options="options"-->
+<!--                            @change="handleChange">-->
+<!--                    </el-cascader>-->
+<!--                </div>-->
                 <p class="name">三食堂三楼</p>
                 <el-avatar class="el-avatar-state" shape="circle" :size="45" :src="url"></el-avatar>
             </el-header>
@@ -69,14 +69,14 @@
                             <el-submenu index="4">
                                 <template slot="title">
                                     <i class="el-icon-location"></i>
-                                    <span>导航四</span>
+                                    <span class="el-submenu" @click="info">店铺管理</span>
                                 </template>
-                                <el-menu-item-group>
-                                    <el-menu-item index="4-1">选项1</el-menu-item>
-                                    <el-menu-item index="4-2">选项2</el-menu-item>
-                                    <el-menu-item index="4-3">选项3</el-menu-item>
-                                    <el-menu-item index="4-4">选项4</el-menu-item>
-                                </el-menu-item-group>
+<!--                                <el-menu-item-group>-->
+<!--                                    <el-menu-item index="4-1">选项1</el-menu-item>-->
+<!--                                    <el-menu-item index="4-2">选项2</el-menu-item>-->
+<!--                                    <el-menu-item index="4-3">选项3</el-menu-item>-->
+<!--                                    <el-menu-item index="4-4">选项4</el-menu-item>-->
+<!--                                </el-menu-item-group>-->
                             </el-submenu>
                         </el-menu>
                     </el-col>
@@ -97,7 +97,6 @@
     export default {
         name: "Ordering",
         data() {
-
             return {
                 url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
 
@@ -153,6 +152,12 @@
             },
             weekStat(){
                 this.$router.push('/Ordering/WeekStat')
+            },
+            info(){
+                this.$router.push('/Ordering/Info')
+            },
+            editMenu(){
+                this.$router.push('/Ordering/EditMenu')
             }
         },
     }
@@ -172,20 +177,21 @@
         padding: 0;
         border-bottom: 1px solid #999999;
     }
-
     .logo {
         float: left;
-        margin-left: 200px;
+        margin-left: 5px;
         margin-top: 4px;
         width: 50px;
         height: 50px;
     }
-
     .logo-name {
         float: left;
         margin-left: 5px;
         margin-top: 10px;
         color: #ffffff;
+    }
+    .el-submenu:hover{
+        color: rgb(255,197,78);
     }
 
     .el-cascader-state {
@@ -194,6 +200,7 @@
         height: 10px;
         text-align: center;
         color: rgb(64, 158, 255);
+        /*color: #E9EEF3;*/
     }
 
     .el-avatar-state {
@@ -201,7 +208,6 @@
         margin-right: 10px;
         margin-top: 7px;
     }
-
     .name {
         float: right;
         font-size: 14px;
@@ -209,16 +215,14 @@
         margin-top: 10px;
         color: #ffffff;
     }
-
     .el-aside {
         background-color: #545c64;
         color: #333;
         text-align: center;
         line-height: 200px;
         width: 200px;
-        height: 600px;
+        height: 1000px;
     }
-
     .el-main {
         background-color: #E9EEF3;
         color: #333;
@@ -228,18 +232,14 @@
         margin: 0;
         padding: 0;
     }
-
     body > .el-container {
         margin-bottom: 0px;
     }
-
     .el-container:nth-child(5) .el-aside,
     .el-container:nth-child(6) .el-aside {
         line-height: 260px;
     }
-
     .el-container:nth-child(7) .el-aside {
         line-height: 320px;
     }
-
 </style>

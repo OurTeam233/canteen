@@ -20,6 +20,9 @@ import Meat from "./components/AllMenu/Meat";
 import MeatVegetables from "./components/AllMenu/MeatVegetables";
 import EnDayStat from "./components/Statistics/EnDayStat";
 import WeekStat from "./components/Statistics/WeekStat";
+import Info from "./components/Information/Info";
+
+import EditMenu from "./components/AllMenu/EditMenu";
 
 export default {
         name: 'app',
@@ -35,6 +38,8 @@ export default {
             MeatVegetables,
             EnDayStat,
             WeekStat,
+            Info,
+            EditMenu,
         },
         methods:{
             loginClick(){
@@ -56,7 +61,7 @@ export default {
     color: #E9EEF3;
   }
 body{
-  background-color: rgb(121,187,255);
+  /*background-color: rgb(121,187,255);*/
   margin: 0;
   padding: 0;
   border: 0;
@@ -67,7 +72,7 @@ body{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  /*color: #2c3e50;*/
   /*margin-top: 60px;*/
 }
 
