@@ -32,7 +32,7 @@
       <el-card class="new">
         <p>新增订单</p>
         <p>今日 本周 本月</p>
-        <div v-for="n in 8" :key="n" class="new-info">
+        <div v-for="n in 10" :key="n" class="new-info">
           <div >
             <p class="userName">用户名</p>
             <p class="pay">付款：15.00</p>

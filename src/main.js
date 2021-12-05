@@ -9,9 +9,6 @@ import VueRouter from 'vue-router';
 
 import router from './router/index.js';
 
-//在vue中设置Echart
-Vue.prototype.$echarts = echarts;
-
 // 实验一下echarts(全局导入)
 import echarts from "echarts";
 Vue.prototype.$echarts = echarts;

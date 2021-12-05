@@ -1,7 +1,7 @@
 <template>
   <div class="big">
     <el-container>
-      <el-header>
+      <el-header >
         <!--头部导航-->
 
         <img class="logo" src="url" />
@@ -99,6 +99,7 @@
           <router-view></router-view>
         </el-main>
       </el-container>
+      <el-footer>哈哈哈</el-footer>
     </el-container>
   </div>
 </template>
@@ -196,6 +197,12 @@ export default {
   width: 200px;
 }
 
+.el-aside{
+  position:sticky;
+  top:60px;
+  z-index: 10;
+}
+
 .el-header {
   background-color: #545c64;
   color: #333;
@@ -203,6 +210,10 @@ export default {
   line-height: 60px;
   padding: 0;
   border-bottom: 1px solid #999999;
+  /*粘滞定位*/ 
+  position:sticky;
+  top:0;
+  z-index: 10;
 }
 
 .logo {

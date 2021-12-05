@@ -36,13 +36,13 @@ export default {
     OverallStatistics,
   },
   methods:{
-      loginClick(){
-          //通过代码修改路径 vue-router
-          this.$router.push('/login')
-      },
-      orderingClick(){
-          this.$router.push('/ordering')
-      },
+    loginClick(){
+      //通过代码修改路径 vue-router
+      this.$router.push('/login')
+    },
+    orderingClick(){
+      this.$router.push('/ordering')
+    },
 
   },
 
