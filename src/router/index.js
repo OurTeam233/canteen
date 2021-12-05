@@ -13,12 +13,17 @@ import IllegalOrders from "../components/AllOrder/IllegalOrders";
  //菜谱
 import Meat from "../components/AllMenu/Meat";
 import MeatVegetables from "../components/AllMenu/MeatVegetables";
+import EditMenu from "../components/AllMenu/EditMenu";
+
 
 //统计
 import EnDayStat from "../components/Statistics/EnDayStat";
 import WeekStat from "../components/Statistics/WeekStat";
 import Test from "../components/Statistics/Test";
 import OverallStatistics from "../components/Statistics/OverallStatistics";
+
+// 店铺管理
+import Info from "../components/Information/Info";
 
 Vue.use(Router)
 
@@ -104,8 +109,19 @@ const routes = [
                 name: 'OverallStatistics',
                 component: OverallStatistics,
                 
+            },
+            {
+                path:'editMenu',
+                name: 'EditMenu',
+                component: EditMenu,
+            },
+            {
+                path:'info',
+                name: 'Info',
+                component: Info,
             }
             
+
         ]
     },
 

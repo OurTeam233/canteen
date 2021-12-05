@@ -18,6 +18,8 @@ import EnDayStat from "./components/Statistics/EnDayStat";
 import WeekStat from "./components/Statistics/WeekStat";
 import Test from "./components/Statistics/Test";
 import OverallStatistics from "./components/Statistics/OverallStatistics";
+import Info from "./components/Information/Info";
+import EditMenu from "./components/AllMenu/EditMenu";
 
 export default {
   name: 'app',
@@ -34,6 +36,8 @@ export default {
     WeekStat,
     Test,
     OverallStatistics,
+    Info,
+    EditMenu,
   },
   methods:{
     loginClick(){

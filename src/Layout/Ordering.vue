@@ -7,6 +7,7 @@
         <img class="logo" src="url" />
         <p class="logo-name">智慧餐口</p>
 
+        <!-- 营业状态显示 -->
         <div class="block el-cascader-state">
           <el-cascader
             v-model="value"
@@ -15,13 +16,22 @@
           >
           </el-cascader>
         </div>
-        <p class="name">{{ $route.params.name }}</p>
+
+        <!-- 普通竖直分割线 -->
+        <!-- <el-divider direction="vertical"></el-divider> -->
+
+        <p class="name"><!--{{ $route.params.name }}--> 三食堂</p>
+
+        <!-- 头像 -->
         <el-avatar
           class="el-avatar-state"
           shape="circle"
           :size="45"
           :src="url"
         ></el-avatar>
+
+        
+
       </el-header>
 
       <el-container>
@@ -33,7 +43,7 @@
               class="el-menu-vertical-demo"
               @open="handleOpen"
               @close="handleClose"
-              background-color="#545c64"
+              background-color="#1d2939"
               text-color="rgb(64,158,255)"
               active-text-color="#ffd04b"
             >
@@ -91,15 +101,35 @@
                   <el-menu-item index="3-4">上月收益</el-menu-item>
                 </el-menu-item-group>
               </el-submenu>
+
+              <el-submenu index="4">
+                <template slot="title">
+                  <i class="el-icon-location"></i>
+                  <span>店铺管理</span>
+                </template>
+                <el-menu-item-group>
+                  
+                  <el-menu-item index="4-1">本月收益</el-menu-item>
+                  <el-menu-item index="4-2">上月收益</el-menu-item>
+                </el-menu-item-group>
+              </el-submenu>
             </el-menu>
           </el-col>
         </el-aside>
 
-        <el-main>
-          <router-view></router-view>
-        </el-main>
+        <el-container>
+          <el-main>
+            <router-view></router-view>
+          </el-main>
+          <el-footer>哈哈哈</el-footer>
+        </el-container>
+        
+
+        
       </el-container>
-      <el-footer>哈哈哈</el-footer>
+
+      
+      
     </el-container>
   </div>
 </template>
@@ -192,76 +222,98 @@ export default {
 </script>
 
 <style scoped>
+
+/*侧边栏里面的单元格 */
 .aside-bar {
   background-color: rgb(64, 158, 255);
   width: 200px;
 }
 
-.el-aside{
-  position:sticky;
-  top:60px;
-  z-index: 10;
-}
 
+/*顶部信息栏 */
 .el-header {
-  background-color: #545c64;
+  /* background-color: #545c64; */
+  background-color: #fff;
   color: #333;
   text-align: center;
   line-height: 60px;
   padding: 0;
   border-bottom: 1px solid #999999;
+  border-left: 1px solid #eee;
   /*粘滞定位*/ 
   position:sticky;
   top:0;
   z-index: 10;
 }
 
+/*有点儿离谱的logo定位 */
 .logo {
   float: left;
-  margin-left: 200px;
+  margin-left: 5px;
   margin-top: 4px;
   width: 50px;
   height: 50px;
 }
 
+/*logo旁边的字 */
 .logo-name {
   float: left;
-  margin-left: 5px;
-  margin-top: 10px;
-  color: #ffffff;
+  margin: 0 0 0 5px;
+  line-height: 60px;
+  color: #333;
 }
 
+/*顶部最右边的营业状态显示 */
 .el-cascader-state {
   float: right;
-  width: 80px;
+  width: 100px;
   height: 10px;
+  /* line-height: 60px; */
   text-align: center;
+  margin-right: 10px;
   color: rgb(64, 158, 255);
 }
 
+/*头像显示 */
 .el-avatar-state {
   float: right;
   margin-right: 10px;
   margin-top: 7px;
 }
 
+/*用户名 */
 .name {
   float: right;
   font-size: 14px;
-  margin-right: 20px;
-  margin-top: 10px;
-  color: #ffffff;
+  /* margin-right: 20px; */
+  /* margin-top: 10px; */
+  margin: 0 20px 0 0;
+  line-height: 60px;
+  color: #333;
 }
 
+/*侧边栏 */
 .el-aside {
-  background-color: #545c64;
+  /* background-color: #545c64; */
+  background-color: #1d2939;
   color: #333;
   text-align: center;
   line-height: 200px;
   width: 200px;
-  height: 600px;
+  /* height: 650px; */
+  /* height: 100%; */
+  /* position:sticky;
+  top:60px;
+  z-index: 9; */
 }
 
+.el-col{
+  position: fixed;
+
+}
+
+
+/*中间的主题内容 */
 .el-main {
   background-color: #e9eef3;
   color: #333;
@@ -272,6 +324,21 @@ export default {
   padding: 0;
 }
 
+
+/*底部footer */
+.el-footer{
+  width: 100%;
+  background-color: #545c64;
+  color: #fff;
+  text-align: center;
+  line-height: 60px;
+  padding: 0;
+  border-top: 1px solid #999999;
+  /* border-left: 1px solid #eee; */
+}
+
+
+/*用来区分布局的容器 */
 .el-container {
   margin-bottom: 0px;
 }
