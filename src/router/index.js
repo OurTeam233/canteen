@@ -14,6 +14,7 @@ import IllegalOrders from "../components/AllOrder/IllegalOrders";
 import Meat from "../components/AllMenu/Meat";
 import MeatVegetables from "../components/AllMenu/MeatVegetables";
 import EditMenu from "../components/AllMenu/EditMenu";
+import Menu from "../components/AllMenu/Menu";
 
 
 //统计
@@ -85,6 +86,11 @@ const routes = [
                 path:'illegalOrders' ,
                 name:'IllegalOrders',
                 component: IllegalOrders,
+            },
+            {
+                path:'menu',
+                name:'Menu',
+                component:Menu,
             },
             {
                 path: 'meat',

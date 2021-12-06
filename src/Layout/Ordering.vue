@@ -4,7 +4,7 @@
       <el-header >
         <!--头部导航-->
 
-        <img class="logo" src="url" />
+        <img class="logo" src="../../public/img/DingTang.png" />
         <p class="logo-name">智慧餐口</p>
 
         <!-- 营业状态显示 -->
@@ -72,8 +72,11 @@
               </el-submenu>
               <el-submenu index="2">
                 <template slot="title">
-                  <i class="el-icon-document"></i>
-                  <span>菜谱</span>
+                  <router-link :to="{name:'Menu'}">
+                    <i class="el-icon-document"></i>
+                    <span>菜谱</span>
+                  </router-link>
+                  
                 </template>
                 <el-menu-item-group>
                   <el-menu-item index="2-1">
@@ -201,27 +204,8 @@ export default {
       this.$router.push("/Ordering/WeekStat");
     },
 
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    handleChange(value) {
-      console.log(value);
-    },
-    newOrders() {
-      this.$router.push("/Ordering/NewOrders");
-    },
-    getOrders() {
-      this.$router.push("/Ordering/GetOrders");
-    },
-    completeOrders() {
-      this.$router.push("/Ordering/CompleteOrders");
-    },
-    illegalOrders() {
-      this.$router.push("/Ordering/IllegalOrders");
-    },
-    test() {
-      this.$router.push("/Ordering/Test");
-    },
+    
+    
   },
 };
 </script>
@@ -313,7 +297,9 @@ export default {
   z-index: 9; */
 }
 
+/*主单元格 */
 .el-submenu{
+  text-align: left;
   width:200px;
 }
 

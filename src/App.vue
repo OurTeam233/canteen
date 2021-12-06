@@ -20,6 +20,7 @@ import Test from "./components/Statistics/Test";
 import OverallStatistics from "./components/Statistics/OverallStatistics";
 import Info from "./components/Information/Info";
 import EditMenu from "./components/AllMenu/EditMenu";
+import Menu from "./components/AllMenu/Menu";
 
 export default {
   name: 'app',
@@ -38,6 +39,7 @@ export default {
     OverallStatistics,
     Info,
     EditMenu,
+    Menu,
   },
   methods:{
     loginClick(){
