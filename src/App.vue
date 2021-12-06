@@ -59,12 +59,18 @@ export default {
   color: #e9eef3;
 }
 
+html,body{
+  height: 100%;
+  margin:0;
+}
+
 body {
   background-color: rgb(121, 187, 255);
 
   margin: 0;
   padding: 0;
   border: 0;
+  
 }
 
 #app {

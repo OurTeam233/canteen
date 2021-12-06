@@ -49,56 +49,59 @@
             >
               <el-submenu index="1">
                 <template slot="title">
-                  <i class="el-icon-location"></i>
+                  <i class="el-icon-shopping-cart-full"></i>
                   <span>订餐系统</span>
                 </template>
                 <el-menu-item-group>
-                  <el-menu-item index="1-1" @click="newOrders"
-                    >新增订单</el-menu-item
-                  >
-                  <el-menu-item index="1-2" @click="getOrders"
-                    >待取订餐</el-menu-item
-                  >
-                  <el-menu-item index="1-3" @click="completeOrders"
-                    >已完成订单</el-menu-item
-                  >
-                  <el-menu-item index="1-4" @click="illegalOrders"
-                    >违规订单</el-menu-item
-                  >
+                  <el-menu-item index="1-1">
+                    <router-link :to="{name:'NewOrders'}">新增订单</router-link>
+                  </el-menu-item>
+                  <el-menu-item index="1-2">
+                    <router-link :to="{name:'GetOrders'}">待取订餐</router-link>
+                    
+                  </el-menu-item>
+                  <el-menu-item index="1-3">
+                    <router-link :to="{name:'CompleteOrders'}">已完成订单</router-link>
+                    
+                  </el-menu-item>
+                  <el-menu-item index="1-4">
+                    <router-link :to="{name:'IllegalOrders'}">违规订单</router-link>
+                    
+                  </el-menu-item>
                 </el-menu-item-group>
               </el-submenu>
               <el-submenu index="2">
                 <template slot="title">
-                  <i class="el-icon-location"></i>
+                  <i class="el-icon-document"></i>
                   <span>菜谱</span>
                 </template>
                 <el-menu-item-group>
-                  <el-menu-item index="2-1" @click="meat">荤菜</el-menu-item>
-                  <el-menu-item index="2-2" @click="meatVegetables"
-                    >花荤</el-menu-item
-                  >
+                  <el-menu-item index="2-1">
+                    <router-link :to="{name:'Meat'}">荤菜</router-link>
+                  </el-menu-item>
+                  <el-menu-item index="2-2">
+                    <router-link :to="{name:'MeatVegetables'}">花荤</router-link>
+                  </el-menu-item>
                   <el-menu-item index="2-3">素菜</el-menu-item>
                   <el-menu-item index="2-4">主食</el-menu-item>
                 </el-menu-item-group>
               </el-submenu>
               <el-submenu index="3">
                 <template slot="title">
-                  <i class="el-icon-location"></i>
+                  <i class="el-icon-data-line"></i>
                   <span>统计</span>
                 </template>
                 <el-menu-item-group>
                   <el-menu-item index="3-1">
-                    <router-link :to="{ name: 'Test', params: { id: 3 } }"
-                      >当天收益</router-link
-                    >
+                    <router-link :to="{name: 'Test', params: {id: 3}}">
+                      当天收益
+                    </router-link>
                   </el-menu-item>
                   <el-menu-item index="3-2">
-                    <router-link :to="{ name: 'OverallStatistics' }"
-                      >总体统计</router-link
-                    >
+                    <router-link :to="{name: 'OverallStatistics'}">
+                      总体统计
+                    </router-link>
                   </el-menu-item>
-                  <el-menu-item index="3-3">本月收益</el-menu-item>
-                  <el-menu-item index="3-4">上月收益</el-menu-item>
                 </el-menu-item-group>
               </el-submenu>
 
@@ -109,8 +112,10 @@
                 </template>
                 <el-menu-item-group>
                   
-                  <el-menu-item index="4-1">本月收益</el-menu-item>
-                  <el-menu-item index="4-2">上月收益</el-menu-item>
+                  <el-menu-item index="4-1">
+                    <router-link :to="{name:'Info'}">店铺信息修改</router-link>
+                  </el-menu-item>
+                  
                 </el-menu-item-group>
               </el-submenu>
             </el-menu>
@@ -121,7 +126,7 @@
           <el-main>
             <router-view></router-view>
           </el-main>
-          <el-footer>哈哈哈</el-footer>
+          
         </el-container>
         
 
@@ -225,8 +230,9 @@ export default {
 
 /*侧边栏里面的单元格 */
 .aside-bar {
-  background-color: rgb(64, 158, 255);
+  /* background-color: rgb(64, 158, 255); */
   width: 200px;
+
 }
 
 
@@ -307,6 +313,10 @@ export default {
   z-index: 9; */
 }
 
+.el-submenu{
+  width:200px;
+}
+
 .el-col{
   position: fixed;
 
@@ -318,24 +328,25 @@ export default {
   background-color: #e9eef3;
   color: #333;
   text-align: center;
-  line-height: 160px;
+  line-height: 30px;
   width: 100%;
+  height: 100vh;
   margin: 0;
   padding: 0;
 }
 
 
 /*底部footer */
-.el-footer{
+/* .el-footer{
   width: 100%;
   background-color: #545c64;
   color: #fff;
   text-align: center;
-  line-height: 60px;
+  height: 16vh;
   padding: 0;
   border-top: 1px solid #999999;
-  /* border-left: 1px solid #eee; */
-}
+  border-left: 1px solid #eee;
+} */
 
 
 /*用来区分布局的容器 */
@@ -351,4 +362,23 @@ export default {
 .el-container:nth-child(7) .el-aside {
   line-height: 320px;
 }
+
+
+
+/*router-link的样式更改 */
+a {
+    text-decoration: none;
+    color:rgb(64,158,255);
+}
+.router-link-active:link{
+  color:rgb(64,158,255);
+}
+.router-link-active:active{
+  color:#ffd04b;
+}
+.router-link-active:visited{
+  color:#ffd04b;
+}
+
+
 </style>

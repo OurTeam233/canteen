@@ -68,34 +68,42 @@ const routes = [
             // 订餐
             {
                 path:'newOrders',
+                name:'NewOrders',
                 component:NewOrders,
             },
             {
                 path:'getOrders',
+                name:'GetOrders',
                 component:GetOrders,
             },
             {
                 path:'completeOrders',
+                name:'CompleteOrders',
                 component:CompleteOrders,
             },
             {
                 path:'illegalOrders' ,
+                name:'IllegalOrders',
                 component: IllegalOrders,
             },
             {
                 path: 'meat',
+                name: 'Meat',
                 component: Meat,
             },
             {
                 path: 'meatVegetables',
+                name: 'MeatVegetables',
                 component: MeatVegetables,
             },
             {
                 path: 'enDayStat',
+                name: 'EnDayStat',
                 component: EnDayStat,
             },
             {
                 path: 'weekStat',
+                name: 'WeekStat',
                 component: WeekStat,
             },
             {
