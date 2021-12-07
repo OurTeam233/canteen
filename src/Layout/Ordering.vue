@@ -20,8 +20,8 @@
         <!-- 普通竖直分割线 -->
         <!-- <el-divider direction="vertical"></el-divider> -->
 
-        <p class="name"><!--{{ $route.params.name }}--> 三食堂</p>
-
+        <p class="name">{{ $route.params.name }} </p>
+ 
         <!-- 头像 -->
         <el-avatar
           class="el-avatar-state"

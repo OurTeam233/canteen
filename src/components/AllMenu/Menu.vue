@@ -7,7 +7,7 @@
     </div>
     <el-tabs
       v-model="groupId"
-      type="card"
+      type="border-card"
       closable
       @tab-remove="removeTab"
     >
@@ -41,7 +41,9 @@ export default {
   name: "Menu",
   data() {
     return {
-      groupId: "1",
+      // 当前选中的tab
+      cntGroupId: "1",
+      // 所有分组
       groups: [
         {
           groupTab: "荤菜",
@@ -84,8 +86,9 @@ export default {
   },
   methods: {
     addTab(targetName) {
+      // 新标签名
       let newTabName = ++this.tabIndex + "";
-      this.editableTabs.push({
+      this.groups.push({
         title: "新标签",
         name: newTabName,
         content: "New Tab content",
@@ -93,7 +96,7 @@ export default {
       this.groupId = newTabName;
     },
     removeTab(targetName) {
-      let tabs = this.editableTabs;
+      let tabs = this.groups;
       let activeName = this.groupId;
       if (activeName === targetName) {
         tabs.forEach((tab, index) => {
@@ -105,9 +108,10 @@ export default {
           }
         });
       }
+      
 
       this.groupId = activeName;
-      this.editableTabs = tabs.filter((tab) => tab.name !== targetName);
+      this.groups = tabs.filter((tab) => tab.name !== targetName);
     },
   },
 };
