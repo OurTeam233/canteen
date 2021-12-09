@@ -54,6 +54,8 @@
           if (valid) {
             // 成功登录后的缓存数据
             sessionStorage.setItem('isLogin', 'true');
+            // 保存用户名
+            sessionStorage.setItem('userName', $state.userInfo.userName);
             // 页面跳转
             this.$router.push({
               name:'Ordering',

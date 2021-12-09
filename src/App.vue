@@ -41,6 +41,9 @@ export default {
     EditMenu,
     Menu,
   },
+  mounted() {
+    window.addEventListener('unload', this.saveState());
+  },
   methods:{
     loginClick(){
       //通过代码修改路径 vue-router
@@ -49,6 +52,9 @@ export default {
     orderingClick(){
       this.$router.push('/ordering')
     },
+    saveState() {
+      sessionStorage.setItem('state', JSON.stringify(this.$store.state))
+    }
 
   },
 
