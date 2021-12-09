@@ -9,7 +9,7 @@
       <el-form-item label="密码" prop="password">
         <el-input type="password" placeholder="请输入密码" v-model="form.password"></el-input>
       </el-form-item>
-      <el-button type="primary" @click="submitForm('form')">登录</el-button>
+      <el-button type="primary"  @click="submitForm('form')">登录</el-button>
 
     </el-form>
     
@@ -48,8 +48,13 @@
     methods: {
       
       submitForm(formName) {
+        // 通过vuex提交登录的用户名
+        this.$store.commit('setUserName', this.form.name);
         this.$refs[formName].validate((valid) => {
           if (valid) {
+            // 成功登录后的缓存数据
+            sessionStorage.setItem('isLogin', 'true');
+            // 页面跳转
             this.$router.push({
               name:'Ordering',
               params:{
@@ -59,7 +64,7 @@
           } else {
             this.$message({
               showClose: true,
-              message: '请输入用户名或密码！',
+              message: '请输入用户名或密码!',
               type: 'error'
             });
             return false;

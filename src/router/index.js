@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
 import Login from '../views/Login.vue'
 import Main from '../views/Main.vue';
 import NotFound from "../views/NotFound";
@@ -29,7 +30,7 @@ import Info from "../components/Information/Info";
 Vue.use(Router)
 
 
-
+var title = '| 智慧餐口';
 
 
 //将路由单独抽出来
@@ -71,6 +72,9 @@ const routes = [
                 path:'newOrders',
                 name:'NewOrders',
                 component:NewOrders,
+                meta: {
+                    title: '新增订单' + title
+                }
             },
             {
                 path:'getOrders',
@@ -91,6 +95,9 @@ const routes = [
                 path:'menu',
                 name:'Menu',
                 component:Menu,
+                meta: {
+                    title: '菜单管理' + title
+                }
             },
             {
                 path: 'meat',
@@ -122,6 +129,9 @@ const routes = [
                 path:'OverallStatistics',
                 name: 'OverallStatistics',
                 component: OverallStatistics,
+                meta: {
+                    title: '统计总览' + title
+                }
                 
             },
             {
@@ -133,18 +143,47 @@ const routes = [
                 path:'info',
                 name: 'Info',
                 component: Info,
+                meta: {
+                    title: '店铺信息' + title
+                }
             }
             
 
         ]
     },
-
 ]
+
+
+
+
+// 路由守卫
+// router.beforeEach((to, from, next) => {
+//     let isLogin = sessionStorage.getItem('isLogin');
+//     // 退出登录
+//     if(to.path == '/logout'){
+//         // 将缓存清空
+//         sessionStorage.clear();
+//         next({path:'/login'})
+//     } else if(to.path == '/login'){
+//         // 如果已经登录，就跳转到首页
+//         if(isLogin){
+//             next({path:'/main'})
+//         } else {
+//             next()
+//         }
+//     } else if(isLogin == null){
+//         // 如果没有登录，就跳转到登录页面
+//         next({path:'/login'})
+//     }
+        
+// })
+
 
 
 export default new Router({
 	routes,
     mode:'history',
-
-
 })
+
+
+

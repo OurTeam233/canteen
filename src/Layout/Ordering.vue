@@ -20,7 +20,7 @@
         <!-- 普通竖直分割线 -->
         <!-- <el-divider direction="vertical"></el-divider> -->
 
-        <p class="name">{{ $route.params.name }} </p>
+        <p class="name">{{ $store.state.userInfo.userName }} </p>
  
         <!-- 头像 -->
         <el-avatar
