@@ -1,11 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Login from '../views/Login.vue'
-import Main from '../views/Main.vue';
-import NotFound from "../views/NotFound";
+
+Vue.use(Router)
+
+
+
+
 //订餐
-import Ordering from "../Layout/Ordering";
+
 import NewOrders from "../components/AllOrder/NewOrders";
 import GetOrders from "../components/AllOrder/GetOrders";
 import CompleteOrders from "../components/AllOrder/CompleteOrders";
@@ -36,36 +39,30 @@ var title = '| 智慧餐口';
 //将路由单独抽出来
 const routes = [
     {
-        //首页
-        path:'/main',
-        name:'Main',
-        component: Main
-    },
-    {
         //默认首页
         path: '',
         //redirect重定向
         redirect:'login',
-        component: Login,
+        component: () => import('../views/Login.vue'),
     },
     {
         // 登录页面
         path: '/login',
         name: 'Login',
-        component:Login
+        component: () => import('../views/Login.vue'),
     },
     {
         // 404页面
         path:'*',
         name:'NotFound',
-        component:NotFound
+        component: () => import('../views/NotFound.vue'),
     },
     
     {
         //订餐页面
         path: '/ordering',
         name: 'Ordering',
-        component: Ordering,
+        component: () => import('../views/Ordering.vue'),
         children:[
             // 订餐
             {
