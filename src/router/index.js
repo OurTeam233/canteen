@@ -1,41 +1,9 @@
 import Vue from 'vue'
-import Router from 'vue-router'
+import VueRouter from 'vue-router'
 
 
-Vue.use(Router)
-
-
-
-
-//订餐
-
-import NewOrders from "../components/AllOrder/NewOrders";
-import GetOrders from "../components/AllOrder/GetOrders";
-import CompleteOrders from "../components/AllOrder/CompleteOrders";
-import IllegalOrders from "../components/AllOrder/IllegalOrders";
-
- //菜谱
-import Meat from "../components/AllMenu/Meat";
-import MeatVegetables from "../components/AllMenu/MeatVegetables";
-import EditMenu from "../components/AllMenu/EditMenu";
-import Menu from "../components/AllMenu/Menu";
-
-
-//统计
-import EnDayStat from "../components/Statistics/EnDayStat";
-import WeekStat from "../components/Statistics/WeekStat";
-import Test from "../components/Statistics/Test";
-import OverallStatistics from "../components/Statistics/OverallStatistics";
-
-// 店铺管理
-import Info from "../components/Information/Info";
-
-Vue.use(Router)
-
-
+Vue.use(VueRouter)
 var title = '| 智慧餐口';
-
-
 //将路由单独抽出来
 const routes = [
     {
@@ -62,13 +30,13 @@ const routes = [
         //订餐页面
         path: '/ordering',
         name: 'Ordering',
-        component: () => import('../views/Ordering.vue'),
+        component: () => import('../Layout/Ordering.vue'),
         children:[
             // 订餐
             {
                 path:'newOrders',
                 name:'NewOrders',
-                component:NewOrders,
+                component: () => import('../components/AllOrder/NewOrders.vue'),
                 meta: {
                     title: '新增订单' + title
                 }
@@ -76,22 +44,22 @@ const routes = [
             {
                 path:'getOrders',
                 name:'GetOrders',
-                component:GetOrders,
+                component: () => import('../components/AllOrder/GetOrders.vue'),
             },
             {
                 path:'completeOrders',
                 name:'CompleteOrders',
-                component:CompleteOrders,
+                component: () => import('../components/AllOrder/CompleteOrders.vue'),
             },
             {
                 path:'illegalOrders' ,
                 name:'IllegalOrders',
-                component: IllegalOrders,
+                component: () => import('../components/AllOrder/IllegalOrders.vue'),
             },
             {
                 path:'menu',
                 name:'Menu',
-                component:Menu,
+                component: () => import('../components/AllMenu/Menu.vue'),
                 meta: {
                     title: '菜单管理' + title
                 }
@@ -99,33 +67,18 @@ const routes = [
             {
                 path: 'meat',
                 name: 'Meat',
-                component: Meat,
-            },
-            {
-                path: 'meatVegetables',
-                name: 'MeatVegetables',
-                component: MeatVegetables,
-            },
-            {
-                path: 'enDayStat',
-                name: 'EnDayStat',
-                component: EnDayStat,
-            },
-            {
-                path: 'weekStat',
-                name: 'WeekStat',
-                component: WeekStat,
+                component: () => import('../components/AllMenu/Meat.vue'),
             },
             {
                 path:'Test/:id',
                 name: 'Test',
-                component: Test,
+                component: () => import('../components/Statistics/Test.vue'),
                 props:true,
             },
             {
                 path:'OverallStatistics',
                 name: 'OverallStatistics',
-                component: OverallStatistics,
+                component: () => import('../components/Statistics/OverallStatistics.vue'),
                 meta: {
                     title: '统计总览' + title
                 }
@@ -134,21 +87,31 @@ const routes = [
             {
                 path:'editMenu',
                 name: 'EditMenu',
-                component: EditMenu,
+                component: () => import('../components/AllMenu/EditMenu.vue'),
             },
             {
                 path:'info',
                 name: 'Info',
-                component: Info,
+                component: () => import('../components/Information/Info.vue'),
                 meta: {
                     title: '店铺信息' + title
                 }
             }
-            
-
         ]
     },
 ]
+
+/* 解决重复点击相同路由的报错问题 */
+const originalPush = VueRouter.prototype.push
+//修改原型对象中的push方法
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
+
+const router = new VueRouter({
+  routes,
+  mode: 'history',
+})
 
 
 
@@ -177,10 +140,5 @@ const routes = [
 
 
 
-export default new Router({
-	routes,
-    mode:'history',
-})
-
-
+export default router
 
