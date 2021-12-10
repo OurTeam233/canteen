@@ -18,6 +18,9 @@
   </div>
 </template>
 <script>
+  import vuex from 'vuex'
+
+
   export default {
     name: 'Login',
     data(){
@@ -55,7 +58,7 @@
             // 成功登录后的缓存数据
             sessionStorage.setItem('isLogin', 'true');
             // 保存用户名
-            sessionStorage.setItem('userName', $state.userInfo.userName);
+            sessionStorage.setItem('userName', this.$store.state.userInfo.userName);
             // 页面跳转
             this.$router.push({
               name:'Ordering',
