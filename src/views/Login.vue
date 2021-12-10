@@ -18,7 +18,6 @@
   </div>
 </template>
 <script>
-  import vuex from 'vuex'
 
 
   export default {
