@@ -1,5 +1,7 @@
-// 从request
-import axios from '../request'
+// 从request中导入axios
+import axios from '../utils/request'
+
+
 
 
 

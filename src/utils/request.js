@@ -1,4 +1,4 @@
-/* 将axios封装到该文件中*/
+/* 封装axios实例*/
 
 // 导入axios
 import axios from 'axios'
