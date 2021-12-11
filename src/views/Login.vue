@@ -4,7 +4,7 @@
     <el-form ref="form" :model="form" :rules="rules" class="login-box">
       <h2>欢迎登录食堂管理系统</h2>
       <el-form-item label="账号" prop="name">
-        <el-input type="text" placeholder="请输入用户名" v-model="form.name"></el-input>
+        <el-input type="text" placeholder="请输入用户名" v-model="form.username"></el-input>
       </el-form-item>
       <el-form-item label="密码" prop="password">
         <el-input type="password" placeholder="请输入密码" v-model="form.password"></el-input>
@@ -18,42 +18,53 @@
   </div>
 </template>
 <script>
-
+  import { login } from '../api/user.js'
 
   export default {
     name: 'Login',
     data(){
       return {
+        loading: false,
         form: {
-          name: '',
-          password: ''
+          username: '',
+          password: '',
+          userType: 2 //用户类型
         },
         rules: {
-          name: [{ 
+          username: [{ 
               required: true,
               message: '请输入用户名', 
               trigger: 'blur' 
             },
-            
           ],
           password: [{ 
               required: true, 
               message: '请输入密码', 
               trigger: 'blur' 
             },
-            
           ]
-
         }
       }
     },
     methods: {
-      
+      // 提交登录信息
       submitForm(formName) {
         // 通过vuex提交登录的用户名
-        this.$store.commit('setUserName', this.form.name);
+        this.$store.commit('setUserName', this.form.username);
         this.$refs[formName].validate((valid) => {
           if (valid) {
+            this.loading = true;
+            // 调用登录接口
+            login(this.form.username, this.form.password, this.form.userType).then(res => {
+              // console.log(res);
+              // console.log(res.data);
+              // console.log(res.data.data);
+              if(res.data.success) {
+                console.log("对对对");
+              }
+            })
+
+
             // 成功登录后的缓存数据
             sessionStorage.setItem('isLogin', 'true');
             // 保存用户名
@@ -62,7 +73,7 @@
             this.$router.push({
               name:'Ordering',
               params:{
-                name:this.form.name
+                name:this.form.username
               }
             });
           } else {

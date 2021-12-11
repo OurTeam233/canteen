@@ -12,8 +12,6 @@ Vue.prototype.$echarts = echarts;
 /* 让vue使用elementUI(懒得抽了) */
 Vue.use(ElementUI);
 
- 
-
 
 
 
