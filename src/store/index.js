@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 import mutations from "./mutations";
 import actions from "./actions";
 import state from "./state";
+import user from "./modules/user";
 
 Vue.use(Vuex)
 
@@ -16,11 +17,10 @@ const store = new Vuex.Store({
   mutations,
   // 异步操作
   actions,
-  // 计算属性
-  // getters,
+  
   // 模块
   modules:{
-    // user
+    user
   },
   // 插件
   plugins: [],

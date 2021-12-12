@@ -1,8 +1,4 @@
-// const state = sessionStorage.getItem('state') ? JSON.parse(sessionStorage.getItem('state')) : {
-//   userInfo: {
-//     userName: '',
-//   }
-// }
+// 仅用来存放一些公共信息
 
 const state = {
   userInfo: {

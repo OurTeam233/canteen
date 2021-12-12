@@ -56,11 +56,14 @@
             this.loading = true;
             // 调用登录接口
             login(this.form.username, this.form.password, this.form.userType).then(res => {
-              // console.log(res);
-              // console.log(res.data);
-              // console.log(res.data.data);
+              // 商家登录成功
               if(res.data.success) {
-                console.log("对对对");
+                // console.log("对对对");
+                let result = res.data.rows[0];
+                // 应该是要储存后端传来的token
+                window.sessionStorage.setItem('token', result.token);
+                window.sessionStorage.setItem('userInfo', JSON.stringify(result.userInfo));
+                
               }
             })
 

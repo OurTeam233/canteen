@@ -1,38 +1,32 @@
-// 暂时不分模块了，有点分不清楚
-// // 状态
-// const state = sessionStorage.getItem('user') ? JSON.parse(sessionStorage.getItem('user')) : {
-//   userName: '',
+// 还是觉得抽出来比较好
+// 只存放有关登录的个人信息
+
+// const state = {
+//   userInfo:{},
+//   token:'',
 // }
-
-
-// // 同步操作
 // const mutations = {
-//   // 设置用户信息
-//   setUserInfo(state, user) {
+//   //设置用户信息
+//   SET_USER_INFO(state,user){
 //     state.userInfo = user
 //   },
-
-//   // 设置用户token
-//   setToken(state, token) {
+//   //设置token
+//   SET_TOKEN(state,token){
 //     state.token = token
 //   }
 // }
 
-
-// // 异步操作
 // const actions = {
-
-
+//   set_token({commit},token){
+//     commit('SET_TOKEN',token)
+//   },
+//   set_userInfo({commit},userInfo){
+//     commit('SET_USER_INFO',userInfo)
+//   }
 // }
-
-
-
-
-
 
 // export default {
 //   state,
 //   mutations,
-//   actions,
-
+//   actions
 // }
