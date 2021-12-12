@@ -50,7 +50,7 @@
       // 提交登录信息
       submitForm(formName) {
         // 通过vuex提交登录的用户名
-        this.$store.commit('setUserName', this.form.username);
+        // this.$store.commit('setUserName', this.form.username);
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.loading = true;
@@ -71,7 +71,7 @@
             // 成功登录后的缓存数据
             sessionStorage.setItem('isLogin', 'true');
             // 保存用户名
-            sessionStorage.setItem('userName', this.$store.state.userInfo.userName);
+            // sessionStorage.setItem('userName', this.$store.state.userInfo.userName);
             // 页面跳转
             this.$router.push({
               name:'Ordering',

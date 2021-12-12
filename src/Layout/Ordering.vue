@@ -1,357 +1,422 @@
 <template>
-  <div class="big">
+
+  <el-container class="home-container">
+
+    <!-- 侧边栏 -->
+    <el-aside :width="isCollapse ? '64px' : '230px'">
+        <!-- 头部logo -->
+        <template>
+          <div class="header-title" v-if="!isCollapse">
+            <img width="40px" height="40px" src="../../public/img/DingTang.png" style="border-radius: 100%">
+            <span style="font-weight:bold">智慧餐口管理系统</span>
+          </div>
+          <div class="header-title-hiddle" v-else>
+             <img width="40px" height="40px" src="../../public/img/DingTang.png" style="border-radius: 100%">
+          </div>
+        </template>
+        
+        <!-- 菜单区域 -->
+        <el-menu 
+            background-color="#282C34" 
+            text-color="#fff" 
+            active-text-color="#fff"
+            :collapse="isCollapse"
+            :collapse-transition="false"
+            :default-active="'/' + activePath"
+            unique-opened
+            router>
+        
+          <!-- 首页 -->
+          <el-menu-item 
+            :index="item.path" v-for="item in menuList" 
+            :key="item.id"
+            @click="selectMenu(item)">
+            <i :class="item.class"></i>
+            <span slot="title">{{item.label}}</span>
+          </el-menu-item>
+
+        </el-menu>
+    </el-aside>
+
+    <!-- 主体 -->
     <el-container>
-      <el-aside :width="iscollapse ? '64px' : '200px'">
-        <!--侧边导航-->
-        <el-col :span="12" class="aside-bar">
-          <el-menu
-            default-active="2"
-            class="el-menu-vertical-demo"
-            @open="handleOpen"
-            @close="handleClose"
-            background-color="#1d2939"
-            text-color="rgb(64,158,255)"
-            active-text-color="#ffd04b"
-          >
-            <el-submenu index="1">
-              <template slot="title">
-                <i class="el-icon-shopping-cart-full"></i>
-                <span>订餐系统</span>
-              </template>
-              <el-menu-item-group>
-                <el-menu-item index="1-1">
-                  <router-link :to="{ name: 'NewOrders' }"
-                    >新增订单</router-link
-                  >
-                </el-menu-item>
-                <el-menu-item index="1-2">
-                  <router-link :to="{ name: 'GetOrders' }"
-                    >待取订餐</router-link
-                  >
-                </el-menu-item>
-                <el-menu-item index="1-3">
-                  <router-link :to="{ name: 'CompleteOrders' }"
-                    >已完成订单</router-link
-                  >
-                </el-menu-item>
-                <el-menu-item index="1-4">
-                  <router-link :to="{ name: 'IllegalOrders' }"
-                    >违规订单</router-link
-                  >
-                </el-menu-item>
-              </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="2">
-              <template slot="title">
-                <router-link :to="{ name: 'Menu' }">
-                  <i class="el-icon-document"></i>
-                  <span>菜谱</span>
-                </router-link>
-              </template>
-              <el-menu-item-group>
-                <el-menu-item index="2-1">
-                  <router-link :to="{ name: 'Meat' }">荤菜</router-link>
-                </el-menu-item>
-                <el-menu-item index="2-2">
-                  <router-link :to="{ name: 'MeatVegetables' }"
-                    >花荤</router-link
-                  >
-                </el-menu-item>
-                <el-menu-item index="2-3">素菜</el-menu-item>
-                <el-menu-item index="2-4">主食</el-menu-item>
-              </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="3">
-              <template slot="title">
-                <i class="el-icon-data-line"></i>
-                <span>统计</span>
-              </template>
-              <el-menu-item-group>
-                <el-menu-item index="3-1">
-                  <router-link :to="{ name: 'Test', params: { id: 3 } }">
-                    当天收益
-                  </router-link>
-                </el-menu-item>
-                <el-menu-item index="3-2">
-                  <router-link :to="{ name: 'OverallStatistics' }">
-                    总体统计
-                  </router-link>
-                </el-menu-item>
-              </el-menu-item-group>
-            </el-submenu>
-
-            <el-submenu index="4">
-              <template slot="title">
-                <i class="el-icon-location"></i>
-                <span>店铺管理</span>
-              </template>
-              <el-menu-item-group>
-                <el-menu-item index="4-1">
-                  <router-link :to="{ name: 'Info' }">店铺信息修改</router-link>
-                </el-menu-item>
-              </el-menu-item-group>
-            </el-submenu>
-          </el-menu>
-        </el-col>
-      </el-aside>
-
-      <el-container>
-        <el-header>
-          <div class="header-left"></div>
-          <!--头部导航-->
-
-          <img class="logo" src="../../public/img/DingTang.png" />
-          <p class="logo-name">智慧餐口</p>
-
-          <!-- 营业状态显示 -->
-          <div class="block el-cascader-state">
-            <el-cascader
-              v-model="value"
-              :options="options"
-              @change="handleChange"
-            >
-            </el-cascader>
+      <!-- 头部 -->
+      <el-header>
+        
+        <!-- 头部导航栏 -->
+        <div class="header-row">
+          <!-- 折叠 展开 和 名人名言 -->
+          <div class="toggle-button">
+            <div>
+              <i :title="isCollapse ? '展开' : '收起'" class="fa fa-bars el-icon-s-fold" @click="toggleCollapse"></i>
+            </div>
+            <div style="height:25px;width:100%;margin-left:10px">
+              <div style="float:left;color:#E74405;font-size:16px;height:25px;line-height:25px;">
+                <i class="fa fa-bullhorn"></i>
+              </div>
+              <el-carousel height="25px" direction="vertical" indicator-position="none" autoplay :interval="8000">
+                
+                <el-carousel-item v-for="item in mottoList" :key="item">
+                  <h3 class="medium">{{ item }}</h3>
+                </el-carousel-item>
+              </el-carousel>
+            </div>
           </div>
 
-          <!-- 普通竖直分割线 -->
-          <!-- <el-divider direction="vertical"></el-divider> -->
+          <!-- 头像下拉菜单 -->
+          <div class="header-avatar">
+            <div class="user">
+              管理员，您好!
+            </div>
+            <el-dropdown @command="handleCommand">
+              <span class="el-dropdown-link">
+                <img width="35" height="35" style="border-radius:50%;background:#dddddd" src="../../public/img/DingTang.png" alt="">
+                <i class="el-icon-arrow-down el-icon--right"></i>
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item command="logout">退出登录</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </div>
+        </div>
 
-          <!-- <p class="name">{{ $store.state.userInfo.userName }} </p> -->
-          <p class="name">{{ $store.state.userInfo.userName }}</p>
+        <!-- tab标签页区域 - 用于标签页切换 -->
+        <div class="tabs-switch-page">
+          <el-tag
+            size="medium"
+            v-for="(tab, index) in tabList"
+            :key="tab.name"
+            @close="handleClose(tab, index)"
+            @click="changeMenu(tab)"
+            :closable="tab.name !== 'home'"
+            :effect="activePath === tab.name ? 'dark' : 'plain'">
+          {{tab.label}}
+          </el-tag>
+        </div>
+        
+      </el-header>
 
-          <!-- 头像 -->
-          <el-avatar
-            class="el-avatar-state"
-            shape="circle"
-            :size="45"
-            :src="url"
-          ></el-avatar>
-        </el-header>
-
-        <el-main>
-          <!-- 嵌套路由 -->
-          <router-view></router-view>
-        </el-main>
-      </el-container>
+      <!-- 内容区 -->
+      <el-main>
+        <!-- 路由占位符，用于展示内容区的内容 -->
+        <div style="padding:15px">
+          <keep-alive :include="catch_components">
+            <router-view />
+          </keep-alive>
+        </div>
+      </el-main>
     </el-container>
-  </div>
+  </el-container>
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex';
 export default {
-  name: "Ordering",
-  data() {
-    return {
-      iscollapse: false, //侧边栏是否折叠
-      url:
-        "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-
-      activeIndex: "1",
-      activeIndex2: "1",
-      value: [],
-      options: [
-        {
-          value: "yingye",
-          label: "营业",
-        },
-        {
-          value: "xiuxi",
-          label: "休息",
-        },
-      ],
-    };
+  components: {
   },
-
+  //组件被创建
+  created() {
+    //加载菜单
+    this.loadMenu();
+  },
+  computed: {
+    ...mapState({ // 从 state 中的到的计算属性
+       activePath: state => state.activePath, // 已选中菜单
+       tabList: state => state.tabList,  // tags菜单列表
+       catch_components: state => state.catch_components,  // keepalive缓存
+    })
+  },
+  data() {
+    return{
+        //菜单列表
+        menuList: [],
+        // 折叠-展开 默认false不折叠 
+        isCollapse: false,
+        // 系统公告
+        mottoList: [
+            '等风来不如追风去，追逐的过程就是人生的意义',
+            '当你想要放弃了，那就想想当初为什么开始',
+            '自强之人谁也打不倒，自弃之人谁也带不动',
+            '既然无法选择回去的路程，那么就清晰的面对已经造成的挑战',
+            '在难过的时候，不要忘记自己还要前进',
+            '人生能有几次搏？莫到白发还未博'
+        ],
+    }
+  },
   methods: {
-    handleSelect(key, keyPath) {
-      console.log(key, keyPath);
+    // 右上角下拉菜单点击事件
+    handleCommand(command){
+      switch(command){
+        // 退出
+        case 'logout': 
+            // //消息提示
+            // this.msg.success('退出登录')
+            // //重置vuex中的数据
+            // this.$store.commit('clearVUEX')
+            //跳转到首页
+            this.$router.push("/logout");
+          break
+        //修改密码
+        case 'update-password':
+          //消息提示
+            this.msg.success('修改密码')
+          break
+      }
     },
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
+    // 点击折叠 展开菜单
+    toggleCollapse(){
+        this.isCollapse = !this.isCollapse;
     },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
+    // 点击菜单 - 传入name，添加到keepalive缓存页面
+    selectMenu(item){
+        // 加入keepalive缓存
+        this.$store.commit('addKeepAliveCache', item.name)
+        //添加tags标签
+        //访问wellcome 就代表home
+        var name = item.name === 'wellcome' ? 'home' : item.name
+        var submenu = {
+          path: name,
+          name: name,
+          label: item.label
+        }
+        //修改选中菜单
+        this.$store.commit('selectMenu', submenu)
     },
-    handleChange(value) {
-      console.log(value);
+    // 关闭tab标签
+    handleClose(tab, index) {
+        // 历史选中菜单
+        var oldActivePath = this.$store.state.activePath
+        // 历史已选中菜单列表
+        var oldTabList = this.$store.state.tabList
+        // 计算标签个数
+        let length = oldTabList.length - 1
+        // 删除tabList中的该对象
+        for(let i = 0;i < oldTabList.length;i++){
+            let item = oldTabList[i]
+            if(item.name === tab.name){
+            oldTabList.splice(i, 1);
+            }
+        }
+        // 删除keepAlive缓存
+        this.$store.commit('removeKeepAliveCache', tab.name)
+        // 如果关闭的标签不是当前路由的话，就不跳转
+        if (tab.name !== oldActivePath) {
+            return
+        }
+        // 如果length为1，必然只剩下首页标签，此时关闭后，更新到首页
+        if(length === 1){
+            // 同时存储菜单
+            this.$store.commit('closeTab', {activePath: 'home', tabList: oldTabList})
+            // tab页向左跳转
+            this.$router.push({ name: oldTabList[index - 1].name })
+            // 不再向下执行
+            return
+        }
+        // 关闭的标签是最右边的话，往左边跳转一个
+        if (index === length) {
+            // 同时更新路径
+            oldActivePath = oldTabList[index - 1].name
+            // 同时存储菜单
+            this.$store.commit('closeTab', {activePath:oldActivePath, tabList: oldTabList})
+            // tab页向左跳转
+            this.$router.push({ name: oldTabList[index - 1].name })
+        } else {
+            // 同时更新路径
+            oldActivePath = oldTabList[index].name
+            // 同时存储菜单
+            this.$store.commit('closeTab', {activePath:oldActivePath, tabList: oldTabList})
+            // tab页向右跳转
+            this.$router.push({ name: oldTabList[index].name })
+        }
     },
-    newOrders() {
-      this.$router.push("/Ordering/NewOrders");
+    // 点击标签跳转路由
+    changeMenu(item) {
+        // 历史选中菜单
+        var oldActivePath = this.$store.state.activePath
+        // 首先判断点击的是否是自己，如果是自己则return
+        if(oldActivePath === item.name){
+            return
+        }
+        // 不是自己，存储菜单
+        this.$store.commit('changeMenu', item.name)
+        // 页面跳转
+        this.$router.push({ name: item.name })
     },
-    getOrders() {
-      this.$router.push("/Ordering/GetOrders");
-    },
-    completeOrders() {
-      this.$router.push("/Ordering/CompleteOrders");
-    },
-    illegalOrders() {
-      this.$router.push("/Ordering/IllegalOrders");
-    },
-    meat() {
-      this.$router.push("/Ordering/Meat");
-    },
-    meatVegetables() {
-      this.$router.push("/Ordering/MeatVegetables");
-    },
-    enDayStat() {
-      this.$router.push("/Ordering/EnDayStat");
-    },
-    weekStat() {
-      this.$router.push("/Ordering/WeekStat");
-    },
+    //加载菜单
+    loadMenu(){
+        this.menuList = [
+            {
+                id: 'number-01', 
+                class: 'fa el-icon-document', 
+                path: '/Ordering/NewOrders', 
+                label: '新增订单', 
+                name: 'home',
+                children:[{
+                  id: 'number-01-01',
+                  label:'第二个',
+                  path: '/Ordering/NewOrders',
+                }]
+            },
+            {
+                id: 'number-02', 
+                class: 'fa el-icon-document', 
+                path: '/test2', 
+                label: '测试页面2', 
+                name: 'test2'
+            },
+            
+        ]
+    }
   },
 };
 </script>
-
-<style scoped>
-/*侧边栏里面的单元格 */
-.aside-bar {
-  /* background-color: rgb(64, 158, 255); */
-  width: 200px;
+<style lang="less" scoped>
+.el-col-align-middle{
+    line-height: 40px;
+    text-align: left;
+    font-size: 14px;
 }
-
-/*顶部信息栏 */
-.el-header {
-  /* background-color: #545c64; */
-  background-color: #fff;
-  color: #333;
-  text-align: center;
-  line-height: 60px;
+.home-container{
+  height: 100%;
+}
+.el-header{
+  color: rgb(0, 0, 0);
+  font-size: 20px;
+  border-bottom: 1px solid #dddddd;
+  height: 103px !important;
   padding: 0;
-  border-bottom: 1px solid #999999;
-  border-left: 1px solid #eee;
-  /*粘滞定位*/
-  position: sticky;
-  top: 0;
-  z-index: 10;
+  background: #fff;
+}
+.header-row{
+  height:60px;
+  width:100%;
+  display: flex;
+  flex-direction:row;
+  justify-content: center;
+  border-bottom:1px solid #dddddd;
+  overflow: hidden;
+}
+.header-avatar{
+  float:right;
+  width:40%;
+  display: flex;
+  align-items: center;
+  justify-content:flex-end;
+  padding-right:20px;
+  .user{
+    font-size: 14px;
+    font-weight: bold;
+    padding: 0 10px;
+  }
 }
 
-/*有点儿离谱的logo定位 */
-.logo {
-  float: left;
-  margin-left: 5px;
-  margin-top: 4px;
-  width: 50px;
-  height: 50px;
-}
-
-/*logo旁边的字 */
-.logo-name {
-  float: left;
-  margin: 0 0 0 5px;
-  line-height: 60px;
-  color: #333;
-}
-
-/*顶部最右边的营业状态显示 */
-.el-cascader-state {
-  float: right;
-  width: 100px;
-  height: 10px;
-  /* line-height: 60px; */
-  text-align: center;
-  margin-right: 10px;
-  color: rgb(64, 158, 255);
-}
-/*状态显示的下拉 */
-.el-cascader__dropdown {
-  width: 100px !important;
-  height: 40px !important;
-}
-
-/*头像显示 */
-.el-avatar-state {
-  float: right;
-  margin-right: 10px;
-  margin-top: 7px;
-}
-
-/*用户名 */
-.name {
-  float: right;
-  font-size: 14px;
-  /* margin-right: 20px; */
-  /* margin-top: 10px; */
-  margin: 0 20px 0 0;
-  line-height: 60px;
-  color: #333;
-}
-
-/*侧边栏 */
-.el-aside {
-  /* background-color: #545c64; */
-  background-color: #1d2939;
-  color: #333;
-  text-align: center;
-  line-height: 200px;
-  width: 200px;
-  /* height: 650px; */
-  /* height: 100%; */
-  /* position:sticky;
-  top:60px;
-  z-index: 9; */
-}
-
-/*主单元格 */
-.el-submenu {
-  text-align: left;
-  width: 200px;
-}
-
-.el-col {
-  position: fixed;
-}
-
-/*中间的主题内容 */
-.el-main {
-  background-color: #e9eef3;
-  color: #333;
-  text-align: center;
-  line-height: 30px;
-  width: 100%;
+.el-aside{
+  background-color: #282C34;
   height: 100vh;
+  .header-title{
+    padding-left: 10px;
+    height: 60px;
+    font-weight: 300;
+    display: flex;
+    font-size: 20px;
+    align-items: center;
+    cursor: pointer;
+    color: #ffffff;
+    span{
+      margin-left: 10px;
+    }
+  }
+  .header-title-hiddle{
+    width: 64px;
+    height: 60px;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    color: #ffffff;
+    cursor: pointer;
+  }
+  .el-menu{
+    border-right: none;
+  }
+}
+// 菜单选中背景色
+.el-menu-item.is-active{
+  background-color: #1890FF !important;
+}
+// 菜单悬浮背景色
+.el-menu-item:hover{
+  background-color: #1890FF !important;
+}
+// 走马灯
+.el-carousel__item h3 {
+  color: #ee7c12;
+  font-size: 14px;
+  opacity: 0.75;
+  line-height: 25px;
   margin: 0;
+}
+
+.el-main{
+  background-color: #eaedf1;
   padding: 0;
 }
 
-/*底部footer */
-/* .el-footer{
-  width: 100%;
-  background-color: #545c64;
+.fa{
+  margin-right: 10px;
+}
+
+// 点击展开/折叠按钮
+.toggle-button{
+  width: 80%;
+  font-size: 20px;
+  line-height: 40px;
+  color:#595959;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  float:left;
+  padding-left: 20px;
+  i{
+    cursor: pointer;
+  }
+}
+// 面包屑导航
+.el-breadcrumb{
+  margin-bottom: 0;
+}
+
+// tab页
+.tabs-switch-page{
+  display: flex;
+  align-items:center;
+  height: 40px;
+  background-color:#fff;
+  overflow: hidden;
+}
+.el-tag{
+  cursor: pointer;
+  margin-left: 10px;
+  border-radius: 2px;
+  font-size: 12px;
+  color: #1890FF;
+  border-color: #1890FF;
+}
+.el-tag--dark{
   color: #fff;
-  text-align: center;
-  height: 16vh;
-  padding: 0;
-  border-top: 1px solid #999999;
-  border-left: 1px solid #eee;
-} */
-
-/*用来区分布局的容器 */
-.el-container {
-  margin-bottom: 0px;
+  background-color: #1890FF;
 }
 
-.el-container:nth-child(5) .el-aside,
-.el-container:nth-child(6) .el-aside {
-  line-height: 260px;
+.el-dropdown-link {
+  cursor: pointer;
+}
+.el-icon-arrow-down {
+  font-size: 12px;
 }
 
-.el-container:nth-child(7) .el-aside {
-  line-height: 320px;
-}
-
-/*router-link的样式更改 */
-a {
-  text-decoration: none;
-  color: rgb(64, 158, 255);
-}
-.router-link-active:link {
-  color: rgb(64, 158, 255);
-}
-.router-link-active:active {
-  color: #ffd04b;
-}
-.router-link-active:visited {
-  color: #ffd04b;
+.submit-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
 }
 </style>
