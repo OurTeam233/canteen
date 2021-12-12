@@ -1,144 +1,138 @@
 <template>
   <div class="big">
     <el-container>
-      <el-header >
-        <!--头部导航-->
-
-        <img class="logo" src="../../public/img/DingTang.png" />
-        <p class="logo-name">智慧餐口</p>
-
-        <!-- 营业状态显示 -->
-        <div class="block el-cascader-state">
-          <el-cascader
-            v-model="value"
-            :options="options"
-            @change="handleChange"
+      <el-aside :width="iscollapse ? '64px' : '200px'">
+        <!--侧边导航-->
+        <el-col :span="12" class="aside-bar">
+          <el-menu
+            default-active="2"
+            class="el-menu-vertical-demo"
+            @open="handleOpen"
+            @close="handleClose"
+            background-color="#1d2939"
+            text-color="rgb(64,158,255)"
+            active-text-color="#ffd04b"
           >
-          </el-cascader>
-        </div>
+            <el-submenu index="1">
+              <template slot="title">
+                <i class="el-icon-shopping-cart-full"></i>
+                <span>订餐系统</span>
+              </template>
+              <el-menu-item-group>
+                <el-menu-item index="1-1">
+                  <router-link :to="{ name: 'NewOrders' }"
+                    >新增订单</router-link
+                  >
+                </el-menu-item>
+                <el-menu-item index="1-2">
+                  <router-link :to="{ name: 'GetOrders' }"
+                    >待取订餐</router-link
+                  >
+                </el-menu-item>
+                <el-menu-item index="1-3">
+                  <router-link :to="{ name: 'CompleteOrders' }"
+                    >已完成订单</router-link
+                  >
+                </el-menu-item>
+                <el-menu-item index="1-4">
+                  <router-link :to="{ name: 'IllegalOrders' }"
+                    >违规订单</router-link
+                  >
+                </el-menu-item>
+              </el-menu-item-group>
+            </el-submenu>
+            <el-submenu index="2">
+              <template slot="title">
+                <router-link :to="{ name: 'Menu' }">
+                  <i class="el-icon-document"></i>
+                  <span>菜谱</span>
+                </router-link>
+              </template>
+              <el-menu-item-group>
+                <el-menu-item index="2-1">
+                  <router-link :to="{ name: 'Meat' }">荤菜</router-link>
+                </el-menu-item>
+                <el-menu-item index="2-2">
+                  <router-link :to="{ name: 'MeatVegetables' }"
+                    >花荤</router-link
+                  >
+                </el-menu-item>
+                <el-menu-item index="2-3">素菜</el-menu-item>
+                <el-menu-item index="2-4">主食</el-menu-item>
+              </el-menu-item-group>
+            </el-submenu>
+            <el-submenu index="3">
+              <template slot="title">
+                <i class="el-icon-data-line"></i>
+                <span>统计</span>
+              </template>
+              <el-menu-item-group>
+                <el-menu-item index="3-1">
+                  <router-link :to="{ name: 'Test', params: { id: 3 } }">
+                    当天收益
+                  </router-link>
+                </el-menu-item>
+                <el-menu-item index="3-2">
+                  <router-link :to="{ name: 'OverallStatistics' }">
+                    总体统计
+                  </router-link>
+                </el-menu-item>
+              </el-menu-item-group>
+            </el-submenu>
 
-        <!-- 普通竖直分割线 -->
-        <!-- <el-divider direction="vertical"></el-divider> -->
-
-        <!-- <p class="name">{{ $store.state.userInfo.userName }} </p> -->
-        <p class="name">{{ $store.state.userInfo.userName }} </p>
- 
-        <!-- 头像 -->
-        <el-avatar
-          class="el-avatar-state"
-          shape="circle"
-          :size="45"
-          :src="url"
-        ></el-avatar>
-
-        
-
-      </el-header>
+            <el-submenu index="4">
+              <template slot="title">
+                <i class="el-icon-location"></i>
+                <span>店铺管理</span>
+              </template>
+              <el-menu-item-group>
+                <el-menu-item index="4-1">
+                  <router-link :to="{ name: 'Info' }">店铺信息修改</router-link>
+                </el-menu-item>
+              </el-menu-item-group>
+            </el-submenu>
+          </el-menu>
+        </el-col>
+      </el-aside>
 
       <el-container>
-        <el-aside width="200px">
-          <!--侧边导航-->
-          <el-col :span="12" class="aside-bar">
-            <el-menu
-              default-active="2"
-              class="el-menu-vertical-demo"
-              @open="handleOpen"
-              @close="handleClose"
-              background-color="#1d2939"
-              text-color="rgb(64,158,255)"
-              active-text-color="#ffd04b"
+        <el-header>
+          <div class="header-left"></div>
+          <!--头部导航-->
+
+          <img class="logo" src="../../public/img/DingTang.png" />
+          <p class="logo-name">智慧餐口</p>
+
+          <!-- 营业状态显示 -->
+          <div class="block el-cascader-state">
+            <el-cascader
+              v-model="value"
+              :options="options"
+              @change="handleChange"
             >
-              <el-submenu index="1">
-                <template slot="title">
-                  <i class="el-icon-shopping-cart-full"></i>
-                  <span>订餐系统</span>
-                </template>
-                <el-menu-item-group>
-                  <el-menu-item index="1-1">
-                    <router-link :to="{name:'NewOrders'}">新增订单</router-link>
-                  </el-menu-item>
-                  <el-menu-item index="1-2">
-                    <router-link :to="{name:'GetOrders'}">待取订餐</router-link>
-                    
-                  </el-menu-item>
-                  <el-menu-item index="1-3">
-                    <router-link :to="{name:'CompleteOrders'}">已完成订单</router-link>
-                    
-                  </el-menu-item>
-                  <el-menu-item index="1-4">
-                    <router-link :to="{name:'IllegalOrders'}">违规订单</router-link>
-                    
-                  </el-menu-item>
-                </el-menu-item-group>
-              </el-submenu>
-              <el-submenu index="2">
-                <template slot="title">
-                  <router-link :to="{name:'Menu'}">
-                    <i class="el-icon-document"></i>
-                    <span>菜谱</span>
-                  </router-link>
-                  
-                </template>
-                <el-menu-item-group>
-                  <el-menu-item index="2-1">
-                    <router-link :to="{name:'Meat'}">荤菜</router-link>
-                  </el-menu-item>
-                  <el-menu-item index="2-2">
-                    <router-link :to="{name:'MeatVegetables'}">花荤</router-link>
-                  </el-menu-item>
-                  <el-menu-item index="2-3">素菜</el-menu-item>
-                  <el-menu-item index="2-4">主食</el-menu-item>
-                </el-menu-item-group>
-              </el-submenu>
-              <el-submenu index="3">
-                <template slot="title">
-                  <i class="el-icon-data-line"></i>
-                  <span>统计</span>
-                </template>
-                <el-menu-item-group>
-                  <el-menu-item index="3-1">
-                    <router-link :to="{name: 'Test', params: {id: 3}}">
-                      当天收益
-                    </router-link>
-                  </el-menu-item>
-                  <el-menu-item index="3-2">
-                    <router-link :to="{name: 'OverallStatistics'}">
-                      总体统计
-                    </router-link>
-                  </el-menu-item>
-                </el-menu-item-group>
-              </el-submenu>
+            </el-cascader>
+          </div>
 
-              <el-submenu index="4">
-                <template slot="title">
-                  <i class="el-icon-location"></i>
-                  <span>店铺管理</span>
-                </template>
-                <el-menu-item-group>
-                  
-                  <el-menu-item index="4-1">
-                    <router-link :to="{name:'Info'}">店铺信息修改</router-link>
-                  </el-menu-item>
-                  
-                </el-menu-item-group>
-              </el-submenu>
-            </el-menu>
-          </el-col>
-        </el-aside>
+          <!-- 普通竖直分割线 -->
+          <!-- <el-divider direction="vertical"></el-divider> -->
 
-        <el-container>
-          <el-main>
-            <router-view></router-view>
-          </el-main>
-          
-        </el-container>
-        
+          <!-- <p class="name">{{ $store.state.userInfo.userName }} </p> -->
+          <p class="name">{{ $store.state.userInfo.userName }}</p>
 
-        
+          <!-- 头像 -->
+          <el-avatar
+            class="el-avatar-state"
+            shape="circle"
+            :size="45"
+            :src="url"
+          ></el-avatar>
+        </el-header>
+
+        <el-main>
+          <!-- 嵌套路由 -->
+          <router-view></router-view>
+        </el-main>
       </el-container>
-
-      
-      
     </el-container>
   </div>
 </template>
@@ -148,6 +142,7 @@ export default {
   name: "Ordering",
   data() {
     return {
+      iscollapse: false, //侧边栏是否折叠
       url:
         "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
 
@@ -204,22 +199,16 @@ export default {
     weekStat() {
       this.$router.push("/Ordering/WeekStat");
     },
-
-    
-    
   },
 };
 </script>
 
 <style scoped>
-
 /*侧边栏里面的单元格 */
 .aside-bar {
   /* background-color: rgb(64, 158, 255); */
   width: 200px;
-
 }
-
 
 /*顶部信息栏 */
 .el-header {
@@ -231,9 +220,9 @@ export default {
   padding: 0;
   border-bottom: 1px solid #999999;
   border-left: 1px solid #eee;
-  /*粘滞定位*/ 
-  position:sticky;
-  top:0;
+  /*粘滞定位*/
+  position: sticky;
+  top: 0;
   z-index: 10;
 }
 
@@ -263,6 +252,11 @@ export default {
   text-align: center;
   margin-right: 10px;
   color: rgb(64, 158, 255);
+}
+/*状态显示的下拉 */
+.el-cascader__dropdown {
+  width: 100px !important;
+  height: 40px !important;
 }
 
 /*头像显示 */
@@ -299,16 +293,14 @@ export default {
 }
 
 /*主单元格 */
-.el-submenu{
+.el-submenu {
   text-align: left;
-  width:200px;
+  width: 200px;
 }
 
-.el-col{
+.el-col {
   position: fixed;
-
 }
-
 
 /*中间的主题内容 */
 .el-main {
@@ -322,7 +314,6 @@ export default {
   padding: 0;
 }
 
-
 /*底部footer */
 /* .el-footer{
   width: 100%;
@@ -334,7 +325,6 @@ export default {
   border-top: 1px solid #999999;
   border-left: 1px solid #eee;
 } */
-
 
 /*用来区分布局的容器 */
 .el-container {
@@ -350,22 +340,18 @@ export default {
   line-height: 320px;
 }
 
-
-
 /*router-link的样式更改 */
 a {
-    text-decoration: none;
-    color:rgb(64,158,255);
+  text-decoration: none;
+  color: rgb(64, 158, 255);
 }
-.router-link-active:link{
-  color:rgb(64,158,255);
+.router-link-active:link {
+  color: rgb(64, 158, 255);
 }
-.router-link-active:active{
-  color:#ffd04b;
+.router-link-active:active {
+  color: #ffd04b;
 }
-.router-link-active:visited{
-  color:#ffd04b;
+.router-link-active:visited {
+  color: #ffd04b;
 }
-
-
 </style>
