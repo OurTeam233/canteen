@@ -128,19 +128,15 @@ export default {
   },
   data() {
     return{
-        //菜单列表
-        menuList: [],
-        // 折叠-展开 默认false不折叠 
-        isCollapse: false,
-        // 系统公告
-        mottoList: [
-            '等风来不如追风去，追逐的过程就是人生的意义',
-            '当你想要放弃了，那就想想当初为什么开始',
-            '自强之人谁也打不倒，自弃之人谁也带不动',
-            '既然无法选择回去的路程，那么就清晰的面对已经造成的挑战',
-            '在难过的时候，不要忘记自己还要前进',
-            '人生能有几次搏？莫到白发还未博'
-        ],
+      //菜单列表
+      menuList: [],
+      // 折叠-展开 默认false不折叠 
+      isCollapse: false,
+      // 系统公告
+      mottoList: [
+          '测试公告1',
+          '欢迎使用叮堂管理系统，祝您使用愉快!',
+      ],
     }
   },
   methods: {
@@ -151,8 +147,8 @@ export default {
         case 'logout': 
             // //消息提示
             // this.msg.success('退出登录')
-            // //重置vuex中的数据
-            // this.$store.commit('clearVUEX')
+            //重置vuex中的数据(也可以不清除)
+            this.$store.commit('clearVUEX')
             //跳转到首页
             this.$router.push("/logout");
           break
@@ -247,7 +243,7 @@ export default {
         this.menuList = [
             {
                 id: 'number-01', 
-                class: 'fa el-icon-document', 
+                class: 'fa el-icon-suitcase-1', 
                 path: '/Ordering/OverallStatistics', 
                 label: '工作台', 
                 name: 'OverallStatistics',
@@ -264,6 +260,27 @@ export default {
                 label: '新增订单', 
                 name: 'NewOrders'
             },
+            {
+              id: 'number-03', 
+              class: 'fa el-icon-document-checked',
+              path: '/Ordering/Meat',
+              label: '历史订单',
+              name: 'Meat'
+            },
+            {
+              id: 'number-04',
+              class: 'fa el-icon-dish',
+              path: '/Ordering/Test/8',
+              label: '菜品管理',
+              name: 'Test'
+            },
+            {
+              id: 'number-05',
+              class: 'fa el-icon-s-custom',
+              path: '/Ordering/Info',
+              label: '店铺信息',
+              name: 'Info'
+            }
             
         ]
     }
@@ -359,6 +376,7 @@ export default {
 .el-main{
   background-color: #eaedf1;
   padding: 0;
+  height: 85vh;
 }
 
 .fa{

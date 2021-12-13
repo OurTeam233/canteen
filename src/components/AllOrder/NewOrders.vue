@@ -1,86 +1,236 @@
 <!--新增订单-->
+<!--
 <template>
+  <div>
+      
     <el-table
-            :data="tableData"
-            style="width: 100%">
-        <el-table-column
-                prop="number"
-                label="订餐号"
-                width="180">
-        </el-table-column>
-        <el-table-column
-                prop="name"
-                label="用户名"
-                width="180">
-        </el-table-column>
-        <el-table-column
-                prop="details"
-                label="菜品详情">
-        </el-table-column>
-        <el-table-column
-                prop="orderdata"
-                label="订餐时间"
-                width="180">
-        </el-table-column>
-        <el-table-column
-                prop="takedata"
-                label="取餐时间"
-                width="180">
-        </el-table-column>
-        <el-table-column
-                prop="price"
-                label="总价"
-                width="100">
-        </el-table-column>
-        <el-table-column label="操作">
-            <template slot-scope="scope">
-                <el-button
-                        size="mini"
-                        @click="handleEdit(scope.$index, scope.row)">接单</el-button>
-            </template>
-        </el-table-column>
+      ref="multipleTable"
+      :data="tableData"
+      tooltip-effect="dark"
+      style="width: 100%"
+      @selection-change="handleSelectionChange"
+    >
+      
+      <el-table-column type="selection" width="55"> </el-table-column>
+      <el-table-column label="取餐号" width="120">
+        <template slot-scope="scope">{{ scope.row.date }}</template>
+      </el-table-column>
+
+      <el-table-column prop="address" label="菜品" show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column prop="address" label="价格" show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column prop="name" label="取餐开始时间" width="120">
+      </el-table-column>
+
+      
+
     </el-table>
+    <div style="margin-top: 20px">
+      <el-button @click="toggleSelection([tableData[1], tableData[2]])"
+        >切换第二、第三行的选中状态</el-button
+      >
+      <el-button @click="toggleSelection()">取消选择</el-button>
+    </div>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: "NewOrders",
-        data() {
-            return {
-                tableData: [{
-                    number:1,
-                    orderdata: '2016-05-02-11:11',
-                    takedata:'2016-05-02-11:50',
-                    name: '王小虎',
-                    details: '红烧肉 辣椒炒鹅肉 米饭',
-                    price:'12',
-                }, {
-                    number: 2,
-                    orderdata: '2016-05-02-11:11',
-                    takedata:'2016-05-02-11:50',
-                    name: '王小虎',
-                    details: '清蒸鱼 白菜豆腐 米饭',
-                    price:'12',
-                }, {
-                    number: 3,
-                    orderdata: '2016-05-02-11:11',
-                    takedata:'2016-05-02-11:50',
-                    name: '王小虎',
-                    details: '佛跳墙 香煎小菜 米线',
-                    price:'12',
-                }, {
-                    number: 4,
-                    orderdata: '2016-05-02-11:11',
-                    takedata:'2016-05-02-11:50',
-                    name: '王小虎',
-                    details: '土豆 豆芽炒肉 粥',
-                    price:'12',
-                }]
-            }
-        }
-    }
+// export default {
+//   data() {
+//     return {
+//       search: '',
+//       tableData: [
+//         {   
+//           date: "2016-05-03",
+//           name: "王小虎",
+//           address: "上海市普陀区金沙江路 1518 弄",
+//         },
+//         {
+//           date: "2016-05-02",
+//           name: "王小虎",
+//           address: "上海市普陀区金沙江路 1518 弄",
+//         },
+//         {
+//           date: "2016-05-04",
+//           name: "王小虎",
+//           address: "上海市普陀区金沙江路 1518 弄",
+//         },
+//         {
+//           date: "2016-05-01",
+//           name: "王小虎",
+//           address: "上海市普陀区金沙江路 1518 弄",
+//         },
+//         {
+//           date: "2016-05-08",
+//           name: "王小虎",
+//           address: "上海市普陀区金沙江路 1518 弄",
+//         },
+//         {
+//           date: "2016-05-06",
+//           name: "王小虎",
+//           address: "上海市普陀区金沙江路 1518 弄",
+//         },
+//         {
+//           date: "2016-05-07",
+//           name: "王小虎",
+//           address: "上海市普陀区金沙江路 1518 弄",
+//         },
+//       ],
+//       multipleSelection: [],
+//     };
+//   },
+
+//   methods: {
+//     toggleSelection(rows) {
+//       if (rows) {
+//         rows.forEach((row) => {
+//           this.$refs.multipleTable.toggleRowSelection(row);
+//         });
+//       } else {
+//         this.$refs.multipleTable.clearSelection();
+//       }
+//     },
+//     handleSelectionChange(val) {
+//       this.multipleSelection = val;
+//     },
+//   },
+// };
 </script>
+-->
 
-<style scoped>
 
-</style>
+
+
+<!--_____________________________________csdn__________________________________________-->
+<template>
+  <div>
+    
+
+    <el-card>
+      <el-row :gutter="20">
+        <el-col :span="8">
+          <el-input
+            placeholder="请输入内容"
+            clearable
+            v-model="queryInfo.query"
+            @clear="getGoodsList"
+          >
+            <el-button
+              slot="append"
+              icon="el-icon-search"
+              @click="handleCurrentChange(1)"
+            ></el-button>
+          </el-input>
+        </el-col>
+        <el-col :span="4">
+          <el-button type="primary" @click="goAddPage">添加商品</el-button>
+        </el-col>
+      </el-row>
+
+      <el-table :data="goodslist" stripe border style="width: 100%">
+        <el-table-column type="index"> </el-table-column>
+        <el-table-column prop="goods_name" label="商品名称"></el-table-column>
+        <el-table-column prop="goods_price" label="商品价格（元）" width="95px"></el-table-column>
+        <el-table-column prop="goods_weight" label="商品重量" width="70px"></el-table-column>
+        <el-table-column prop="add_time" label="创建时间" width="170px">
+          <template v-slot="scope">
+            {{ scope.row.add_time | dateFormat }}
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" width="130px">
+          <template v-slot="scope">
+            <el-button size="mini" type="primary" icon="el-icon-edit" @click="edit(scope.row)"></el-button>
+            <el-button size="mini" type="warning" icon="el-icon-delete" @click="removeById(scope.row.goods_id)"></el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="queryInfo.pagenum"
+        :page-sizes="[10, 20, 50]"
+        :page-size="queryInfo.pagesize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+        background
+      >
+      </el-pagination>
+    </el-card>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      queryInfo: {
+        query: "",
+        pagenum: 1,
+        pagesize: 10
+      },
+      goodslist: [
+          {
+              
+          }
+      ],
+      total: 0
+    };
+  },
+  created() {
+       this.getGoodsList();
+  },
+  methods: {
+    async getGoodsList() {
+      const { data } = await this.$http.get("goods", {
+        params: this.queryInfo
+      });
+      if (data.meta.status !== 200) {
+        return this.$message.error(data.meta.msg);
+      }
+      this.goodslist = data.data.goods;
+      this.total = data.data.total;
+    },
+    handleSizeChange(newSize) {
+      this.queryInfo.pagesize = newSize;
+      this.getGoodsList();
+    },
+    handleCurrentChange(newPage) {
+      this.queryInfo.pagenum = newPage;
+      this.getGoodsList();
+    },
+    // eslint-disable-next-line no-unused-vars
+    edit(row){
+      alert(JSON.stringify(row));
+    },
+    removeById(id) {
+      this.$confirm("此操作将永久删除该商品, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(async () => {
+          const { data } = await this.$http.delete(`goods/${id}`);
+          if (data.meta.status !== 200) {
+            return this.$message.error(data.meta.msg);
+          }
+          this.getGoodsList();
+          this.$message({
+            type: "success",
+            message: "删除成功!"
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+    },
+    goAddPage() {
+      this.$router.push("goods/add");
+    }
+  }
+};
+</script>

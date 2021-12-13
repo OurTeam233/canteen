@@ -100,7 +100,7 @@ const routes = [{
                 name: 'OverallStatistics',
                 component: () => import('../components/Statistics/OverallStatistics.vue'),
                 meta: {
-                    title: '统计总览' + title
+                    title: '工作台' + title
                 }
 
             },
@@ -144,7 +144,6 @@ router.beforeEach((to, from, next) => {
     if (title) {
         document.title = title
     }
-
 
     let isLogin = sessionStorage.getItem('isLogin');
     // 退出登录

@@ -14,6 +14,7 @@
           type="password"
           placeholder="请输入密码"
           v-model="form.password"
+          show-password
         ></el-input>
       </el-form-item>
       <el-button type="primary" @click="submitForm('form')">登录</el-button>
@@ -75,6 +76,8 @@ export default {
               //   "userInfo",
               //   JSON.stringify(result.userInfo)
               // );
+              this.$store.dispatch("set_token", res.data.token);
+              window.sessionStorage.setItem('token', res.data.token);
               // 页面跳转
               this.$router.push({
                 name: "OverallStatistics",
@@ -82,6 +85,10 @@ export default {
                   name: this.form.username,
                 },
               });
+
+              // 成功登录后的缓存数据
+              sessionStorage.setItem("isLogin", "true");
+
             } else {
               this.$message({
                 showClose: true,
@@ -92,11 +99,11 @@ export default {
             }
           });
 
-          // 成功登录后的缓存数据
-          sessionStorage.setItem("isLogin", "true");
+          
           // 保存用户名
           // sessionStorage.setItem('userName', this.$store.state.userInfo.userName);
         } else {
+          return false;
         }
       });
     },

@@ -8,7 +8,7 @@ import router from './router/index.js';
 import store from './store/index.js';
 // 实验一下echarts(全局导入)
 import echarts from "echarts";
-Vue.prototype.$echarts = echarts;
+// Vue.prototype.$echarts = echarts;
 /* 让vue使用elementUI(懒得抽了) */
 Vue.use(ElementUI);
 
