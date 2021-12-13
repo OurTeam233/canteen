@@ -4,10 +4,10 @@ const state = {
   catch_components: [],
   
   // 当前选中的菜单 - 默认选择首页
-  activePath: '/Ordering/Statistics',
+  activePath: '/Ordering/OverallStatistics',
   // 菜单项 - 默认包含首页
   tabList: [
-      {path: '/Ordering/Statistics', label: '工作台', name: 'Statistics'}
+      {path: '/Ordering/OverallStatistics', label: '工作台', name: 'OverallStatistics'}
   ]
 }
 

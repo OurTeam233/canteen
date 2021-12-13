@@ -6,11 +6,11 @@ const mutations = {
   //清空vuex数据
   clearVUEX(state) {
     state.catch_components = []
-    state.activePath = '/Ordering/Statistics'
+    state.activePath = '/Ordering/OverallStatistics'
     state.tabList = [{
-      path: '/Ordering/Statistics',
+      path: '/Ordering/OverallStatistics',
       label: '工作台',
-      name: 'Statistics'
+      name: 'OverallStatistics'
     }]
   },
   // 跳转页面执行

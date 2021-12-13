@@ -156,11 +156,11 @@ export default {
             //跳转到首页
             this.$router.push("/logout");
           break
-        //修改密码
-        case 'update-password':
-          //消息提示
-            this.msg.success('修改密码')
-          break
+        // //修改密码
+        // case 'update-password':
+        //   //消息提示
+        //     this.msg.success('修改密码')
+        //   break
       }
     },
     // 点击折叠 展开菜单
@@ -248,21 +248,21 @@ export default {
             {
                 id: 'number-01', 
                 class: 'fa el-icon-document', 
-                path: '/Ordering/NewOrders', 
-                label: '新增订单', 
-                name: 'home',
-                children:[{
-                  id: 'number-01-01',
-                  label:'第二个',
-                  path: '/Ordering/NewOrders',
-                }]
+                path: '/Ordering/OverallStatistics', 
+                label: '工作台', 
+                name: 'OverallStatistics',
+                // children:[{
+                //   id: 'number-01-01',
+                //   label:'第二个',
+                //   path: '/Ordering/NewOrders',
+                // }]
             },
             {
                 id: 'number-02', 
                 class: 'fa el-icon-document', 
-                path: '/test2', 
-                label: '测试页面2', 
-                name: 'test2'
+                path: '/Ordering/NewOrders', 
+                label: '新增订单', 
+                name: 'NewOrders'
             },
             
         ]
