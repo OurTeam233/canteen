@@ -124,24 +124,23 @@
           </el-input>
         </el-col>
         <el-col :span="4">
-          <el-button type="primary" @click="goAddPage">添加商品</el-button>
+          <el-button type="primary" @click="clearSearch">清空搜索</el-button>
         </el-col>
       </el-row>
 
       <el-table :data="goodslist" stripe border style="width: 100%">
         <el-table-column type="index"> </el-table-column>
-        <el-table-column prop="goods_name" label="商品名称"></el-table-column>
-        <el-table-column prop="goods_price" label="商品价格（元）" width="95px"></el-table-column>
-        <el-table-column prop="goods_weight" label="商品重量" width="70px"></el-table-column>
-        <el-table-column prop="add_time" label="创建时间" width="170px">
-          <template v-slot="scope">
+        <el-table-column prop="number" label="取餐号"></el-table-column>
+        <el-table-column prop="foods" label="菜品" width="700px"></el-table-column>
+        <el-table-column prop="price" label="价格" width="70px"></el-table-column>
+        <el-table-column prop="time" label="取餐时间" width="170px">
+          <!-- <template v-slot="scope">
             {{ scope.row.add_time | dateFormat }}
-          </template>
+          </template> -->
         </el-table-column>
-        <el-table-column label="操作" width="130px">
+        <el-table-column label="操作" width="80px">
           <template v-slot="scope">
-            <el-button size="mini" type="primary" icon="el-icon-edit" @click="edit(scope.row)"></el-button>
-            <el-button size="mini" type="warning" icon="el-icon-delete" @click="removeById(scope.row.goods_id)"></el-button>
+            <el-button size="mini" type="primary" @click="finish(scope.row)">完成</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -171,11 +170,80 @@ export default {
         pagesize: 10
       },
       goodslist: [
-          {
-              
-          }
+        {
+          number: "1-14-11",
+          foods: "鸡肉",
+          price: 30,
+          time: "2022-12-12"
+        },
+        {
+          number: "1-14-12",
+          foods: "牛肉",
+          price: 10,
+          time: "2022-12-12"
+        },
+        {
+          number: "1-14-11",
+          foods: "鸡肉",
+          price: 30,
+          time: "2022-12-12"
+        },
+        {
+          number: "1-14-12",
+          foods: "牛肉",
+          price: 10,
+          time: "2022-12-12"
+        },
+        {
+          number: "1-14-11",
+          foods: "鸡肉",
+          price: 30,
+          time: "2022-12-12"
+        },
+        {
+          number: "1-14-12",
+          foods: "牛肉",
+          price: 10,
+          time: "2022-12-12"
+        },
+        {
+          number: "1-14-11",
+          foods: "鸡肉",
+          price: 30,
+          time: "2022-12-12"
+        },
+        {
+          number: "1-14-12",
+          foods: "牛肉",
+          price: 10,
+          time: "2022-12-12"
+        },
+        {
+          number: "1-14-11",
+          foods: "鸡肉",
+          price: 30,
+          time: "2022-12-12"
+        },
+        {
+          number: "1-14-12",
+          foods: "牛肉",
+          price: 10,
+          time: "2022-12-12"
+        },
+        {
+          number: "1-14-11",
+          foods: "鸡肉",
+          price: 30,
+          time: "2022-12-12"
+        },
+        {
+          number: "1-14-12",
+          foods: "牛肉",
+          price: 10,
+          time: "2022-12-12"
+        }
       ],
-      total: 0
+      total: 12
     };
   },
   created() {
@@ -201,7 +269,7 @@ export default {
       this.getGoodsList();
     },
     // eslint-disable-next-line no-unused-vars
-    edit(row){
+    finish(row){
       alert(JSON.stringify(row));
     },
     removeById(id) {
@@ -228,9 +296,10 @@ export default {
           });
         });
     },
-    goAddPage() {
-      this.$router.push("goods/add");
+    clearSearch(){
+      this.queryInfo.query = "";
     }
+    
   }
 };
 </script>

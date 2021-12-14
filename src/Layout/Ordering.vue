@@ -62,7 +62,14 @@
               </el-carousel>
             </div>
           </div>
-
+          <!-- 营业状态显示 -->
+          <div class="state">
+            <el-switch
+              v-model="state"
+              active-text="营业中"
+              inactive-text="休息中">
+            </el-switch>
+          </div>
           <!-- 头像下拉菜单 -->
           <div class="header-avatar">
             <div class="user">
@@ -71,13 +78,14 @@
             <el-dropdown @command="handleCommand">
               <span class="el-dropdown-link">
                 <img width="35" height="35" style="border-radius:50%;background:#dddddd" src="../../public/img/DingTang.png" alt="">
-                <i class="el-icon-arrow-down el-icon--right"></i>
+                <!-- <i class="el-icon-arrow-down el-icon--right"></i> -->
               </span>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item command="logout">退出登录</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </div>
+          
         </div>
 
         <!-- tab标签页区域 - 用于标签页切换 -->
@@ -137,6 +145,8 @@ export default {
           '测试公告1',
           '欢迎使用叮堂管理系统，祝您使用愉快!',
       ],
+      // 营业状态
+      state: true,
     }
   },
   methods: {
@@ -261,6 +271,11 @@ export default {
                 name: 'NewOrders'
             },
             {
+              id: 'number-06',
+              class: 'fa el-icon-document-checked',
+              label: '未取订单'
+            },
+            {
               id: 'number-03', 
               class: 'fa el-icon-document-checked',
               path: '/Ordering/Meat',
@@ -315,7 +330,7 @@ export default {
 }
 .header-avatar{
   float:right;
-  width:40%;
+  width:15%;
   display: flex;
   align-items: center;
   justify-content:flex-end;
@@ -436,5 +451,12 @@ export default {
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
+}
+
+
+
+.state{
+  width:250px;
+  line-height: 60px;
 }
 </style>
