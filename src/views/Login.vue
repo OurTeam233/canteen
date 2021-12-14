@@ -76,9 +76,14 @@ export default {
               //   "userInfo",
               //   JSON.stringify(result.userInfo)
               // );
+              
               this.$store.dispatch("set_token", res.data.token);
               window.sessionStorage.setItem('token', res.data.token);
               // 页面跳转
+              // this.$router.push(this.$store.activePath)
+              // 成功登录后的缓存数据
+              window.sessionStorage.setItem("isLogin", "true");
+              // 由于vue的DOM更新是异步的，所以要等数据更新完之后再跳转页面
               this.$router.push({
                 name: "OverallStatistics",
                 params: {
@@ -86,9 +91,7 @@ export default {
                 },
               });
 
-              // 成功登录后的缓存数据
-              sessionStorage.setItem("isLogin", "true");
-
+              
             } else {
               this.$message({
                 showClose: true,

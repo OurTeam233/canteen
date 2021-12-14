@@ -157,7 +157,7 @@ router.beforeEach((to, from, next) => {
         // 如果已经登录，就跳转到首页
         if (isLogin) {
             next({
-                path: '/ordering'
+                path: '/Ordering/OverallStatistics'
             })
         } else {
             next()

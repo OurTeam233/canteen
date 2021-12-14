@@ -35,7 +35,7 @@
         <div v-for="n in 10" :key="n" class="new-info">
           <div >
             <p class="userName">用户名</p>
-            <p class="pay">付款：15.00</p>
+            <p class="pay">付款:15.00</p>
           </div>
           
           <p class="new-time">6分钟前</p>
