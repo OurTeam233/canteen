@@ -2,12 +2,14 @@
   <div>
     我是测试界面 参数传递:{{ id }}
     <div style="width: 100%; height: 300px" ref="chart"></div>
+    <button @click="button(1)">测试请求</button>
   </div>
 </template>
 
 <script>
 let Echarts = require("echarts/lib/echarts");
 require("echarts/lib/chart/bar");
+import {test} from "../../api/user.js";
 
 export default {
   name: "Test",
@@ -34,7 +36,14 @@ export default {
       // 4.传入数据
       this.chart.setOption(option);
     },
-  },
+    button(param) {
+      test(param).then((res) => {
+        console.log(res);
+      });
+    },
+  }
+
+
 };
 </script>
 

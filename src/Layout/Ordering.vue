@@ -148,7 +148,7 @@ export default {
             // //消息提示
             // this.msg.success('退出登录')
             //重置vuex中的数据(也可以不清除)
-            // this.$store.commit('clearVUEX')
+            this.$store.commit('clearVUEX')
             //跳转到首页
             this.$router.push("/logout");
           break

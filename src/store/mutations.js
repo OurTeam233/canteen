@@ -12,6 +12,10 @@ const mutations = {
       label: '工作台',
       name: 'OverallStatistics'
     }]
+    // 顺便清除token
+    state.token = ''
+    state.userInfo = {}
+
   },
   // 跳转页面执行
   selectMenu(state, submenu) {
