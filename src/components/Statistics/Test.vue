@@ -2,7 +2,7 @@
   <div>
     我是测试界面 参数传递:{{ id }}
     <div style="width: 100%; height: 300px" ref="chart"></div>
-    <button @click="button(1)">测试请求</button>
+    <button @click="button()">测试请求</button>
   </div>
 </template>
 
@@ -36,8 +36,8 @@ export default {
       // 4.传入数据
       this.chart.setOption(option);
     },
-    button(param) {
-      test(param).then((res) => {
+    button() {
+      test().then((res) => {
         console.log(res);
       });
     },

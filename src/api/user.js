@@ -12,7 +12,8 @@ export const login = (username, password, userType) => axios.post('/Login/Store'
 
 
 // 测试(查询店铺信息)
-export const test = (storeId) => axios.get('/Store', {storeId:storeId})
+export const test = () => axios.post('/Store')
+export const test2 = () => axios.post('/Dishes')
 
 
 

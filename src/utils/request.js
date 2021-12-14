@@ -12,7 +12,7 @@ const baseUrl = axios.create({
   // 公共接口(baseURL是特定写法)
   baseURL: '/api',
   // 请求超时时间
-  timeout: 6000,
+  timeout: 10000,
 })
 
 // 请求拦截器

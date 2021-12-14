@@ -253,7 +253,7 @@ export default {
         this.menuList = [
             {
                 id: 'number-01', 
-                class: 'fa el-icon-suitcase-1', 
+                class: 'el-icon-suitcase-1', 
                 path: '/Ordering/OverallStatistics', 
                 label: '工作台', 
                 name: 'OverallStatistics',
@@ -265,33 +265,33 @@ export default {
             },
             {
                 id: 'number-02', 
-                class: 'fa el-icon-document', 
+                class: 'el-icon-document', 
                 path: '/Ordering/NewOrders', 
                 label: '新增订单', 
                 name: 'NewOrders'
             },
             {
               id: 'number-06',
-              class: 'fa el-icon-document-checked',
+              class: 'el-icon-document-add',
               label: '未取订单'
             },
             {
               id: 'number-03', 
-              class: 'fa el-icon-document-checked',
+              class: 'el-icon-document-checked',
               path: '/Ordering/Meat',
               label: '历史订单',
               name: 'Meat'
             },
             {
               id: 'number-04',
-              class: 'fa el-icon-dish',
+              class: 'el-icon-dish',
               path: '/Ordering/Test/8',
               label: '菜品管理',
               name: 'Test'
             },
             {
               id: 'number-05',
-              class: 'fa el-icon-s-custom',
+              class: 'el-icon-s-custom',
               path: '/Ordering/Info',
               label: '店铺信息',
               name: 'Info'
