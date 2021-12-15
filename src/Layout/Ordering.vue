@@ -273,16 +273,16 @@ export default {
             {
               id: 'number-06',
               class: 'el-icon-document-add',
-              path: '/Ordering/EditMenu',
+              path: '/Ordering/NotReceive',
               label: '未取订单',
-              name: 'EditMenu'
+              name: 'NotReceive'
             },
             {
               id: 'number-03', 
               class: 'el-icon-document-checked',
-              path: '/Ordering/Meat',
+              path: '/Ordering/HistoryOrders',
               label: '历史订单',
-              name: 'Meat'
+              name: 'HistoryOrders'
             },
             {
               id: 'number-04',

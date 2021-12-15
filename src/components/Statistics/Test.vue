@@ -3,13 +3,15 @@
     我是测试界面 参数传递:{{ id }}
     <div style="width: 100%; height: 300px" ref="chart"></div>
     <button @click="button()">测试请求</button>
+    <button @click="button1()">图床</button>
   </div>
 </template>
 
 <script>
 let Echarts = require("echarts/lib/echarts");
 require("echarts/lib/chart/bar");
-import {test} from "../../api/user.js";
+import {test,img} from "../../api/user.js";
+
 
 export default {
   name: "Test",
@@ -41,6 +43,11 @@ export default {
         console.log(res);
       });
     },
+    button1(){
+      img().then((res) => {
+        console.log(res);
+      });
+    }
   }
 
 

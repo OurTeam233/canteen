@@ -16,5 +16,9 @@ export const test = () => axios.post('/Store')
 export const test2 = () => axios.post('/Dishes')
 
 
+// 图床测试
+export const img = () => axios.post('/image/meat1.webp')
+
+
 
 

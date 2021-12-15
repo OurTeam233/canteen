@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import store from '../store'
 
 // 引入加载条
 import NProgress from 'nprogress'
@@ -59,6 +58,22 @@ const routes = [{
                 component: () => import('../components/AllOrder/NewOrders.vue'),
                 meta: {
                     title: '新增订单' + title
+                }
+            },
+            {
+                path: 'NotReceive',
+                name: 'NotReceive',
+                component: () => import('../components/AllOrder/NotReceive.vue'),
+                meta: {
+                    title: '未取订单' + title
+                }
+            },
+            {
+                path: 'HistoryOrders',
+                name: 'HistoryOrders',
+                component: () => import('../components/AllOrder/HistoryOrders.vue'),
+                meta: {
+                    title: '历史订单' + title
                 }
             },
             {
