@@ -124,12 +124,13 @@
           </el-input>
         </el-col>
         <el-col :span="4">
-          <el-button type="primary" @click="clearSearch">清空搜索</el-button>
+          <el-button type="primary" @click="toggleSelection()">清空选择</el-button>
         </el-col>
       </el-row>
 
-      <el-table :data="goodslist" stripe border style="width: 100%">
-        <el-table-column type="index"> </el-table-column>
+      <el-table :data="goodslist" stripe border style="width: 100%" @selection-change="handleSelectionChange">
+        <!-- <el-table-column type="index"> </el-table-column> -->
+        <el-table-column type="selection" width="55"></el-table-column>
         <el-table-column prop="number" label="取餐号"></el-table-column>
         <el-table-column prop="foods" label="菜品" width="700px"></el-table-column>
         <el-table-column prop="price" label="价格" width="70px"></el-table-column>
@@ -243,7 +244,11 @@ export default {
           time: "2022-12-12"
         }
       ],
-      total: 12
+      // 所用订单的总数
+      total: 12,
+      // 好像是多选列表
+      multipleSelection: [],
+
     };
   },
   created() {
@@ -298,6 +303,19 @@ export default {
     },
     clearSearch(){
       this.queryInfo.query = "";
+    },
+    // 多选
+    toggleSelection(rows) {
+      if (rows) {
+        rows.forEach(row => {
+          this.$refs.multipleTable.toggleRowSelection(row);
+        });
+      } else {
+        this.$refs.multipleTable.clearSelection();
+      }
+    },
+    handleSelectionChange(val) {
+      this.multipleSelection = val;
     }
     
   }

@@ -273,7 +273,9 @@ export default {
             {
               id: 'number-06',
               class: 'el-icon-document-add',
-              label: '未取订单'
+              path: '/Ordering/EditMenu',
+              label: '未取订单',
+              name: 'EditMenu'
             },
             {
               id: 'number-03', 
