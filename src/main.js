@@ -12,6 +12,18 @@ import echarts from "echarts";
 /* 让vue使用elementUI(懒得抽了) */
 Vue.use(ElementUI);
 
+// 使用vue-socket.io
+// import VueSocketIO from 'vue-socket.io'
+// Vue.use(new VueSocketIO({
+//     debug: true,
+//     connection: 'http://121.43.56.241:8080/CanteenWeb',
+//     vuex: {
+//         store,
+//         actionPrefix: 'SOCKET_', //为vuex设置的两个前缀
+//         mutationPrefix: 'SOCKET_'
+//     },
+//     options: { path: "/my-app/" } //Optional options
+// }))
 
 
 

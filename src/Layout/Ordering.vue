@@ -287,7 +287,7 @@ export default {
             {
               id: 'number-04',
               class: 'el-icon-dish',
-              path: '/Ordering/Test/8',
+              path: '/Ordering/Test',
               label: '菜品管理',
               name: 'Test'
             },

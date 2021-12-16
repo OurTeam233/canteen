@@ -105,10 +105,12 @@ const routes = [{
                 component: () => import('../components/AllMenu/Meat.vue'),
             },
             {
-                path: 'Test/:id',
+                path: 'Test',
                 name: 'Test',
                 component: () => import('../components/Statistics/Test.vue'),
-                props: true,
+                meta: {
+                    title: '测试' + title
+                }
             },
             {
                 path: 'OverallStatistics',
