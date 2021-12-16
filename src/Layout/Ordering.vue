@@ -288,8 +288,15 @@ export default {
               id: 'number-04',
               class: 'el-icon-dish',
               path: '/Ordering/Test',
-              label: '菜品管理',
+              label: '专门写测试的',
               name: 'Test'
+            },
+            {
+              id: 'number-07',
+              class: 'el-icon-dish',
+              path: '/Ordering/Menu',
+              label: '菜品管理',
+              name: 'Menu'
             },
             {
               id: 'number-05',
