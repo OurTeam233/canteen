@@ -31,7 +31,7 @@
         @tab-remove="removeTab"
       >
         <el-tab-pane
-          v-for="group in foodslist"
+          v-for="group in dishesList"
           :key="group.index"
           :label="group.name"
           :name="group.id"
@@ -101,8 +101,14 @@
 </template>
 
 <script>
+import { getDishesList } from '../../api/user.js'
 export default {
   name: "Menu",
+  mounted() {
+    getDishesList().then(res => {
+      this.dishesList = res.data
+    })
+  },
   data() {
     return {
       queryInfo: {
@@ -111,85 +117,7 @@ export default {
         pagesize: 10,
       },
       cntGroupId: 1,  
-      foodslist: [
-        {
-          dishes: [
-            // {
-            //   id: 1,
-            //   imgUrl: "https://s4.ax1x.com/2021/12/07/ogMo4A.jpg",
-            //   name: "鸡腿",
-            //   price: 5,
-            //   vipPrice: 3,
-            //   sales: 9999,
-            // },
-          ],
-          id: 1,
-          name: "荤菜",
-        },
-        {
-          dishes: [
-            {
-              id: 3,
-              imgUrl: "https://s4.ax1x.com/2021/12/07/ogQc5j.jpg",
-              name: "酸辣土豆丝",
-              price: 3,
-              vipPrice: 2,
-              sales: 777,
-            },
-            {
-              id: 3,
-              imgUrl: "https://s4.ax1x.com/2021/12/07/ogQc5j.jpg",
-              name: "酸辣土豆丝",
-              price: 3,
-              vipPrice: 2,
-              sales: 777,
-            },
-            {
-              id: 3,
-              imgUrl: "https://s4.ax1x.com/2021/12/07/ogQc5j.jpg",
-              name: "酸辣土豆丝",
-              price: 3,
-              vipPrice: 2,
-              sales: 777,
-            },
-            {
-              id: 3,
-              imgUrl: "https://s4.ax1x.com/2021/12/07/ogQc5j.jpg",
-              name: "酸辣土豆丝",
-              price: 3,
-              vipPrice: 2,
-              sales: 777,
-            },
-            {
-              id: 3,
-              imgUrl: "https://s4.ax1x.com/2021/12/07/ogQc5j.jpg",
-              name: "酸辣土豆丝",
-              price: 3,
-              vipPrice: 2,
-              sales: 777,
-            },
-            {
-              id: 3,
-              imgUrl: "https://s4.ax1x.com/2021/12/07/ogQc5j.jpg",
-              name: "酸辣土豆丝",
-              price: 3,
-              vipPrice: 2,
-              sales: 777,
-            },
-            {
-              id: 3,
-              imgUrl: "https://s4.ax1x.com/2021/12/07/ogQc5j.jpg",
-              name: "酸辣土豆丝",
-              price: 3,
-              vipPrice: 2,
-              sales: 777,
-            },
-            
-          ],
-          id: 2,
-          name: "素菜",
-        },
-      ],
+      dishesList: [],
 
       // 所用订单的总数
       total: 12,
