@@ -13,11 +13,14 @@ export const login = (username, password, userType) => axios.post('/Login/Store'
 
 // 测试(查询店铺信息)
 export const test = () => axios.post('/Store')
+// 获取到店铺id后就可以请求店铺中的菜品信息
 export const test2 = () => axios.post('/Dishes')
 
 
 // 图床测试
 export const img = () => axios.post('/image/meat1.webp')
+
+
 
 
 
