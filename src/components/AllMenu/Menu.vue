@@ -18,9 +18,7 @@
           </el-input>
         </el-col>
         <el-col :span="3">
-          <el-button type="primary" @click="toggleSelection()"
-            >+ 新增分类</el-button
-          >
+          <el-button type="primary" @click="toggleSelection()">+ 新增分类</el-button>
         </el-col>
       </el-row>
 

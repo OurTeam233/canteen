@@ -11,10 +11,17 @@ export const login = (username, password, userType) => axios.post('/Login/Store'
 
 
 
-// 测试(查询店铺信息)
-export const test = () => axios.post('/Store')
-// 获取到店铺id后就可以请求店铺中的菜品信息
+
+// 获取店铺数据
+export const getStoreInfo = () => axios.post('/Store')
+
+// 获取店铺中所有的菜品信息
 export const getDishesList = () => axios.post('/Dishes')
+
+// 获取...订单信息
+export const getOrderList = () => axios.post('/Order/Select')
+
+
 
 
 // 图床测试
