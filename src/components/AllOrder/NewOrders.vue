@@ -27,10 +27,10 @@
         <!-- <el-table-column type="index"> </el-table-column> -->
         <el-table-column type="selection" width="55"></el-table-column>
         <el-table-column prop="orderNumber" label="取餐号"></el-table-column>
-        <el-table-column prop="orderDetailsList" :formatter="getDishesString" label="菜品列表" width="700px">
+        <el-table-column prop="orderDetailsList" :formatter="getDishesString" label="菜品列表" width="600px">
           
         </el-table-column>
-        <el-table-column prop="totalPrice" label="总价格" width="70px"></el-table-column>
+        <el-table-column prop="totalPrice" :formatter="moneyFormat" label="总价格(元)" width="100px"></el-table-column>
         <el-table-column prop="orderTime" :formatter="dateFormat" label="取餐开始时间" width="200px">
           <!-- <template v-slot="scope">
             {{ scope.row.add_time | dateFormat }}
@@ -119,6 +119,11 @@ export default {
         ans += item.name + '*' + item.num;
       });
       return ans;
+    },
+
+    // 价格格式化
+    moneyFormat(row){
+      return row.totalPrice / 100
     },
 
     // 格式化取餐时间
