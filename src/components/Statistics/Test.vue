@@ -35,7 +35,7 @@ export default {
   // },
   data() {
     return {
-      wsUrl: 'ws://121.43.56.241:8080/CanteenWeb/websocketTest/1', // ws地址
+      wsUrl: 'ws://121.43.56.241:8080/CanteenWeb/Websocket/1', // ws地址
       websock: null, // ws实例
     }
   },
