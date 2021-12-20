@@ -8,12 +8,10 @@
             placeholder="请输入内容"
             clearable
             v-model="queryInfo.query"
-            @clear="getGoodsList"
           >
             <el-button
               slot="append"
               icon="el-icon-search"
-              @click="handleCurrentChange(1)"
             ></el-button>
           </el-input>
         </el-col>
@@ -27,7 +25,7 @@
         // 查询不为空
         if(this.queryInfo.query != ''){
           // 在这一行的菜品列表中遍历
-          for(item in data.orderDetailsList){
+          for(let item in data.orderDetailsList){
             if(String(item.name).includes(String(this.queryInfo.query)))
               return true;
           }
@@ -51,8 +49,6 @@
       </el-table>
 
       <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
         :current-page="queryInfo.pagenum"
         :page-sizes="[10, 20, 50]"
         :page-size="queryInfo.pagesize"
@@ -110,7 +106,6 @@ export default {
     };
   },
   created() {
-       this.getGoodsList();
   },
   mounted() {
     getOrderList().then(res => {
@@ -157,67 +152,16 @@ export default {
       return new Date(row.orderTime).toLocaleString();
     },
     
-    
-
-    async getGoodsList() {
-      const { data } = await this.$http.get("goods", {
-        params: this.queryInfo
-      });
-      if (data.meta.status !== 200) {
-        return this.$message.error(data.meta.msg);
-      }
-      this.goodslist = data.data.goods;
-      this.total = data.data.total;
-    },
-    handleSizeChange(newSize) {
-      this.queryInfo.pagesize = newSize;
-      this.getGoodsList();
-    },
-    handleCurrentChange(newPage) {
-      this.queryInfo.pagenum = newPage;
-      this.getGoodsList();
-    },
     // eslint-disable-next-line no-unused-vars
     finish(row){
       alert(JSON.stringify(row));
     },
-    removeById(id) {
-      this.$confirm("此操作将永久删除该商品, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
-        .then(async () => {
-          const { data } = await this.$http.delete(`goods/${id}`);
-          if (data.meta.status !== 200) {
-            return this.$message.error(data.meta.msg);
-          }
-          this.getGoodsList();
-          this.$message({
-            type: "success",
-            message: "删除成功!"
-          });
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消删除"
-          });
-        });
-    },
+    
     clearSearch(){
       this.queryInfo.query = "";
     },
     // 多选
-    toggleSelection(rows) {
-      if (rows) {
-        rows.forEach(row => {
-          this.$refs.multipleTable.toggleRowSelection(row);
-        });
-      } else {
-        this.$refs.multipleTable.clearSelection();
-      }
-    },
+    
     handleSelectionChange(val) {
       this.multipleSelection = val;
     }
