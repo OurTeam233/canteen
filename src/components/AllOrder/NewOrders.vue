@@ -25,11 +25,14 @@
         // 查询不为空
         if(this.queryInfo.query != ''){
           // 在这一行的菜品列表中遍历
-          for(let item in data.orderDetailsList){
-            if(String(item.name).includes(String(this.queryInfo.query)))
+          for(let i = 0; i < data.orderDetailsList.length; i++){
+            // 如果菜品名称中包含查询内容
+            if(data.orderDetailsList[i].name.toLowerCase().includes(this.queryInfo.query.toLowerCase())){
+              // 返回true
               return true;
+            }
           }
-          return false;  
+          return false;
         }
         return true;
         })" stripe border style="width: 100%" @selection-change="handleSelectionChange">
