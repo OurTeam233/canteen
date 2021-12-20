@@ -22,6 +22,10 @@ export const getDishesList = () => axios.post('/Dishes')
 export const getOrderList = () => axios.post('/Order/Select')
 
 
+// 更改订单状态
+export const changeOrderType = (orderId, type) => axios.post('/Order/Update', {orderId, type})
+
+
 
 
 // 图床测试

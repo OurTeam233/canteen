@@ -5,7 +5,7 @@
       <el-row :gutter="20">
         <el-col :span="8">
           <el-input
-            placeholder="请输入内容"
+            placeholder="请输入要查询的菜品名称"
             clearable
             v-model="queryInfo.query"
           >
@@ -16,7 +16,7 @@
           </el-input>
         </el-col>
         <el-col :span="4">
-          <el-button type="primary" @click="function(){console.log(this.queryInfo.query)}">清空选择</el-button>
+          <el-button type="primary" >完成选中</el-button>
         </el-col>
       </el-row>
 
@@ -35,14 +35,17 @@
           return false;
         }
         return true;
-        })" stripe border style="width: 100%" @selection-change="handleSelectionChange">
+        })" 
+        ref="multipleTable"
+        stripe border 
+        style="width: 100%" 
+        @selection-change="handleSelectionChange">
         <!-- <el-table-column type="index"> </el-table-column> -->
         <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column prop="orderNumber" label="取餐号"></el-table-column>
-        <el-table-column prop="orderDetailsList" :formatter="getDishesString" label="菜品列表" width="600px">
-          
-        </el-table-column>
-        <el-table-column prop="totalPrice" :formatter="moneyFormat" label="总价格(元)" width="100px"></el-table-column>
+        <el-table-column prop="orderNumber" label="取餐号" width="85px"></el-table-column>
+        <el-table-column prop="orderDetailsList" :formatter="getDishesString" label="菜品列表" width="500px"></el-table-column>
+        <el-table-column prop="note" label="备注"></el-table-column>
+        <el-table-column prop="totalPrice" :formatter="moneyFormat" label="总价(元)" width="80px"></el-table-column>
         <el-table-column prop="orderTime" :formatter="dateFormat" label="取餐开始时间" width="200px"></el-table-column>
         <el-table-column label="操作" width="80px">
           <template v-slot="scope">
@@ -66,6 +69,7 @@
 
 <script>
 import { getOrderList } from '../../api/user.js'
+import { changeOrderType } from '../../api/user.js'
 export default {
   name: 'NewOrders',
   data() {
@@ -84,6 +88,7 @@ export default {
         //   studentId: 1,
         //   time: 1640374602000,
         //   totalPrice: 100,
+        //   type: 2
         //   orderDetailsList: [
         //     {
         //       dishesId: 5,
@@ -128,23 +133,7 @@ export default {
       }
       return ans;
     },
-
-
-    // 搜索过滤函数
-    filterData(data){
-      // 查询不为空
-      if(this.queryInfo.query != ''){
-        // 在这一行的菜品列表中遍历
-        for(item in data.orderDetailsList){
-          if(String(item.name).includes(String(this.queryInfo.query)))
-            return true;
-        }
-        return false;  
-      }
-      return true;
-    },
     
-
     // 价格格式化
     moneyFormat(row){
       return row.totalPrice / 100
@@ -164,7 +153,15 @@ export default {
       this.queryInfo.query = "";
     },
     // 多选
-    
+    toggleSelection(rows) {
+      if (rows) {
+        rows.forEach(row => {
+          this.$refs.multipleTable.toggleRowSelection(row);
+        });
+      } else {
+        this.$refs.multipleTable.clearSelection();
+      }
+    },
     handleSelectionChange(val) {
       this.multipleSelection = val;
     }
