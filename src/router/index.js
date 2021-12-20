@@ -133,6 +133,14 @@ const routes = [{
                 meta: {
                     title: '店铺信息' + title
                 }
+            },
+            {
+                path: 'wantCopyTest',
+                name: 'WantCopyTest',
+                component: () => import('../components/Statistics/wantCopyTest.vue'),
+                meta: {
+                    title: '想偷代码' + title
+                }
             }
         ]
     },

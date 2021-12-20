@@ -304,6 +304,13 @@ export default {
               path: '/Ordering/Info',
               label: '店铺信息',
               name: 'Info'
+            },
+            {
+              id: 'number-08',
+              class: 'el-icon-s-custom',
+              path: '/Ordering/WantCopyTest',
+              label: '偷点代码走',
+              name: 'WantCopyTest'
             }
             
         ]

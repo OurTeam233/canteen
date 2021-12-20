@@ -18,12 +18,23 @@
           </el-input>
         </el-col>
         <el-col :span="4">
-          <el-button type="primary" @click="toggleSelection()">清空选择</el-button>
+          <el-button type="primary" @click="function(){console.log(this.queryInfo.query)}">清空选择</el-button>
         </el-col>
       </el-row>
 
       <!-- 表格数据 -->
-      <el-table :data="orderList" stripe border style="width: 100%" @selection-change="handleSelectionChange">
+      <el-table :data="orderList.filter(data => {
+        // 查询不为空
+        if(this.queryInfo.query != ''){
+          // 在这一行的菜品列表中遍历
+          for(item in data.orderDetailsList){
+            if(String(item.name).includes(String(this.queryInfo.query)))
+              return true;
+          }
+          return false;  
+        }
+        return true;
+        })" stripe border style="width: 100%" @selection-change="handleSelectionChange">
         <!-- <el-table-column type="index"> </el-table-column> -->
         <el-table-column type="selection" width="55"></el-table-column>
         <el-table-column prop="orderNumber" label="取餐号"></el-table-column>
@@ -31,11 +42,7 @@
           
         </el-table-column>
         <el-table-column prop="totalPrice" :formatter="moneyFormat" label="总价格(元)" width="100px"></el-table-column>
-        <el-table-column prop="orderTime" :formatter="dateFormat" label="取餐开始时间" width="200px">
-          <!-- <template v-slot="scope">
-            {{ scope.row.add_time | dateFormat }}
-          </template> -->
-        </el-table-column>
+        <el-table-column prop="orderTime" :formatter="dateFormat" label="取餐开始时间" width="200px"></el-table-column>
         <el-table-column label="操作" width="80px">
           <template v-slot="scope">
             <el-button size="mini" type="primary" @click="finish(scope.row)">完成</el-button>
@@ -70,6 +77,7 @@ export default {
         pagesize: 10
       },
       orderList: [
+        // 数据说明
         // {
         //   id: 2,
         //   orderNumber: "02-0001",
@@ -95,7 +103,7 @@ export default {
         
       ],
       // 所用订单的总数
-      total: 12,
+      total: 0,
       // 好像是多选列表
       multipleSelection: [],
 
@@ -114,12 +122,30 @@ export default {
     // 获取菜品列表(在一行中显示)
     getDishesString(row){
       let ans = ''
-      row.orderDetailsList.forEach(item => {
-        if(ans != '') ans += '、';
-        ans += item.name + '*' + item.num;
-      });
+      if(row.orderDetailsList){
+        row.orderDetailsList.forEach(item => {
+          if(ans != '') ans += '、';
+          ans += item.name + '*' + item.num;
+        });
+      }
       return ans;
     },
+
+
+    // 搜索过滤函数
+    filterData(data){
+      // 查询不为空
+      if(this.queryInfo.query != ''){
+        // 在这一行的菜品列表中遍历
+        for(item in data.orderDetailsList){
+          if(String(item.name).includes(String(this.queryInfo.query)))
+            return true;
+        }
+        return false;  
+      }
+      return true;
+    },
+    
 
     // 价格格式化
     moneyFormat(row){
