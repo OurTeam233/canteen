@@ -15,9 +15,7 @@
             ></el-button>
           </el-input>
         </el-col>
-        <el-col :span="4">
-          <el-button type="primary" @click="completeOrders()">完成选中</el-button>
-        </el-col>
+        
       </el-row>
 
       <!-- 表格数据 -->
@@ -44,18 +42,12 @@
         style="width: 100%" 
         @selection-change="handleSelectionChange">
         <!-- <el-table-column type="index"> </el-table-column> -->
-        <el-table-column type="selection" width="55"></el-table-column>
         <el-table-column prop="orderNumber" label="取餐号" width="85px"></el-table-column>
         <el-table-column prop="orderDetailsList" :formatter="getDishesString" label="菜品列表" width="500px"></el-table-column>
         <el-table-column prop="note" label="备注"></el-table-column>
         <el-table-column prop="totalPrice" :formatter="moneyFormat" label="总价(元)" width="80px"></el-table-column>
         <el-table-column prop="orderTime" :formatter="dateFormat" label="取餐开始时间" width="200px"></el-table-column>
-        <el-table-column label="操作" width="80px">
-          <template v-slot="scope">
-            <!-- <el-button size="mini" type="primary" @click="finish(scope.row)">完成</el-button> -->
-            <el-button size="mini" type="primary" @click="completeOrder(scope.row)">完成</el-button>
-          </template>
-        </el-table-column>
+        
       </el-table>
 
       <el-pagination
@@ -75,7 +67,6 @@
 
 <script>
 import { getOrderList } from '../../api/user.js'
-import { changeOrderType } from '../../api/user.js'
 export default {
   name: 'NewOrders',
   data() {
@@ -106,7 +97,7 @@ export default {
         this.orderList = [];
         for(let i = 0; i < res.data.length; i++){
           // 同时将历史和违规订单统计进来
-          if(res.data[i].type == 2 || res.data[i].type == 3){
+          if(res.data[i].type == 2){
             this.orderList.push(res.data[i]);
           }
         }
@@ -139,59 +130,9 @@ export default {
       return new Date(row.orderTime).toLocaleString();
     },
     
-    // 处理单个订单
-    completeOrder(row){
-      // 将订单状态改为历史
-      changeOrderType(row.id, 2);
-      // 更新数据
-      this.getNewOrderList();
-    },
+    
 
-    // 处理选中的订单
-    completeOrders(){
-      // 如果没有选中任何订单
-      if(this.multipleSelection.length == 0){
-        this.$message({
-          message: '请选择要完成的订单',
-          type: 'warning'
-        })
-        return;
-      }
-      // 如果选中了大于等于一个订单
-      if(this.multipleSelection.length >= 1){
-        // 存放所有要更新的promise
-        let all = [];
-        for(let i = 0; i < this.multipleSelection.length; i++){
-          // 将订单状态改为已完成
-          all.push(changeOrderType(this.multipleSelection[i].id, 1))
-        }
-        // 将所有promise执行完毕
-        Promise.all(all).then(res => {
-          // 更新数据
-          this.getNewOrderList();
-        })
-        this.$message({
-          message: '所选订单已被取走',
-          type: 'success'
-        })
-        return;
-      }
-    },
-
-    // 多选
-    toggleSelection(rows) {
-      if (rows) {
-        rows.forEach(row => {
-          this.$refs.multipleTable.toggleRowSelection(row);
-        });
-      } else {
-        this.$refs.multipleTable.clearSelection();
-      }
-    },
-    handleSelectionChange(val) {
-      this.multipleSelection = val;
-    },
-
+    
     // 分页
     handleSizeChange(val) {
       this.queryInfo.pagesize = val;

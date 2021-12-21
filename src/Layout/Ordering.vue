@@ -285,6 +285,13 @@ export default {
               name: 'HistoryOrders'
             },
             {
+              id: 'number-09',
+              class: 'el-icon-document-delete',
+              path: '/Ordering/IllegalOrders',
+              label: '违规订单',
+              name: 'IllegalOrders'
+            },
+            {
               id: 'number-04',
               class: 'el-icon-dish',
               path: '/Ordering/Test',
