@@ -104,12 +104,24 @@ export default {
    this.getNewOrderList();
    // 长连接
    this.initWebSocket();
+
+   // 轮询
+   this.f();
+   
   },
   destroyed() {
     // 离开路由之后断开websocket连接
     this.websock.close()
   },
   methods: {
+    // 轮询函数
+    f(){
+      setTimeout(() => {
+        this.getNewOrderList();
+        this.f();
+      }, 1000 * 60 * 20);
+    },
+
     // 重新获取菜品列表
     getNewOrderList(){
       // 请求所有订单并进行筛选
