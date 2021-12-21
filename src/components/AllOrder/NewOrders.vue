@@ -35,7 +35,10 @@
           return false;
         }
         return true;
-        })" 
+        }).slice(
+              (queryInfo.pagenum - 1) * queryInfo.pagesize,
+              queryInfo.pagenum * queryInfo.pagesize
+            )" 
         ref="multipleTable"
         stripe border 
         style="width: 100%" 
@@ -56,6 +59,8 @@
       </el-table>
 
       <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
         :current-page="queryInfo.pagenum"
         :page-sizes="[10, 20, 50]"
         :page-size="queryInfo.pagesize"
@@ -118,17 +123,7 @@ export default {
   created() {
   },
   mounted() {
-    // getOrderList().then(res => {
-    //   for(let i = 0; i < res.data.length; i++){
-    //     if(res.data[i].type == 3){
-    //       this.orderList.push(res.data[i]);
-    //     }
-    //   }
-    //   // this.orderList = res.data
-    //   console.log(res.data)
-    // })
-    
-    this.getNewOrderList();
+   this.getNewOrderList();
   },
   methods: {
     // 重新获取菜品列表
@@ -141,9 +136,11 @@ export default {
             this.orderList.push(res.data[i]);
           }
         }
-        // this.orderList = res.data
         console.log(this.orderList)
-      })
+        // 同时更新菜品的总数
+        this.total = this.orderList.length;
+      });
+      
     },
 
 
@@ -233,6 +230,16 @@ export default {
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;
+    },
+
+    // 分页
+    handleSizeChange(val) {
+      this.queryInfo.pagesize = val;
+      // console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      this.queryInfo.pagenum = val;
+      // console.log(`当前页: ${val}`);
     }
     
   }
