@@ -39,8 +39,7 @@
             )" 
         ref="multipleTable"
         stripe border 
-        style="width: 100%" 
-        @selection-change="handleSelectionChange">
+        style="width: 100%" >
         <!-- <el-table-column type="index"> </el-table-column> -->
         <el-table-column prop="orderNumber" label="取餐号" width="85px"></el-table-column>
         <el-table-column prop="orderDetailsList" :formatter="getDishesString" label="菜品列表" width="500px"></el-table-column>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- 新增订单 -->
+    <!-- 订单管理 -->
     <el-card>
       <el-row :gutter="20">
         <el-col :span="8">
@@ -18,22 +18,20 @@
           </el-input>
         </el-col>
         <el-col :span="3">
-          <el-button type="primary" @click="toggleSelection()">+ 新增分类</el-button>
+          <el-button type="primary">+ 新增分类</el-button>
         </el-col>
       </el-row>
 
       <el-tabs
         v-model="cntGroupId"
         type="border-card"
-        closable
-        @tab-remove="removeTab"
-      >
+        @tab-remove="removeTab">
         <el-tab-pane
           v-for="group in dishesList"
           :key="group.index"
           :label="group.name"
-          :name="group.id"
-        >
+          :name="group.id">
+          
           <!-- {{ group.foods }} -->
           <div class="operate">
             <el-button size="medium" type="primary" plain>+ 新增菜品</el-button>
@@ -46,8 +44,8 @@
             stripe
             border
             style="width: 100%"
-            @selection-change="handleSelectionChange"
-          >
+            @selection-change="handleSelectionChange">
+
             <!-- <el-table-column type="index"> </el-table-column> -->
             <el-table-column type="selection" width="55"></el-table-column>
             <el-table-column prop="name" label="菜品名"></el-table-column>
