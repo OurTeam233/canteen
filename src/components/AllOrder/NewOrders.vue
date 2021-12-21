@@ -85,37 +85,15 @@ export default {
         pagenum: 1,
         pagesize: 10
       },
-      orderList: [
-        // 数据说明
-        // {
-        //   id: 2,
-        //   orderNumber: "02-0001",
-        //   orderTime: 164037459000,
-        //   studentId: 1,
-        //   time: 1640374602000,
-        //   totalPrice: 100,
-        //   type: 2
-        //   orderDetailsList: [
-        //     {
-        //       dishesId: 5,
-        //       name: "冬瓜",
-        //       num: 1,
-        //       price: 2,
-        //     },
-        //     {
-        //       dishesId: 4,
-        //       name: "草莓",
-        //       num: 1,
-        //       price: 2.5,
-        //     }
-        //   ]
-        // },
-        
-      ],
+      orderList: [],
       // 所用订单的总数
       total: 0,
       // 好像是多选列表
       multipleSelection: [],
+
+      // 长连接
+      wsUrl: 'ws://121.43.56.241:8080/CanteenWeb/Websocket/1', // ws地址
+      websock: null, // ws实例
       
 
     };
@@ -124,6 +102,12 @@ export default {
   },
   mounted() {
    this.getNewOrderList();
+   // 长连接
+   this.initWebSocket();
+  },
+  destroyed() {
+    // 离开路由之后断开websocket连接
+    this.websock.close()
   },
   methods: {
     // 重新获取菜品列表
@@ -240,7 +224,45 @@ export default {
     handleCurrentChange(val) {
       this.queryInfo.pagenum = val;
       // console.log(`当前页: ${val}`);
-    }
+    },
+
+
+
+    // 长连接函数
+    // 初始化weosocket
+    initWebSocket() {
+      if (typeof WebSocket === 'undefined')
+        return console.log('您的浏览器不支持websocket')
+      this.websock = new WebSocket(this.wsUrl)
+      this.websock.onmessage = this.websocketonmessage
+      this.websock.onopen = this.websocketonopen
+      this.websock.onerror = this.websocketonerror
+      this.websock.onclose = this.websocketclose
+    },
+    websocketonopen() {
+      // 连接建立之后执行send方法发送数据
+      let actions = { test: 'test' }
+      this.websocketsend(JSON.stringify(actions))
+    },
+    websocketonerror() {
+      // 连接建立失败重连
+      this.initWebSocket()
+    },
+    websocketonmessage(e) {
+      // 数据接收
+      // const redata = JSON.parse(e.data)
+      // console.log('接收的数据', redata)
+      this.getNewOrderList();
+      console.log(e)
+    },
+    websocketsend(Data) {
+      // 数据发送
+      this.websock.send(Data)
+    },
+    websocketclose(e) {
+      // 关闭
+      console.log('断开连接', e)
+    },
     
   }
 };
