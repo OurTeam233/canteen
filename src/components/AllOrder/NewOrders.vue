@@ -49,7 +49,8 @@
         <el-table-column prop="orderTime" :formatter="dateFormat" label="取餐开始时间" width="200px"></el-table-column>
         <el-table-column label="操作" width="80px">
           <template v-slot="scope">
-            <el-button size="mini" type="primary" @click="finish(scope.row)">完成</el-button>
+            <!-- <el-button size="mini" type="primary" @click="finish(scope.row)">完成</el-button> -->
+            <el-button size="mini" type="primary" @click="completeOrder(scope.row)">完成</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -116,12 +117,36 @@ export default {
   created() {
   },
   mounted() {
-    getOrderList().then(res => {
-      this.orderList = res.data
-      console.log(res.data)
-    })
+    // getOrderList().then(res => {
+    //   for(let i = 0; i < res.data.length; i++){
+    //     if(res.data[i].type == 3){
+    //       this.orderList.push(res.data[i]);
+    //     }
+    //   }
+    //   // this.orderList = res.data
+    //   console.log(res.data)
+    // })
+    
+    this.getNewOrderList();
   },
   methods: {
+    // 重新获取菜品列表
+    getNewOrderList(){
+      // 请求所有订单并进行筛选
+      getOrderList().then(res => {
+        this.orderList = [];
+        for(let i = 0; i < res.data.length; i++){
+          if(res.data[i].type == 0){
+            this.orderList.push(res.data[i]);
+          }
+        }
+        // this.orderList = res.data
+        console.log(res.data)
+      })
+    },
+
+
+
     // 获取菜品列表(在一行中显示)
     getDishesString(row){
       let ans = ''
@@ -144,6 +169,69 @@ export default {
       return new Date(row.orderTime).toLocaleString();
     },
     
+    // 处理单个订单
+    completeOrder(row){
+      // 将订单状态改为已完成
+      changeOrderType(row.id, 1);
+      // 更新数据
+      this.getNewOrderList();
+    },
+
+    // 处理选中的订单
+    completeOrders(){
+      // 如果没有选中任何订单
+      if(this.multipleSelection.length == 0){
+        this.$message({
+          message: '请选择要完成的订单',
+          type: 'warning'
+        })
+        return;
+      }
+      // 如果选中了多个订单
+      if(this.multipleSelection.length > 1){
+        this.$message({
+          message: '只能选择一个订单完成',
+          type: 'warning'
+        })
+        return;
+      }
+      // 如果选中了一个订单
+      if(this.multipleSelection.length == 1){
+        // 如果订单状态不是未完成
+        if(this.multipleSelection[0].type != 0){
+          this.$message({
+            message: '该订单已完成',
+            type: 'warning'
+          })
+          return;
+        }
+        // 如果订单状态是未完成
+        else{
+          // 发送请求
+          changeOrderType(this.multipleSelection[0].id, 1).then(res => {
+            // 如果成功
+            if(res.data.code == 0){
+              // 刷新页面
+              this.$message({
+                message: '订单完成',
+                type: 'success'
+              })
+              this.queryInfo.pagenum = 1;
+              this.getOrderList();
+            }
+            // 如果失败
+            else{
+              this.$message({
+                message: '订单完成失败',
+                type: 'error'
+              })
+            }
+          })
+        }
+      }
+    },
+
+
     // eslint-disable-next-line no-unused-vars
     finish(row){
       alert(JSON.stringify(row));
