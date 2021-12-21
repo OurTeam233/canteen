@@ -1,42 +1,59 @@
 <template>
   <div>
-    
-
+    <!-- 未取订单 -->
     <el-card>
       <el-row :gutter="20">
         <el-col :span="8">
           <el-input
-            placeholder="请输入内容"
+            placeholder="请输入要查询的菜品名称"
             clearable
             v-model="queryInfo.query"
-            @clear="getGoodsList"
           >
             <el-button
               slot="append"
               icon="el-icon-search"
-              @click="handleCurrentChange(1)"
             ></el-button>
           </el-input>
         </el-col>
         <el-col :span="4">
-          <el-button type="primary" @click="toggleSelection()">清空选择</el-button>
+          <el-button type="primary" @click="completeOrders()">取餐选中</el-button>
         </el-col>
       </el-row>
 
-      <el-table :data="goodslist" stripe border style="width: 100%" @selection-change="handleSelectionChange">
+      <!-- 表格数据 -->
+      <el-table :data="orderList.filter(data => {
+        // 查询不为空
+        if(this.queryInfo.query != ''){
+          // 在这一行的菜品列表中遍历
+          for(let i = 0; i < data.orderDetailsList.length; i++){
+            // 如果菜品名称中包含查询内容
+            if(data.orderDetailsList[i].name.toLowerCase().includes(this.queryInfo.query.toLowerCase())){
+              // 返回true
+              return true;
+            }
+          }
+          return false;
+        }
+        return true;
+        }).slice(
+              (queryInfo.pagenum - 1) * queryInfo.pagesize,
+              queryInfo.pagenum * queryInfo.pagesize
+            )" 
+        ref="multipleTable"
+        stripe border 
+        style="width: 100%" 
+        @selection-change="handleSelectionChange">
         <!-- <el-table-column type="index"> </el-table-column> -->
         <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column prop="number" label="取餐号"></el-table-column>
-        <el-table-column prop="foods" label="菜品" width="700px"></el-table-column>
-        <el-table-column prop="price" label="价格" width="70px"></el-table-column>
-        <el-table-column prop="time" label="取餐时间" width="170px">
-          <!-- <template v-slot="scope">
-            {{ scope.row.add_time | dateFormat }}
-          </template> -->
-        </el-table-column>
+        <el-table-column prop="orderNumber" label="取餐号" width="85px"></el-table-column>
+        <el-table-column prop="orderDetailsList" :formatter="getDishesString" label="菜品列表" width="500px"></el-table-column>
+        <el-table-column prop="note" label="备注"></el-table-column>
+        <el-table-column prop="totalPrice" :formatter="moneyFormat" label="总价(元)" width="80px"></el-table-column>
+        <el-table-column prop="orderTime" :formatter="dateFormat" label="取餐开始时间" width="200px"></el-table-column>
         <el-table-column label="操作" width="80px">
           <template v-slot="scope">
-            <el-button size="mini" type="primary" @click="finish(scope.row)">完成</el-button>
+            <!-- <el-button size="mini" type="primary" @click="finish(scope.row)">完成</el-button> -->
+            <el-button size="mini" type="primary" @click="completeOrder(scope.row)">已取餐</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -57,8 +74,10 @@
 </template>
 
 <script>
+import { getOrderList } from '../../api/user.js'
+import { changeOrderType } from '../../api/user.js'
 export default {
-  name: 'NotReceive',
+  name: 'NewOrders',
   data() {
     return {
       queryInfo: {
@@ -66,140 +85,98 @@ export default {
         pagenum: 1,
         pagesize: 10
       },
-      goodslist: [
-        {
-          number: "1-14-11",
-          foods: "鸡肉",
-          price: 30,
-          time: "2022-12-12"
-        },
-        {
-          number: "1-14-12",
-          foods: "牛肉",
-          price: 10,
-          time: "2022-12-12"
-        },
-        {
-          number: "1-14-11",
-          foods: "鸡肉",
-          price: 30,
-          time: "2022-12-12"
-        },
-        {
-          number: "1-14-12",
-          foods: "牛肉",
-          price: 10,
-          time: "2022-12-12"
-        },
-        {
-          number: "1-14-11",
-          foods: "鸡肉",
-          price: 30,
-          time: "2022-12-12"
-        },
-        {
-          number: "1-14-12",
-          foods: "牛肉",
-          price: 10,
-          time: "2022-12-12"
-        },
-        {
-          number: "1-14-11",
-          foods: "鸡肉",
-          price: 30,
-          time: "2022-12-12"
-        },
-        {
-          number: "1-14-12",
-          foods: "牛肉",
-          price: 10,
-          time: "2022-12-12"
-        },
-        {
-          number: "1-14-11",
-          foods: "鸡肉",
-          price: 30,
-          time: "2022-12-12"
-        },
-        {
-          number: "1-14-12",
-          foods: "牛肉",
-          price: 10,
-          time: "2022-12-12"
-        },
-        {
-          number: "1-14-11",
-          foods: "鸡肉",
-          price: 30,
-          time: "2022-12-12"
-        },
-        {
-          number: "1-14-12",
-          foods: "牛肉",
-          price: 10,
-          time: "2022-12-12"
-        }
-      ],
+      orderList: [],
       // 所用订单的总数
-      total: 12,
-      // 好像是多选列表
+      total: 0,
+      // 多选列表
       multipleSelection: [],
 
     };
   },
   created() {
-       this.getGoodsList();
+  },
+  mounted() {
+   this.getNewOrderList();
   },
   methods: {
-    async getGoodsList() {
-      const { data } = await this.$http.get("goods", {
-        params: this.queryInfo
-      });
-      if (data.meta.status !== 200) {
-        return this.$message.error(data.meta.msg);
-      }
-      this.goodslist = data.data.goods;
-      this.total = data.data.total;
-    },
-    handleSizeChange(newSize) {
-      this.queryInfo.pagesize = newSize;
-      this.getGoodsList();
-    },
-    handleCurrentChange(newPage) {
-      this.queryInfo.pagenum = newPage;
-      this.getGoodsList();
-    },
-    // eslint-disable-next-line no-unused-vars
-    finish(row){
-      alert(JSON.stringify(row));
-    },
-    removeById(id) {
-      this.$confirm("此操作将永久删除该商品, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
-        .then(async () => {
-          const { data } = await this.$http.delete(`goods/${id}`);
-          if (data.meta.status !== 200) {
-            return this.$message.error(data.meta.msg);
+    // 重新获取菜品列表
+    getNewOrderList(){
+      // 请求所有订单并进行筛选
+      getOrderList().then(res => {
+        this.orderList = [];
+        for(let i = 0; i < res.data.length; i++){
+          if(res.data[i].type == 1){
+            this.orderList.push(res.data[i]);
           }
-          this.getGoodsList();
-          this.$message({
-            type: "success",
-            message: "删除成功!"
-          });
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消删除"
-          });
+        }
+        console.log(this.orderList)
+        // 同时更新菜品的总数
+        this.total = this.orderList.length;
+      });
+      
+    },
+
+    // 获取菜品列表(字符串拼接)
+    getDishesString(row){
+      let ans = ''
+      if(row.orderDetailsList){
+        row.orderDetailsList.forEach(item => {
+          if(ans != '') ans += '、';
+          ans += item.name + '*' + item.num;
         });
+      }
+      return ans;
     },
-    clearSearch(){
-      this.queryInfo.query = "";
+    
+    // 价格格式化
+    moneyFormat(row){
+      return row.totalPrice / 100
     },
+
+    // 格式化取餐时间
+    dateFormat(row){
+      return new Date(row.orderTime).toLocaleString();
+    },
+    
+    // 处理单个订单
+    completeOrder(row){
+      // 将订单状态改为历史
+      changeOrderType(row.id, 2);
+      // 更新数据
+      this.getNewOrderList();
+    },
+
+    // 处理选中的订单
+    completeOrders(){
+      // 如果没有选中任何订单
+      if(this.multipleSelection.length == 0){
+        this.$message({
+          message: '请选择要完成的订单',
+          type: 'warning'
+        })
+        return;
+      }
+      // 如果选中了大于等于一个订单
+      if(this.multipleSelection.length >= 1){
+        // 存放所有要更新的promise
+        let all = [];
+        for(let i = 0; i < this.multipleSelection.length; i++){
+          // 将订单状态改为已完成
+          all.push(changeOrderType(this.multipleSelection[i].id, 2))
+        }
+        // 将所有promise执行完毕
+        Promise.all(all).then(res => {
+          // 更新数据
+          this.getNewOrderList();
+        })
+        this.$message({
+          message: '所选订单已被取走',
+          type: 'success'
+        })
+        return;
+      }
+    },
+
     // 多选
     toggleSelection(rows) {
       if (rows) {
@@ -212,13 +189,18 @@ export default {
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;
+    },
+
+    // 分页
+    handleSizeChange(val) {
+      this.queryInfo.pagesize = val;
+      // console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      this.queryInfo.pagenum = val;
+      // console.log(`当前页: ${val}`);
     }
     
   }
 };
 </script>
-
-
-<style lang="less" scoped>
-
-</style>
