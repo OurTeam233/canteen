@@ -16,7 +16,7 @@
           </el-input>
         </el-col>
         <el-col :span="4">
-          <el-button type="primary" >完成选中</el-button>
+          <el-button type="primary" @click="completeOrders()">完成选中</el-button>
         </el-col>
       </el-row>
 
@@ -111,6 +111,7 @@ export default {
       total: 0,
       // 好像是多选列表
       multipleSelection: [],
+      
 
     };
   },
@@ -141,13 +142,13 @@ export default {
           }
         }
         // this.orderList = res.data
-        console.log(res.data)
+        console.log(this.orderList)
       })
     },
 
 
 
-    // 获取菜品列表(在一行中显示)
+    // 获取菜品列表(字符串拼接)
     getDishesString(row){
       let ans = ''
       if(row.orderDetailsList){
@@ -187,47 +188,27 @@ export default {
         })
         return;
       }
-      // 如果选中了多个订单
-      if(this.multipleSelection.length > 1){
-        this.$message({
-          message: '只能选择一个订单完成',
-          type: 'warning'
+      // 如果选中了大于等于一个订单
+      if(this.multipleSelection.length >= 1){
+        // 存放所有要更新的promise
+        let all = [];
+        for(let i = 0; i < this.multipleSelection.length; i++){
+          // 将订单状态改为已完成
+          all.push(changeOrderType(this.multipleSelection[i].id, 1))
+        }
+        // 将所有promise执行完毕
+        Promise.all(all).then(res => {
+          // 更新数据
+          this.getNewOrderList();
         })
+        this.$message({
+          message: '已成功完成所选订单',
+          type: 'success'
+        })
+        // // 更新数据
+        // setTimeout(this.getNewOrderList(),1000);
+        
         return;
-      }
-      // 如果选中了一个订单
-      if(this.multipleSelection.length == 1){
-        // 如果订单状态不是未完成
-        if(this.multipleSelection[0].type != 0){
-          this.$message({
-            message: '该订单已完成',
-            type: 'warning'
-          })
-          return;
-        }
-        // 如果订单状态是未完成
-        else{
-          // 发送请求
-          changeOrderType(this.multipleSelection[0].id, 1).then(res => {
-            // 如果成功
-            if(res.data.code == 0){
-              // 刷新页面
-              this.$message({
-                message: '订单完成',
-                type: 'success'
-              })
-              this.queryInfo.pagenum = 1;
-              this.getOrderList();
-            }
-            // 如果失败
-            else{
-              this.$message({
-                message: '订单完成失败',
-                type: 'error'
-              })
-            }
-          })
-        }
       }
     },
 
