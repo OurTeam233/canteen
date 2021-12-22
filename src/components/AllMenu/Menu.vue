@@ -8,12 +8,10 @@
             placeholder="请输入内容"
             clearable
             v-model="queryInfo.query"
-            @clear="getGoodsList"
           >
             <el-button
               slot="append"
               icon="el-icon-search"
-              @click="handleCurrentChange(1)"
             ></el-button>
           </el-input>
         </el-col>
@@ -103,6 +101,7 @@ export default {
   mounted() {
     getDishesList().then(res => {
       this.dishesList = res.data
+      console.log(this.dishesList)
     })
   },
   data() {
@@ -116,64 +115,35 @@ export default {
       dishesList: [],
 
       // 所用订单的总数
-      total: 12,
+      total: 0,
       // 好像是多选列表
       multipleSelection: [],
     };
   },
   created() {
-    this.getGoodsList();
   },
   methods: {
-    async getGoodsList() {
-      const { data } = await this.$http.get("goods", {
-        params: this.queryInfo,
-      });
-      if (data.meta.status !== 200) {
-        return this.$message.error(data.meta.msg);
-      }
-      this.goodslist = data.data.goods;
-      this.total = data.data.total;
-    },
-    handleSizeChange(newSize) {
-      this.queryInfo.pagesize = newSize;
-      this.getGoodsList();
-    },
-    handleCurrentChange(newPage) {
-      this.queryInfo.pagenum = newPage;
-      this.getGoodsList();
-    },
-    // eslint-disable-next-line no-unused-vars
-    finish(row) {
-      alert(JSON.stringify(row));
-    },
-    removeById(id) {
-      this.$confirm("此操作将永久删除该商品, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
-      })
-        .then(async () => {
-          const { data } = await this.$http.delete(`goods/${id}`);
-          if (data.meta.status !== 200) {
-            return this.$message.error(data.meta.msg);
+    
+    //删除标签
+    removeTab(targetName) {
+      let tabs = this.editableTabs;
+      let activeName = this.editableTabsValue;
+      if (activeName === targetName) {
+        tabs.forEach((tab, index) => {
+          if (tab.name === targetName) {
+            let nextTab = tabs[index + 1] || tabs[index - 1];
+            if (nextTab) {
+              activeName = nextTab.name;
+            }
           }
-          this.getGoodsList();
-          this.$message({
-            type: "success",
-            message: "删除成功!",
-          });
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消删除",
-          });
         });
+      }
+      
+      this.editableTabsValue = activeName;
+      this.editableTabs = tabs.filter(tab => tab.name !== targetName);
     },
-    clearSearch() {
-      this.queryInfo.query = "";
-    },
+
+
     // 多选
     toggleSelection(rows) {
       if (rows) {
@@ -186,6 +156,16 @@ export default {
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;
+    },
+
+    // 分页
+    handleSizeChange(val) {
+      this.queryInfo.pagesize = val;
+      // console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      this.queryInfo.pagenum = val;
+      // console.log(`当前页: ${val}`);
     },
   },
 };

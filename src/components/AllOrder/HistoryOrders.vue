@@ -45,7 +45,7 @@
         <el-table-column prop="orderDetailsList" :formatter="getDishesString" label="菜品列表" width="500px"></el-table-column>
         <el-table-column prop="note" label="备注"></el-table-column>
         <el-table-column prop="totalPrice" :formatter="moneyFormat" label="总价(元)" width="80px"></el-table-column>
-        <el-table-column prop="orderTime" :formatter="dateFormat" label="取餐开始时间" width="200px"></el-table-column>
+        <el-table-column prop="orderTime" :formatter="dateFormat" sortable label="取餐开始时间" width="200px"></el-table-column>
         
       </el-table>
 
