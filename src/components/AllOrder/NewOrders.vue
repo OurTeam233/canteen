@@ -166,9 +166,22 @@ export default {
     // 处理单个订单
     completeOrder(row){
       // 将订单状态改为已完成
-      changeOrderType(row.id, 1);
-      // 更新数据
-      this.getNewOrderList();
+      changeOrderType(row.id, 1).then(res => {
+        this.$message({
+          message: '成功处理该订单,请在未取订单中查看',
+          type: 'success'
+        });
+        // 刷新订单列表
+        this.getNewOrderList();
+      }).catch(err => {
+        this.$message({
+          message: '处理失败,请重试',
+          type: 'error'
+        });
+      });
+      // // 更新数据
+      // this.getNewOrderList();
+      
     },
 
     // 处理选中的订单
@@ -195,7 +208,7 @@ export default {
           this.getNewOrderList();
         })
         this.$message({
-          message: '已成功完成所选订单',
+          message: '已成功完成所选订单,请在未取订单中查看',
           type: 'success'
         })
         // // 更新数据

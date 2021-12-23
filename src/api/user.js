@@ -21,13 +21,14 @@ export const getDishesList = () => axios.post('/Dishes')
 // 获取...订单信息
 export const getOrderList = () => axios.post('/Order/Select')
 
-
 // 更改订单状态
 export const changeOrderType = (orderId, type) => axios.post('/Order/Update', {orderId, type})
 
+// 新增菜品分类标签
+export const addDishesType = (name) => axios.post('/Dishes/Type/Insert', {name})
 
-
-
+// 删除菜品分类标签
+// export const deleteTab = ()
 // 图床测试
 export const img = () => axios.post('/image/meat1.webp')
 

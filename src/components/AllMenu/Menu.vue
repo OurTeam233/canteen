@@ -16,14 +16,13 @@
           </el-input>
         </el-col>
         <el-col :span="3">
-          <el-button type="primary">+ 新增分类</el-button>
+          <el-button type="primary" @click="createDishesTab">+ 新增分类</el-button>
         </el-col>
       </el-row>
 
       <el-tabs
         v-model="cntGroupId"
-        type="border-card"
-        @tab-remove="removeTab">
+        type="border-card">
         <el-tab-pane
           v-for="group in dishesList"
           :key="group.index"
@@ -34,7 +33,7 @@
           <div class="operate">
             <el-button size="medium" type="primary" plain>+ 新增菜品</el-button>
             <el-button size="medium" type="warning" plain>删除选中</el-button>
-            <el-button size="medium" type="danger" plain>删除此分类</el-button>
+            <el-button size="medium" type="danger" plain @click="deleteDishesTab">删除此分类</el-button>
           </div>
 
           <el-table
@@ -95,7 +94,10 @@
 </template>
 
 <script>
-import { getDishesList } from '../../api/user.js'
+import { 
+  getDishesList,
+  addDishesType,
+} from '../../api/user.js'
 export default {
   name: "Menu",
   mounted() {
@@ -124,26 +126,69 @@ export default {
   },
   methods: {
     
-    //删除标签
-    removeTab(targetName) {
-      let tabs = this.editableTabs;
-      let activeName = this.editableTabsValue;
-      if (activeName === targetName) {
-        tabs.forEach((tab, index) => {
-          if (tab.name === targetName) {
-            let nextTab = tabs[index + 1] || tabs[index - 1];
-            if (nextTab) {
-              activeName = nextTab.name;
-            }
-          }
-        });
-      }
+    // //删除标签
+    // removeTab(targetName) {
+    //   let tabs = this.editableTabs;
+    //   let activeName = this.editableTabsValue;
+    //   if (activeName === targetName) {
+    //     tabs.forEach((tab, index) => {
+    //       if (tab.name === targetName) {
+    //         let nextTab = tabs[index + 1] || tabs[index - 1];
+    //         if (nextTab) {
+    //           activeName = nextTab.name;
+    //         }
+    //       }
+    //     });
+    //   }
       
-      this.editableTabsValue = activeName;
-      this.editableTabs = tabs.filter(tab => tab.name !== targetName);
+    //   this.editableTabsValue = activeName;
+    //   this.editableTabs = tabs.filter(tab => tab.name !== targetName);
+    // },
+
+
+    // 新增标签(会弹出一个模态框出来)
+    createDishesTab() {
+      this.$prompt('请输入新增的菜品分类名称', '新增', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        // 正则匹配空值
+        inputPattern: /^\S+$/,
+        inputErrorMessage: '内容不能为空'
+      }).then(({ value }) => {
+        this.$message({
+          type: 'success',
+          message: '成功创建一个分类: ' + value
+        });
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '取消输入'
+        });       
+      });
     },
-
-
+    // 删除标签
+    deleteDishesTab() {
+      this.$confirm('此操作将永久删除该分类, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        });
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });        
+      });
+    },
+    // 新增菜品
+    createDishes() {
+      
+    },
+    
     // 多选
     toggleSelection(rows) {
       if (rows) {

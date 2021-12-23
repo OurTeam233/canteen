@@ -142,9 +142,22 @@ export default {
     // 处理单个订单
     completeOrder(row){
       // 将订单状态改为历史
-      changeOrderType(row.id, 2);
-      // 更新数据
-      this.getNewOrderList();
+      changeOrderType(row.id, 2).then(res => {
+        this.$message({
+          message: '成功处理该订单,请在历史订单中查看',
+          type: 'success'
+        });
+        // 刷新订单列表
+        this.getNewOrderList();
+      }).catch(err => {
+        this.$message({
+          message: '处理失败,请重试',
+          type: 'error'
+        });
+      });
+      // // 更新数据
+      // this.getNewOrderList();
+      
     },
 
     // 处理选中的订单
