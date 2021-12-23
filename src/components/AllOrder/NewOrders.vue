@@ -119,7 +119,7 @@ export default {
       setTimeout(() => {
         this.getNewOrderList();
         this.f();
-      }, 1000 * 60 * 20);
+      }, 1000 * 60 * 20); // 隔20分钟进行一次刷新
     },
 
     // 重新获取菜品列表

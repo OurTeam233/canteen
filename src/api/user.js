@@ -28,7 +28,11 @@ export const changeOrderType = (orderId, type) => axios.post('/Order/Update', {o
 export const addDishesType = (name) => axios.post('/Dishes/Type/Insert', {name})
 
 // 删除菜品分类标签
-// export const deleteTab = ()
+export const deleteType = (dishesTypeId) => axios.post('/Dishes/Type/Delete', {dishesTypeId})
+
+// 删除菜品
+export const deleteDishes = (dishesId) => axios.post('/Dishes/Delete', {dishesId})
+
 // 图床测试
 export const img = () => axios.post('/image/meat1.webp')
 

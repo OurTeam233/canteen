@@ -32,7 +32,7 @@
           <!-- {{ group.foods }} -->
           <div class="operate">
             <el-button size="medium" type="primary" plain>+ 新增菜品</el-button>
-            <el-button size="medium" type="warning" plain>删除选中</el-button>
+            <el-button size="medium" type="warning" plain @click="deleteDishes()">删除选中</el-button>
             <el-button size="medium" type="danger" plain @click="deleteDishesTab">删除此分类</el-button>
           </div>
 
@@ -101,10 +101,8 @@ import {
 export default {
   name: "Menu",
   mounted() {
-    getDishesList().then(res => {
-      this.dishesList = res.data
-      console.log(this.dishesList)
-    })
+    this.getNewDishesList()
+  
   },
   data() {
     return {
@@ -113,7 +111,7 @@ export default {
         pagenum: 1,
         pagesize: 10,
       },
-      cntGroupId: 1,  
+      cntGroupId: 3,  
       dishesList: [],
 
       // 所用订单的总数
@@ -125,7 +123,18 @@ export default {
   created() {
   },
   methods: {
-    
+    // 获取最新的菜品列表
+    getNewDishesList() {
+      getDishesList().then(res => {
+        this.dishesList = res.data
+        console.log(this.dishesList)
+      })
+    },
+
+    // 打印测试
+    finish(row){
+      console.log(row)
+    },
     // //删除标签
     // removeTab(targetName) {
     //   let tabs = this.editableTabs;
@@ -155,10 +164,17 @@ export default {
         inputPattern: /^\S+$/,
         inputErrorMessage: '内容不能为空'
       }).then(({ value }) => {
-        this.$message({
-          type: 'success',
-          message: '成功创建一个分类: ' + value
-        });
+        // 发送新增菜品类型的请求
+        addDishesType(value).then(() => {
+          // this.dishesList.push(res.data)
+          this.getNewDishesList()
+          this.$message({
+            type: 'success',
+            message: '成功创建一个分类: ' + value
+          });
+        })
+
+        
       }).catch(() => {
         this.$message({
           type: 'info',
@@ -188,6 +204,37 @@ export default {
     createDishes() {
       
     },
+    // 删除所有选中的菜品
+    deleteDishes() {
+      // 如果没有选中任何订单
+      if(this.multipleSelection.length == 0){
+        this.$message({
+          message: '请选择要删除的菜品',
+          type: 'warning'
+        })
+        return;
+      }
+      // 如果选中了大于等于一个订单
+      if(this.multipleSelection.length >= 1){
+        // 存放所有要删除的promise
+        let all = [];
+        for(let i = 0; i < this.multipleSelection.length; i++){
+          // 将所选菜品删除
+          all.push(deleteDishes(this.multipleSelection[i].id))
+        }
+        // 将所有promise执行完毕
+        Promise.all(all).then(res => {
+          // 更新数据
+          this.getNewDishesList();
+        })
+        this.$message({
+          message: '成功删除所选菜品',
+          type: 'success'
+        })
+        return;
+      }
+    },
+
     
     // 多选
     toggleSelection(rows) {
