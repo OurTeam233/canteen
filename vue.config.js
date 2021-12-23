@@ -35,6 +35,10 @@ module.exports = {
           '^/api': ' '
         }
       },
+      '/': {
+        target: 'http://121.43.56.241:8080/upload',
+        changOrigin: true, //允许跨域
+      }
       
     },
   },

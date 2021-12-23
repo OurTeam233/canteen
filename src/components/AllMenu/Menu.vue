@@ -2,27 +2,53 @@
   <div>
     <!-- 订单管理 -->
     <el-card>
-      <el-row :gutter="20">
-        <el-col :span="8">
-          <el-input
-            placeholder="请输入内容"
-            clearable
-            v-model="queryInfo.query"
-          >
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-            ></el-button>
-          </el-input>
-        </el-col>
-        <el-col :span="3">
-          <el-button type="primary" @click="createDishesTab">+ 新增分类</el-button>
-        </el-col>
-      </el-row>
+      <!-- 操作按钮 -->
+      <div class="operate">
+        <el-button size="medium" type="primary" plain @click="showForm()">+ 新增菜品</el-button>
+        <el-button size="medium" type="warning" plain @click="deleteDishes()">删除选中</el-button>
+      </div>
+      
+      <el-dialog class="newDishes" title="更改菜品信息" :visible.sync="dialogFormVisible">
+        <el-form :model="newDishes" :rules="rules">
+          <el-form-item label="菜品名:" :label-width="formLabelWidth" prop="name">
+            <el-input v-model="newDishes.dishes.name" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="菜品类别:" :label-width="formLabelWidth" prop="dishesTypeName">
+            <el-select v-model="newDishes.dishesTypeName" placeholder="请选择菜品类别">
+              <el-option label="区域一" value="shanghai"></el-option>
+              <el-option label="区域二" value="beijing"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="普通价格:" :label-width="formLabelWidth" prop="price">
+            <el-input v-model="newDishes.dishes.price" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="会员价格:" :label-width="formLabelWidth" prop="vipPrice">
+            <el-input v-model="newDishes.dishes.vipPrice" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="上传菜品图片:" :label-width="formLabelWidth">
+            <el-upload
+              action="http://121.43.56.241:8080/upload"
+              list-type="picture-card"
+              limit="1"
+              :on-preview="handlePictureCardPreview"
+              :on-remove="handleRemove">
+              <i class="el-icon-plus"></i>
+            </el-upload>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="hideForm()">取 消</el-button>
+          <el-button type="primary" @click="hideForm()">确 定</el-button>
+        </div>
+      </el-dialog>
+
+
+
 
       <el-tabs
         v-model="cntGroupId"
         type="border-card">
+        
         <el-tab-pane
           v-for="group in dishesList"
           :key="group.index"
@@ -30,11 +56,7 @@
           :name="group.id">
           
           <!-- {{ group.foods }} -->
-          <div class="operate">
-            <el-button size="medium" type="primary" plain>+ 新增菜品</el-button>
-            <el-button size="medium" type="warning" plain @click="deleteDishes()">删除选中</el-button>
-            <el-button size="medium" type="danger" plain @click="deleteDishesTab">删除此分类</el-button>
-          </div>
+          
 
           <el-table
             :data="group.dishes"
@@ -42,7 +64,7 @@
             border
             style="width: 100%"
             @selection-change="handleSelectionChange">
-
+            <el-empty description="暂时没有菜品呢"></el-empty>
             <!-- <el-table-column type="index"> </el-table-column> -->
             <el-table-column type="selection" width="55"></el-table-column>
             <el-table-column prop="name" label="菜品名"></el-table-column>
@@ -96,7 +118,7 @@
 <script>
 import { 
   getDishesList,
-  addDishesType,
+  deleteDishes,
 } from '../../api/user.js'
 export default {
   name: "Menu",
@@ -118,6 +140,58 @@ export default {
       total: 0,
       // 好像是多选列表
       multipleSelection: [],
+      // 弹出表单是否显示
+      dialogFormVisible: false,
+      // 表单的样式设置
+      formLabelWidth: '100px',
+      // 新增菜品所填表单数据
+      newDishes: {
+        dishes: {
+          name: '',
+          price: '',
+          vipPrice: '',
+          imgUrl: '',
+        },
+        dishesTypeName: '',
+      },
+      // 表单的验证规则
+      rules:{
+        name: [
+          {
+            required: true,
+            message: '请输入菜品名',
+            trigger: 'blur'
+          },
+          {
+            min: 1,
+            max: 6,
+            message: '长度在 1 到 6 个汉字',
+            trigger: 'blur'
+          }
+        ],
+        price: [
+          {
+            required: true,
+            message: '请输入普通价格',
+            trigger: 'blur'
+          },
+        ],
+        vipPrice: [
+          {
+            required: true,
+            message: '请输入会员价格',
+            trigger: 'blur'
+          },
+        ],
+        imgUrl: [],
+        dishesTypeName: [
+          {
+            required: true,
+            message: '请输入菜品类别',
+            trigger: 'blur'
+          },
+        ],
+      },
     };
   },
   created() {
@@ -135,71 +209,16 @@ export default {
     finish(row){
       console.log(row)
     },
-    // //删除标签
-    // removeTab(targetName) {
-    //   let tabs = this.editableTabs;
-    //   let activeName = this.editableTabsValue;
-    //   if (activeName === targetName) {
-    //     tabs.forEach((tab, index) => {
-    //       if (tab.name === targetName) {
-    //         let nextTab = tabs[index + 1] || tabs[index - 1];
-    //         if (nextTab) {
-    //           activeName = nextTab.name;
-    //         }
-    //       }
-    //     });
-    //   }
-      
-    //   this.editableTabsValue = activeName;
-    //   this.editableTabs = tabs.filter(tab => tab.name !== targetName);
-    // },
 
-
-    // 新增标签(会弹出一个模态框出来)
-    createDishesTab() {
-      this.$prompt('请输入新增的菜品分类名称', '新增', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        // 正则匹配空值
-        inputPattern: /^\S+$/,
-        inputErrorMessage: '内容不能为空'
-      }).then(({ value }) => {
-        // 发送新增菜品类型的请求
-        addDishesType(value).then(() => {
-          // this.dishesList.push(res.data)
-          this.getNewDishesList()
-          this.$message({
-            type: 'success',
-            message: '成功创建一个分类: ' + value
-          });
-        })
-
-        
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '取消输入'
-        });       
-      });
+    // 显示弹出表单
+    showForm() {
+      this.dialogFormVisible = true;
     },
-    // 删除标签
-    deleteDishesTab() {
-      this.$confirm('此操作将永久删除该分类, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.$message({
-          type: 'success',
-          message: '删除成功!'
-        });
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        });        
-      });
+    // 隐藏弹出表单
+    hideForm() {
+      this.dialogFormVisible = false;
     },
+    
     // 新增菜品
     createDishes() {
       
@@ -224,13 +243,14 @@ export default {
         }
         // 将所有promise执行完毕
         Promise.all(all).then(res => {
+          this.$message({
+            message: '成功删除所选菜品',
+            type: 'success'
+          });
           // 更新数据
           this.getNewDishesList();
         })
-        this.$message({
-          message: '成功删除所选菜品',
-          type: 'success'
-        })
+        
         return;
       }
     },
@@ -259,6 +279,15 @@ export default {
       this.queryInfo.pagenum = val;
       // console.log(`当前页: ${val}`);
     },
+
+    // 图片上传
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    handlePictureCardPreview(file) {
+      this.dialogImageUrl = file.url;
+      this.dialogVisible = true;
+    },
   },
 };
 </script>
@@ -286,5 +315,11 @@ export default {
   align-items: center;
   height: 50px;
   padding: 0 10px;
+}
+
+
+/* 修改菜品的表单样式 */
+.newDishes{
+  text-align: left;
 }
 </style>
