@@ -27,12 +27,16 @@
           </el-form-item>
           <el-form-item label="上传菜品图片:" :label-width="formLabelWidth">
             <el-upload
+              class="uploader"
               action="http://121.43.56.241:8080/upload"
               list-type="picture-card"
-              limit="1"
-              :on-preview="handlePictureCardPreview"
-              :on-remove="handleRemove">
-              <i class="el-icon-plus"></i>
+              :show-file-list="false"
+              :before-upload="beforeUpload"
+              :on-success="handleSuccess"
+              :limit="1"
+              v-model="newDishes.dishes.imgUrl">
+              <img v-if="newDishes.dishes.imgUrl" :src="newDishes.dishes.imgUrl" class="dishesImg">
+              <i v-else class="el-icon-plus"></i>
             </el-upload>
           </el-form-item>
         </el-form>
@@ -288,6 +292,23 @@ export default {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
     },
+    // 图片上传前的验证函数
+    beforeUpload(file) {
+      const isJPG = file.type === 'image/jpeg';
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!');
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!');
+      }
+      return isJPG && isLt2M;
+    },
+    // 图片上传成功后的回调函数
+    handleSuccess(res, file) {
+      this.newDishes.dishes.imgUrl = "http://121.43.56.241:8080" + res.data.msg;
+    },
   },
 };
 </script>
@@ -322,4 +343,7 @@ export default {
 .newDishes{
   text-align: left;
 }
+
+/*有关表单中图片上传的样式 */
+
 </style>
