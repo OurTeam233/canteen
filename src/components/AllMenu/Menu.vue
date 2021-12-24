@@ -14,7 +14,7 @@
             <el-input v-model="newDishes.dishes.name" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="菜品类别:" :label-width="formLabelWidth" prop="dishesTypeName">
-            <el-select v-model="newDishes.dishesTypeName" placeholder="请选择菜品类别">
+            <el-select v-model="newDishes.dishesTypeName" filterable allow-create placeholder="请选择菜品类别">
               <el-option label="区域一" value="shanghai"></el-option>
               <el-option label="区域二" value="beijing"></el-option>
             </el-select>

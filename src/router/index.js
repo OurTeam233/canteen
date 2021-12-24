@@ -27,12 +27,21 @@ const routes = [{
         component: () => import('../views/Login.vue'),
     },
     {
-        // 登录页面
+        // 商家的登录页面
         path: '/login',
         name: 'Login',
         component: () => import('../views/Login.vue'),
         meta: {
             title: '登录' + title
+        }
+    },
+    {
+        // 管理员的登录界面
+        path: '/adminLogin',
+        name: 'AdminLogin',
+        component: () => import('../views/AdminLogin.vue'),
+        meta: {
+            title: '管理员登录' + title
         }
     },
     {
