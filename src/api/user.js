@@ -30,6 +30,9 @@ export const deleteDishes = (dishesId) => axios.post('/CanteenWeb/Dishes/Delete'
 // 新增菜品
 export const addDishes = (dishes) => axios.post('/CanteenWeb/Dishes/Insert', {dishes})
 
+// 查询所有菜品标签
+export const getDishesType = () => axios.post('/CanteenWeb/Dishes/Types/Select')
+
 // 上传图片
 export const uploadImg = (file) => axios.post('/upload', {file})
 

@@ -4,44 +4,49 @@
     <el-card>
       <!-- 操作按钮 -->
       <div class="operate">
-        <el-button size="medium" type="primary" plain @click="showForm()">+ 新增菜品</el-button>
+        <el-button size="medium" type="primary" plain @click="showForm();getType()">+ 新增菜品</el-button>
         <el-button size="medium" type="warning" plain @click="deleteDishes()">删除选中</el-button>
       </div>
       
       <el-dialog class="newDishes" title="更改菜品信息" :visible.sync="dialogFormVisible">
-        <el-form :model="newDishes" :rules="rules">
+        <el-form :model="newDishes" :rules="rules" ref="newDishes">
           <el-form-item label="菜品名:" :label-width="formLabelWidth" prop="name">
-            <el-input v-model="newDishes.dishes.name" autocomplete="off"></el-input>
+            <el-input v-model="newDishes.name" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="菜品类别:" :label-width="formLabelWidth" prop="dishesTypeName">
             <el-select v-model="newDishes.dishesTypeName" filterable allow-create placeholder="请选择菜品类别">
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
+              <el-option
+                v-for="item in dishesTypeList"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id">
+              </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="普通价格:" :label-width="formLabelWidth" prop="price">
-            <el-input v-model="newDishes.dishes.price" autocomplete="off"></el-input>
+          <el-form-item label="普通价格(元):" :label-width="formLabelWidth" prop="price">
+            <el-input v-model="newDishes.price" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="会员价格:" :label-width="formLabelWidth" prop="vipPrice">
-            <el-input v-model="newDishes.dishes.vipPrice" autocomplete="off"></el-input>
+          <el-form-item label="会员价格(元):" :label-width="formLabelWidth" prop="vipPrice">
+            <el-input v-model="newDishes.vipPrice" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="上传菜品图片:" :label-width="formLabelWidth">
+          <el-form-item label="上传菜品图片:" :label-width="formLabelWidth" prop="imgUrl">
             <el-upload
               class="uploader"
               action="/api/upload"
               list-type="picture-card"
-              :show-file-list="false"
+              :show-file-list="true"
               :before-upload="beforeUpload"
               :on-success="handleSuccess"
-              :limit="1"
-              v-model="newDishes.dishes.imgUrl">
-              <img v-if="newDishes.dishes.imgUrl" :src="newDishes.dishes.imgUrl" class="dishesImg">
-              <i v-else class="el-icon-plus"></i>
+              :limit="maxCount"
+              v-model="newDishes.imgUrl">
+              <!-- <img v-if="newDishes.imgUrl != ''" :src="newDishes.imgUrl" class="dishesImg">
+              <i v-else class="el-icon-plus"></i> -->
+              <i class="el-icon-plus"></i> 
             </el-upload>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="hideForm()">取 消</el-button>
+          <el-button @click="hideForm();resetForm('newDishes')">取 消</el-button>
           <el-button type="primary" @click="hideForm()">确 定</el-button>
         </div>
       </el-dialog>
@@ -123,6 +128,7 @@
 import { 
   getDishesList,
   deleteDishes,
+  getDishesType,
 } from '../../api/user.js'
 export default {
   name: "Menu",
@@ -131,14 +137,30 @@ export default {
   
   },
   data() {
+    // 验证表单中的数字类型
+    const isNumber = (rule, value, callback) => {
+      if (!value) {
+        callback();
+      } else {
+        var reg = /^-?\d{1,4}(?:\.\d{1,2})?$/;
+        if (reg.test(value)) {
+          callback();
+        } else {
+          callback(new Error("请输入数字"));//如:1 或1.8 或1.85
+        }
+      }
+    }; 
     return {
       queryInfo: {
         query: "",
         pagenum: 1,
         pagesize: 10,
       },
-      cntGroupId: 3,  
+      cntGroupId: 3,
+      // 菜品列表  
       dishesList: [],
+      // 菜品类别列表
+      dishesTypeList: [],
 
       // 所用订单的总数
       total: 0,
@@ -147,17 +169,18 @@ export default {
       // 弹出表单是否显示
       dialogFormVisible: false,
       // 表单的样式设置
-      formLabelWidth: '100px',
+      formLabelWidth: '110px',
+      // 图片的最大上传数量
+      maxCount: 1,
       // 新增菜品所填表单数据
       newDishes: {
-        dishes: {
-          name: '',
-          price: '',
-          vipPrice: '',
-          imgUrl: '',
-        },
+        name: '',
+        price: '',
+        vipPrice: '',
+        imgUrl: '',
         dishesTypeName: '',
       },
+      
       // 表单的验证规则
       rules:{
         name: [
@@ -176,23 +199,38 @@ export default {
         price: [
           {
             required: true,
-            message: '请输入普通价格',
+            message: '请输入数字',
             trigger: 'blur'
           },
+          {
+            validator: isNumber,
+            trigger: 'blur'
+          }
+          
         ],
         vipPrice: [
           {
             required: true,
-            message: '请输入会员价格',
+            message: '请输入数字',
             trigger: 'blur'
           },
+          {
+            validator: isNumber,
+            trigger: 'blur'
+          }
         ],
-        imgUrl: [],
+        imgUrl: [
+          {
+            required: true,
+            message: '请上传图片',
+            trigger: 'blur'
+          }
+        ],
         dishesTypeName: [
           {
             required: true,
             message: '请输入菜品类别',
-            trigger: 'blur'
+            trigger: 'change'
           },
         ],
       },
@@ -292,22 +330,40 @@ export default {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
     },
+
+    // 获取菜品类别
+    getType() {
+      getDishesType().then(res => {
+        // console.log(res.data)
+        this.dishesTypeList = res.data
+      })
+    },
+    
+    // 取消填写表单后清空表单数据
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
+    },
     // 图片上传前的验证函数
     beforeUpload(file) {
+      console.log(file)
       const isJPG = file.type === 'image/jpeg';
       const isLt2M = file.size / 1024 / 1024 < 2;
 
       if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!');
+        this.$message.error('上传图片只能是 JPG 格式!');
       }
       if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!');
+        this.$message.error('上传图片大小不能超过 2MB!');
       }
       return isJPG && isLt2M;
     },
     // 图片上传成功后的回调函数
     handleSuccess(res, file) {
-      this.newDishes.dishes.imgUrl = "http://121.43.56.241:8080" + res.data.msg;
+      // console.log('-------------------')
+      // console.log(file)
+      // console.log(res)
+      this.newDishes.imgUrl = "http://121.43.56.241" + res.msg;
+      console.log(this.newDishes.imgUrl)
     },
   },
 };
@@ -345,5 +401,8 @@ export default {
 }
 
 /*有关表单中图片上传的样式 */
-
+.dishesImg{
+  width:148px;
+  height:148px;
+}
 </style>
