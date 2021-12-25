@@ -28,7 +28,7 @@
           <el-form-item label="上传菜品图片:" :label-width="formLabelWidth">
             <el-upload
               class="uploader"
-              action="http://121.43.56.241:8080/upload"
+              action="/api/upload"
               list-type="picture-card"
               :show-file-list="false"
               :before-upload="beforeUpload"

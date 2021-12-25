@@ -7,31 +7,31 @@ import axios from '../utils/request'
 // 用户登录
 // export const login = (username, password, userType) => http.post('http://121.43.56.241:8080/CanteenWeb/User/Login', {username, password, userType})
 // export const login = (username, password, userType) => api.postListAPI(username, password, userType)
-export const login = (username, password, userType) => axios.post('/Login', {username, password, userType})
+export const login = (username, password, userType) => axios.post('/CanteenWeb/Login', {username, password, userType})
 
 
 
 
 // 获取店铺数据
-export const getStoreInfo = () => axios.post('/Store')
+export const getStoreInfo = () => axios.post('/CanteenWeb/Store')
 
 // 获取店铺中所有的菜品信息
-export const getDishesList = () => axios.post('/Dishes')
+export const getDishesList = () => axios.post('/CanteenWeb/Dishes')
 
 // 获取...订单信息
-export const getOrderList = () => axios.post('/Order/Select')
+export const getOrderList = () => axios.post('/CanteenWeb/Order/Select')
 
 // 更改订单状态
-export const changeOrderType = (orderId, type) => axios.post('/Order/Update', {orderId, type})
+export const changeOrderType = (orderId, type) => axios.post('/CanteenWeb/Order/Update', {orderId, type})
 
 // 删除菜品
-export const deleteDishes = (dishesId) => axios.post('/Dishes/Delete', {dishesId})
+export const deleteDishes = (dishesId) => axios.post('/CanteenWeb/Dishes/Delete', {dishesId})
 
 // 新增菜品
-export const addDishes = (dishes) => axios.post('/Dishes/Insert', {dishes})
+export const addDishes = (dishes) => axios.post('/CanteenWeb/Dishes/Insert', {dishes})
 
 // 上传图片
-export const uploadImg = (file) => axios.post('http://121.43.56.241:8080/upload', {file})
+export const uploadImg = (file) => axios.post('/upload', {file})
 
 
 
