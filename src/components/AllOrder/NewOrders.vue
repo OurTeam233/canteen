@@ -92,7 +92,7 @@ export default {
       multipleSelection: [],
 
       // 长连接
-      wsUrl: 'wss://121.43.56.241/CanteenWeb/Websocket/1', // ws地址
+      wsUrl: 'ws://121.43.56.241/CanteenWeb/Websocket/1', // ws地址
       websock: null, // ws实例
       
 
