@@ -19,7 +19,7 @@
                 v-for="item in dishesTypeList"
                 :key="item.id"
                 :label="item.name"
-                :value="item.id">
+                :value="item.name">
               </el-option>
             </el-select>
           </el-form-item>
@@ -37,6 +37,7 @@
               :show-file-list="true"
               :before-upload="beforeUpload"
               :on-success="handleSuccess"
+              :on-remove="handleRemove"
               :limit="maxCount"
               v-model="newDishes.imgUrl">
               <!-- <img v-if="newDishes.imgUrl != ''" :src="newDishes.imgUrl" class="dishesImg">
@@ -47,7 +48,7 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="hideForm();resetForm('newDishes')">取 消</el-button>
-          <el-button type="primary" @click="hideForm()">确 定</el-button>
+          <el-button type="primary" @click="submitForm('newDishes')">确 定</el-button>
         </div>
       </el-dialog>
 
@@ -129,6 +130,7 @@ import {
   getDishesList,
   deleteDishes,
   getDishesType,
+  addDishes,
 } from '../../api/user.js'
 export default {
   name: "Menu",
@@ -223,7 +225,7 @@ export default {
           {
             required: true,
             message: '请上传图片',
-            trigger: 'blur'
+            trigger: 'change'
           }
         ],
         dishesTypeName: [
@@ -339,7 +341,45 @@ export default {
       })
     },
     
-    // 取消填写表单后清空表单数据
+    // 表单的提交与清空
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          // 验证成功将表单数据请求出去
+          console.log(this.newDishes)
+          addDishes(this.newDishes).then(res => {
+            console.log(res)
+            this.$message({
+              message: '添加成功',
+              type: 'success'
+            });
+            // 更新数据
+            this.getNewDishesList();
+            // 隐藏弹出表单
+            this.hideForm();
+            // 清空弹出表单中的数据
+            this.newDishes = {
+              name: '',
+              price: '',
+              vipPrice: '',
+              imgUrl: '',
+              dishesTypeName: '',
+            }
+          }).catch(err => {
+            this.$message({
+              message: '添加失败,请检查网络或稍后再试',
+              type: 'error'
+            });
+          })
+          // 成功提交后清空并隐藏表单
+          // this.hideForm();
+          // this.resetForm('newDishes');
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
+    },
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
@@ -364,6 +404,10 @@ export default {
       // console.log(res)
       this.newDishes.imgUrl = "http://121.43.56.241" + res.msg;
       console.log(this.newDishes.imgUrl)
+    },
+    // 移除图片时将图片地址清空
+    handleRemove(file, fileList) {
+      this.newDishes.imgUrl = '';
     },
   },
 };
