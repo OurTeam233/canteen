@@ -1,46 +1,28 @@
 <template>
   <div>
     <el-table
-      :data="tableData"
+      :data="storeInfoList"
       style="width: 100%"
     >
       <el-table-column label="店铺信息">
         <template slot-scope="props">
           <el-form>
-            <el-form-item label="店铺名称：" class="form-item">
-              <span >{{ props.row.shop }}</span>
+            <el-form-item label="店铺名称:" class="form-item">
+              <span >{{ props.row.name }}</span>
               <el-button class="el-button" size="medium" @click="editName">编辑</el-button>
             </el-form-item>
-            <el-form-item label="联系电话：" class="form-item" >
-              <span>{{ props.row.telephone }}</span>
+            <el-form-item label="联系电话:" class="form-item" >
+              <span>{{ props.row.phone }}</span>
               <el-button class="el-button" size="medium">编辑</el-button>
             </el-form-item>
-            <el-form-item label="店铺地址：" class="form-item">
-              <span>{{ props.row.address }}</span>
+            <el-form-item label="店铺描述:" class="form-item">
+              <span>{{ props.row.description }}</span>
               <el-button class="el-button" size="medium">编辑</el-button>
             </el-form-item>
-            <el-form-item label="商品详情：" class="form-item">
-              <span>{{ props.row.id }}</span>
-              <el-button class="el-button" size="medium">查看</el-button>
-            </el-form-item>
-            <el-form-item label="营业额：￥" class="form-item">
-              <span>{{ props.row.money}}</span>
-              <el-button class="el-button" size="medium">查看</el-button>
-            </el-form-item>
-            <el-form-item label="接单设置：" class="form-item">
-              <el-switch
-                v-model="value1"
-                active-text="自动接单"
-                inactive-text="手动接单">
-              </el-switch>
-            </el-form-item>
-            <el-form-item label="店铺状态：" class="form-item">
-              <el-switch
-                v-model="value2"
-                active-text="休息"
-                inactive-text="营业">
-              </el-switch>
-            </el-form-item>
+            
+            
+            
+            
           </el-form>
         </template>
       </el-table-column>
@@ -68,9 +50,6 @@
     font-size: large;
   }
 
-  .form-item {
-
-  }
 
   .form-item:hover {
 
@@ -85,29 +64,34 @@
 </style>
 
 <script>
+  import { getStoreInfo } from '../../api/user.js'
   export default {
     name: 'Info',
     data () {
       return {
         value1: true,
         value2: true,
-        tableData: [{
-          category: '江浙小吃、小吃零食',
-          desc: '荷兰优质淡奶，奶香浓而不腻',
-          address: '上海市普陀区真北路',
-          shop: '王小虎夫妻店',
-          telephone: '123456789',
-          money: '10万元',
-          ordering: '手动',//自动
-          state: '营业'
-        },]
+        storeInfoList: [{
+          name: '',
+          phone: '',
+          description: '',
+          logoUrl: '',
+        }],
       }
     },
-
+    mounted(){
+      this.getNewStoreInfo()
+    },
     methods: {
 
-      edit(){
-
+      getNewStoreInfo(){
+        getStoreInfo().then(res => {
+          this.storeInfoList[0].name = res.data.name;
+          this.storeInfoList[0].phone = res.data.phone;
+          this.storeInfoList[0].description = res.data.description;
+          this.storeInfoList[0].logoUrl = res.data.logoUrl;
+          console.log(res)
+        })
       },
       editName () {
         this.$prompt('请输入店名', '提示', {

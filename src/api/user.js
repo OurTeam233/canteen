@@ -34,6 +34,9 @@ export const getDishesType = () => axios.post('/CanteenWeb/Dishes/Types/Select')
 // 上传图片(好像被组件代替了没用上)
 export const uploadImg = (file) => axios.post('/upload', {file})
 
+// 修改店铺营业状态
+export const changeStoreStatus = (status) => axios.post('/CanteenWeb/Store/Update', {status})
+
 
 
 

@@ -66,6 +66,7 @@
           <div class="state">
             <el-switch
               v-model="state"
+              @change="changeState"
               active-text="营业中"
               inactive-text="休息中">
             </el-switch>
@@ -73,7 +74,7 @@
           <!-- 头像下拉菜单 -->
           <div class="header-avatar">
             <div class="user">
-              管理员，您好!
+              商家，您好!
             </div>
             <el-dropdown @command="handleCommand">
               <span class="el-dropdown-link">
@@ -119,6 +120,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex';
+import { changeStoreStatus } from '../api/user.js';
 export default {
   components: {
   },
@@ -150,6 +152,24 @@ export default {
     }
   },
   methods: {
+
+    // 点击开关切换商家的营业状态
+    changeState() {
+      // console.log("切换成功")
+      // console.log(this.state)
+      let toState = this.state ? 1 : 0;
+      // console.log(toState)
+      changeStoreStatus(toState).then(res => {
+        // console.log(res)
+        if(res.data.success) {
+          this.$message({
+            message: '营业状态切换成功',
+            type: 'success'
+          });
+        }
+      });
+    },
+
     // 右上角下拉菜单点击事件
     handleCommand(command){
       switch(command){
@@ -290,13 +310,6 @@ export default {
               path: '/Ordering/IllegalOrders',
               label: '违规订单',
               name: 'IllegalOrders'
-            },
-            {
-              id: 'number-04',
-              class: 'el-icon-dish',
-              path: '/Ordering/Test',
-              label: '专门写测试的',
-              name: 'Test'
             },
             {
               id: 'number-07',
