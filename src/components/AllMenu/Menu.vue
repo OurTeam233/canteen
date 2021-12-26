@@ -63,7 +63,7 @@
           v-for="group in dishesList"
           :key="group.index"
           :label="group.name"
-          :name="group.id">
+          :name="String(group.id)">
           
           <!-- {{ group.foods }} -->
           
@@ -136,7 +136,9 @@ export default {
   name: "Menu",
   mounted() {
     this.getNewDishesList()
-  
+    // console.log('-------------------')
+    // console.log(this.dishesList)
+    // this.cntGroupId = String(this.dishesList[0].id)
   },
   data() {
     // 验证表单中的数字类型
@@ -158,7 +160,7 @@ export default {
         pagenum: 1,
         pagesize: 10,
       },
-      cntGroupId: 3,
+      cntGroupId: '',
       // 菜品列表  
       dishesList: [],
       // 菜品类别列表
@@ -246,6 +248,9 @@ export default {
       getDishesList().then(res => {
         this.dishesList = res.data
         console.log(this.dishesList)
+        // 默认标签页为列表中的第一个元素
+        this.cntGroupId = String(this.dishesList[0].id)
+
       })
     },
 
