@@ -136,6 +136,7 @@ export default {
   name: "Menu",
   mounted() {
     this.getNewDishesList()
+    
     // console.log('-------------------')
     // console.log(this.dishesList)
     // this.cntGroupId = String(this.dishesList[0].id)
@@ -341,7 +342,7 @@ export default {
     // 获取菜品类别
     getType() {
       getDishesType().then(res => {
-        // console.log(res.data)
+        console.log(res.data)
         this.dishesTypeList = res.data
       })
     },
@@ -352,7 +353,7 @@ export default {
         if (valid) {
           // 验证成功将表单数据请求出去
           console.log(this.newDishes)
-          addDishes(this.newDishes).then(res => {
+          addDishes(JSON.stringify(this.newDishes)).then(res => {
             console.log(res)
             this.$message({
               message: '添加成功',

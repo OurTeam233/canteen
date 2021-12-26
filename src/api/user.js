@@ -10,8 +10,6 @@ import axios from '../utils/request'
 export const login = (username, password, userType) => axios.post('/CanteenWeb/Login', {username, password, userType})
 
 
-
-
 // 获取店铺数据
 export const getStoreInfo = () => axios.post('/CanteenWeb/Store')
 
