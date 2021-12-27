@@ -36,15 +36,6 @@ const routes = [{
         }
     },
     {
-        // 管理员的登录界面
-        path: '/adminLogin',
-        name: 'AdminLogin',
-        component: () => import('../views/AdminLogin.vue'),
-        meta: {
-            title: '管理员登录' + title
-        }
-    },
-    {
         // 404页面
         path: '*',
         name: 'NotFound',
