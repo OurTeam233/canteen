@@ -7,8 +7,13 @@ const state = {
   activePath: '/Ordering/OverallStatistics',
   // 菜单项 - 默认包含首页
   tabList: [
-      {path: '/Ordering/OverallStatistics', label: '工作台', name: 'OverallStatistics'}
+      {
+        path: '/ordering/OverallStatistics', 
+        label: '工作台', 
+        name: 'OverallStatistics'
+      }
   ]
+  
 }
 
 export default state

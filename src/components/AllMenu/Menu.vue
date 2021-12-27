@@ -88,16 +88,8 @@
                   height="65px"/>
               </template>
             </el-table-column>
-            <el-table-column
-              prop="price"
-              label="价格(元)"
-              width="100px"
-            ></el-table-column>
-            <el-table-column prop="vipPrice" label="会员价(元)" width="100px">
-              <!-- <template v-slot="scope">
-          {{ scope.row.add_time | dateFormat }}
-        </template> -->
-            </el-table-column>
+            <el-table-column prop="price" label="价格(元)" width="100px" :formatter="moneyFormat" ></el-table-column>
+            <el-table-column prop="vipPrice" label="会员价(元)" width="100px" :formatter="vipMoneyFormat" ></el-table-column>
 
             <el-table-column label="操作" width="100px">
               <template v-slot="scope">
@@ -254,7 +246,13 @@ export default {
 
       })
     },
-
+    // 价格格式化
+    moneyFormat(row){
+      return row.price / 100
+    },
+    vipMoneyFormat(row){
+      return row.vipPrice / 100
+    },
     // 打印测试
     finish(row){
       console.log(row)
@@ -269,10 +267,6 @@ export default {
       this.dialogFormVisible = false;
     },
     
-    // 新增菜品
-    createDishes() {
-      
-    },
     // 删除所有选中的菜品
     deleteDishes() {
       // 如果没有选中任何订单

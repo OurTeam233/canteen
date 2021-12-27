@@ -55,8 +55,15 @@ export const adminMenuList = [
   {
     id: '001',
     class: 'el-icon-suitcase-1',
-    path: '/Ordering/editMenu',
-    label: '管理员界面测试',
-    name: 'editMenu'
+    path: '/ordering/OverallStatistics',
+    label: '工作台',
+    name: 'OverallStatistics',
+  },
+  {
+    id: '002',
+    class: 'el-icon-suitcase-1',
+    path: '/ordering/UserManage',
+    label: '商家用户管理',
+    name: 'UserManage'
   }
 ]

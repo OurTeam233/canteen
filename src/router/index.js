@@ -135,11 +135,11 @@ const routes = [{
                 }
             },
             {
-                path: 'wantCopyTest',
-                name: 'WantCopyTest',
-                component: () => import('../components/Statistics/wantCopyTest.vue'),
+                path: 'userManage',
+                name: 'UserManage',
+                component: () => import('../components/Admin/UserManage.vue'),
                 meta: {
-                    title: '想偷代码' + title
+                    title: '用户管理' + title
                 }
             }
         ]

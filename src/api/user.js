@@ -26,7 +26,13 @@ export const changeOrderType = (orderId, type) => axios.post('/CanteenWeb/Order/
 export const deleteDishes = (dishesId) => axios.post('/CanteenWeb/Dishes/Delete', {dishesId})
 
 // 新增菜品
-export const addDishes = (dishes) => axios.post('/CanteenWeb/Dishes/Insert', {dishes})
+export const addDishes = (dishes) => axios({
+  url: '/CanteenWeb/Dishes/Insert',
+  method: 'post',
+  data: {
+    dishes
+  }
+})
 
 // 查询所有菜品标签
 export const getDishesType = () => axios.post('/CanteenWeb/Dishes/Types/Select')
@@ -39,6 +45,12 @@ export const changeStoreStatus = (status) => axios.post('/CanteenWeb/Store/Updat
 
 
 
+/*管理员操作 */
+
+// 查询所有用户
+export const getUserList = () => axios.post('/CanteenWeb/User/Select')
+
+// 
 
 
 
