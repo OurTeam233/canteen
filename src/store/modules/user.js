@@ -3,12 +3,17 @@
 
 const state = {
   userInfo:{},
+  type: '',
   token:'',
 }
 const mutations = {
   //设置用户信息
   SET_USER_INFO(state,user){
     state.userInfo = user
+  },
+  //设置用户类型
+  SET_USER_TYPE(state,type){
+    state.type = type
   },
   //设置token
   SET_TOKEN(state,token){
@@ -22,6 +27,9 @@ const actions = {
   },
   set_userInfo({commit},userInfo){
     commit('SET_USER_INFO',userInfo)
+  },
+  set_userType({commit},type){
+    commit('SET_USER_TYPE',type)
   }
 }
 

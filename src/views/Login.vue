@@ -2,7 +2,7 @@
   <div class="container">
     <el-form ref="form" :model="form" :rules="rules" class="login-box">
       <h2>欢迎登录食堂管理系统</h2>
-      <el-form-item label="账号" prop="name">
+      <el-form-item label="账号" prop="username">
         <el-input
           type="text"
           placeholder="请输入用户名"
@@ -16,6 +16,12 @@
           v-model="form.password"
           show-password
         ></el-input>
+      </el-form-item>
+      <el-form-item label="请选择用户类型" prop="userType">
+        <el-radio-group v-model="form.userType">
+          <el-radio :label="2">食堂商家</el-radio>
+          <el-radio :label="0">管理员</el-radio>
+        </el-radio-group>
       </el-form-item>
       <el-button type="primary" @click="submitForm('form')">登录</el-button>
     </el-form>
@@ -49,6 +55,13 @@ export default {
             trigger: "blur",
           },
         ],
+        userType: [
+          {
+            required: true,
+            message: "请选择用户类型",
+            trigger: "change",
+          },
+        ]
       },
     };
   },
@@ -76,9 +89,12 @@ export default {
               //   "userInfo",
               //   JSON.stringify(result.userInfo)
               // );
-              
+              console.log(res.data)
               this.$store.dispatch("set_token", res.data.token);
               window.sessionStorage.setItem('token', res.data.token);
+              // 保存用户类型
+              this.$store.dispatch("set_userType", this.form.userType);
+              window.sessionStorage.setItem('userType', this.form.userType);
               // 页面跳转
               // this.$router.push(this.$store.activePath)
               // 成功登录后的缓存数据
