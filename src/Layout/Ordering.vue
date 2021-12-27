@@ -63,7 +63,7 @@
             </div>
           </div>
           <!-- 营业状态显示 -->
-          <div class="state">
+          <div class="state" >
             <el-switch
               v-model="state"
               @change="changeState"
@@ -129,6 +129,11 @@ export default {
   
   //组件被创建
   created() {
+    let tempType = sessionStorage.getItem('userType');
+    console.log(tempType);
+    if(tempType != null){
+      this.$store.dispatch('set_userType', tempType);
+    }
     //加载菜单
     this.loadMenu();
   },
@@ -274,10 +279,10 @@ export default {
     },
     //加载菜单
     loadMenu(){
-      if(this.userType === 0) {
+      if(this.userType === '0') {
         // 管理员用户
         this.menuList = adminMenuList
-      } else if(this.userType === 2) {
+      } else if(this.userType === '2') {
         this.menuList = storeMenuList
       }
 
