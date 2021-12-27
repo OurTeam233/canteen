@@ -63,7 +63,7 @@
             </div>
           </div>
           <!-- 营业状态显示 -->
-          <div class="state" >
+          <div class="state" v-if="this.userType == '2'">
             <el-switch
               v-model="state"
               @change="changeState"
@@ -74,7 +74,8 @@
           <!-- 头像下拉菜单 -->
           <div class="header-avatar">
             <div class="user">
-              商家，您好!
+              {{this.userType=='0'?'管理员':'商家'}}
+              , 您好!
             </div>
             <el-dropdown @command="handleCommand">
               <span class="el-dropdown-link">
@@ -283,6 +284,7 @@ export default {
         // 管理员用户
         this.menuList = adminMenuList
       } else if(this.userType === '2') {
+        // 商家用户
         this.menuList = storeMenuList
       }
 

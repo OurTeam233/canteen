@@ -21,6 +21,7 @@
       </el-row>
 
       <!-- 表格数据 -->
+      
       <el-table :data="orderList.filter(data => {
         // 查询不为空
         if(this.queryInfo.query != ''){
@@ -43,6 +44,7 @@
         stripe border 
         style="width: 100%" 
         @selection-change="handleSelectionChange">
+        
         <!-- <el-table-column type="index"> </el-table-column> -->
         <el-table-column type="selection" width="55"></el-table-column>
         <el-table-column prop="orderNumber" label="取餐号" width="85px"></el-table-column>
@@ -56,6 +58,7 @@
             <el-button size="mini" type="primary" @click="completeOrder(scope.row)">完成</el-button>
           </template>
         </el-table-column>
+        
       </el-table>
 
       <el-pagination
