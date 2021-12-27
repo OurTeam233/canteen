@@ -121,9 +121,12 @@
 <script>
 import { mapState, mapMutations } from 'vuex';
 import { changeStoreStatus } from '../api/user.js';
+import {
+  adminMenuList,
+  storeMenuList
+} from '../utils/menuList.js';
 export default {
-  components: {
-  },
+  
   //组件被创建
   created() {
     //加载菜单
@@ -134,6 +137,7 @@ export default {
        activePath: state => state.activePath, // 已选中菜单
        tabList: state => state.tabList,  // tags菜单列表
        catch_components: state => state.catch_components,  // keepalive缓存
+       userType: state => state.user.type
     })
   },
   data() {
@@ -270,63 +274,71 @@ export default {
     },
     //加载菜单
     loadMenu(){
-        this.menuList = [
-            {
-                id: 'number-01', 
-                class: 'el-icon-suitcase-1', 
-                path: '/Ordering/OverallStatistics', 
-                label: '工作台', 
-                name: 'OverallStatistics',
-                // children:[{
-                //   id: 'number-01-01',
-                //   label:'第二个',
-                //   path: '/Ordering/NewOrders',
-                // }]
-            },
-            {
-                id: 'number-02', 
-                class: 'el-icon-document', 
-                path: '/Ordering/NewOrders', 
-                label: '新增订单', 
-                name: 'NewOrders'
-            },
-            {
-              id: 'number-06',
-              class: 'el-icon-document-add',
-              path: '/Ordering/NotReceive',
-              label: '未取订单',
-              name: 'NotReceive'
-            },
-            {
-              id: 'number-03', 
-              class: 'el-icon-document-checked',
-              path: '/Ordering/HistoryOrders',
-              label: '历史订单',
-              name: 'HistoryOrders'
-            },
-            {
-              id: 'number-09',
-              class: 'el-icon-document-delete',
-              path: '/Ordering/IllegalOrders',
-              label: '违规订单',
-              name: 'IllegalOrders'
-            },
-            {
-              id: 'number-07',
-              class: 'el-icon-dish',
-              path: '/Ordering/Menu',
-              label: '菜品管理',
-              name: 'Menu'
-            },
-            {
-              id: 'number-05',
-              class: 'el-icon-s-custom',
-              path: '/Ordering/Info',
-              label: '店铺信息',
-              name: 'Info'
-            }
+      if(this.userType === 0) {
+        // 管理员用户
+        this.menuList = adminMenuList
+      } else if(this.userType === 2) {
+        this.menuList = storeMenuList
+      }
+
+
+        // this.menuList = [
+        //     {
+        //         id: 'number-01', 
+        //         class: 'el-icon-suitcase-1', 
+        //         path: '/Ordering/OverallStatistics', 
+        //         label: '工作台', 
+        //         name: 'OverallStatistics',
+        //         // children:[{
+        //         //   id: 'number-01-01',
+        //         //   label:'第二个',
+        //         //   path: '/Ordering/NewOrders',
+        //         // }]
+        //     },
+        //     {
+        //         id: 'number-02', 
+        //         class: 'el-icon-document', 
+        //         path: '/Ordering/NewOrders', 
+        //         label: '新增订单', 
+        //         name: 'NewOrders'
+        //     },
+        //     {
+        //       id: 'number-06',
+        //       class: 'el-icon-document-add',
+        //       path: '/Ordering/NotReceive',
+        //       label: '未取订单',
+        //       name: 'NotReceive'
+        //     },
+        //     {
+        //       id: 'number-03', 
+        //       class: 'el-icon-document-checked',
+        //       path: '/Ordering/HistoryOrders',
+        //       label: '历史订单',
+        //       name: 'HistoryOrders'
+        //     },
+        //     {
+        //       id: 'number-09',
+        //       class: 'el-icon-document-delete',
+        //       path: '/Ordering/IllegalOrders',
+        //       label: '违规订单',
+        //       name: 'IllegalOrders'
+        //     },
+        //     {
+        //       id: 'number-07',
+        //       class: 'el-icon-dish',
+        //       path: '/Ordering/Menu',
+        //       label: '菜品管理',
+        //       name: 'Menu'
+        //     },
+        //     {
+        //       id: 'number-05',
+        //       class: 'el-icon-s-custom',
+        //       path: '/Ordering/Info',
+        //       label: '店铺信息',
+        //       name: 'Info'
+        //     }
             
-        ]
+        // ]
     }
   },
 };
