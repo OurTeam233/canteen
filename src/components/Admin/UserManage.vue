@@ -38,7 +38,6 @@
         style="width: 100%" 
         @selection-change="handleSelectionChange">
         <!-- <el-table-column type="index"> </el-table-column> -->
-        <el-table-column type="selection" width="55"></el-table-column>
         <el-table-column prop="storeName" label="店铺名" width="200px"></el-table-column>
         <el-table-column prop="username"  label="用户名" ></el-table-column>
         
