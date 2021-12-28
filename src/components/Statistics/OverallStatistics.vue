@@ -11,7 +11,9 @@
           <div class="data-plate">
 
             <div v-for="n in 6" :key="n" class="test">
-              <div class="test-icon"></div>
+              <div class="test-icon">
+                <i class="el-icon-user-solid" style="font-size:40px;"></i>
+              </div>
               <div class="test-text">
                 <p style="width:130px">累计订单</p>
                 <div>
@@ -202,7 +204,7 @@ p{
 }
 
 .test-icon{
-  background-color:red;
+  /* background-color:red; */
   width:60px;
   height:60px;
   margin:10px;
