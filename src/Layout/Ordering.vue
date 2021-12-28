@@ -131,7 +131,7 @@ export default {
   //组件被创建
   created() {
     let tempType = sessionStorage.getItem('userType');
-    console.log(tempType);
+    // console.log(tempType)
     if(tempType != null){
       this.$store.dispatch('set_userType', tempType);
     }

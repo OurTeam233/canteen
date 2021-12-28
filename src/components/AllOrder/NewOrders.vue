@@ -48,8 +48,17 @@
         <!-- <el-table-column type="index"> </el-table-column> -->
         <el-table-column type="selection" width="55"></el-table-column>
         <el-table-column prop="orderNumber" label="取餐号" width="85px"></el-table-column>
-        <el-table-column prop="orderDetailsList" :formatter="getDishesString" label="菜品列表" width="500px"></el-table-column>
+        <el-table-column prop="orderDetailsList" :formatter="getDishesString" label="菜品列表" width="450px"></el-table-column>
         <el-table-column prop="note" label="备注"></el-table-column>
+        <el-table-column prop="qrCode" label="取餐码" width="100px">
+          <template slot-scope="scope">
+            <img
+              :src="scope.row.qrCode"
+              alt=""
+              width="75px"
+              height="75px"/>
+          </template>
+        </el-table-column>
         <el-table-column prop="totalPrice" :formatter="moneyFormat" label="总价(元)" width="80px"></el-table-column>
         <el-table-column prop="orderTime" :formatter="dateFormat" label="取餐开始时间" width="200px"></el-table-column>
         <el-table-column label="操作" width="80px">

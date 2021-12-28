@@ -31,16 +31,25 @@
     
     
     <div class="right-box new">
-      <el-card class="new">
-        <p>新增订单</p>
-        <p>今日 本周 本月</p>
-        <div v-for="n in 10" :key="n" class="new-info">
-          <div >
-            <p class="userName">用户名</p>
-            <p class="pay">付款:15.00</p>
+      <el-card class="list">
+        <div class="list-title">
+          <p><b>预定菜品</b></p>
+          <div class="list-button">
+            <el-button type="text" @click="getToday()">今天</el-button>
+            <el-button type="text" @click="getTomorrow()">明天</el-button>
           </div>
           
-          <p class="new-time">6分钟前</p>
+        </div>
+        <el-empty v-if="this.reserveDishesList.length == 0" description="暂无数据"></el-empty>
+        <div v-for="(item, index) in reserveDishesList" :key="item.id" class="list-item">
+          <div class="list-index">{{ index }}</div>
+          <img :src="item.imgUrl" alt="" class="list-img">
+          <div >
+            <p class="name">{{ item.name }}</p>
+            <p class="num">{{ item.num }}</p>
+          </div>
+          
+          
         </div>
 
       </el-card>
@@ -50,16 +59,60 @@
 
 <script>
 import * as Echarts from 'echarts';
+import { 
+  getTomorrowDishes,
+  getTodayDishes,
+} from '../../api/user.js'
 
 export default {
   name: "OverallStatistics",
   data() {
-    return {chart: null};
+    return {
+      chart: null,
+      // 预定的菜品列表
+      reserveDishesList: [
+        // 演示数据
+        {
+          id:1,
+          name: "黄焖鸡",
+          num: 20,
+        },
+        {
+          id:2,
+          name: "黄焖鸡",
+          num: 20,
+        },
+        {
+          id:3,
+          name: "黄焖鸡",
+          num: 20,
+        },
+      ],
+    };
   },
   mounted() {
+    
     this.init();
+    this.getToday();
   },
   methods: {
+
+    // 获取今天的预定菜品
+    getToday(){
+      getTodayDishes().then(res => {
+        this.reserveDishesList = res.data;
+        // console.log('----------------')
+        // console.log(res);
+      })
+    },
+    // 获取明天的预定菜品
+    getTomorrow() {
+      getTomorrowDishes().then(res => {
+        this.reserveDishesList = res.data;
+        // console.log('----------------')
+        // console.log(res);
+      })
+    },
     init() { 
       let chartDom = document.getElementById('charts');
       let myChart = Echarts.init(chartDom);
@@ -148,6 +201,8 @@ export default {
       });
       myChart.setOption(option);
     },
+
+    
   },
 };
 </script>
@@ -166,6 +221,43 @@ p{
 
 }
 
+/*预定菜品的标题菜单栏 */
+.list-title{
+  /* display: flex; */
+  padding: 0;
+  border-bottom:1px solid #ccc;
+}
+/*预定菜品的文字按钮 */
+.list-button{
+  display: flex;
+  /* justify-content: space-between; */
+  padding: 0;
+}
+
+/*预定菜品的列表项 */
+.list-item{
+  display: flex;
+  /* background-color: gray; */
+  justify-content: space-between;
+  border-radius: 10px;
+  align-items: center;
+  padding:5px 0;
+  /* border-bottom:1px solid #eee; */
+  margin: 8px 0;
+}
+
+/*预定菜品列表项的索引 */
+.list-index{
+  width: 50px;
+  text-align: center;
+}
+/*预定菜品列表项中的图片 */
+.list-img{
+  width:75px;
+  height:75px;
+  border-radius:5px;
+  margin:0 10px 0 5px;
+}
 
 
 
@@ -221,6 +313,8 @@ p{
   width:33%;
   margin:10px 10px 10px 0;
 }
+
+
 
 .new-info{
   width:100%;

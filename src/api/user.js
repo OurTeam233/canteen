@@ -57,3 +57,16 @@ export const resetUser = (user) => axios.post('/CanteenWeb/User/Update', {user})
 // 创建新的商家用户
 export const createUser = (user) => axios.post('/CanteenWeb/User/Insert', {user})
 
+
+/*统计界面操作 (商家和管理员公用界面，只是请求到的数据不同) */
+
+//获取明天的预定菜品
+export const getTomorrowDishes = () => axios.post('/CanteenWeb/Statistic/Dishes/NextDay')
+
+//获取今天的预定菜品
+export const getTodayDishes = () => axios.post('/CanteenWeb/Statistic/Dishes/Today')
+
+// 获取店铺的总营业额
+export const getTotalPrice = () => axios.post('/CanteenWeb/Statistic/TotalPrice')
+
+
