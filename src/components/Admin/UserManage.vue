@@ -16,7 +16,7 @@
           </el-input>
         </el-col>
         <el-col :span="4">
-          <el-button type="primary" @click="completeOrders()">+ 新增用户</el-button>
+          <el-button type="primary" @click="showForm2()">+ 新增用户</el-button>
         </el-col>
       </el-row>
 
@@ -52,7 +52,7 @@
 
 
       <!-- 重置用户信息的表单 -->
-      <el-dialog class="newUser" title="账号信息重置" :visible.sync="dialogFormVisible">
+      <el-dialog class="newUser" title="账号信息重置" :visible.sync="dialogFormVisible1">
         <el-form :model="newUser" :rules="rules" ref="newUser">
           <el-form-item label="用户名:" prop="username">
             <el-input v-model="newUser.username" autocomplete="off"></el-input>
@@ -66,6 +66,24 @@
         <div slot="footer" class="dialog-footer">
           <el-button @click="hideForm();resetForm('newUser')">取 消</el-button>
           <el-button type="primary" @click="submitForm('newUser')">确 定</el-button>
+        </div>
+      </el-dialog>
+
+      <!-- 创建新的用户的表单 -->
+      <el-dialog class="newUser2" title="创建新的账号" :visible.sync="dialogFormVisible2">
+        <el-form :model="newUser2" :rules="rules" ref="newUser2">
+          <el-form-item label="用户名:" prop="username">
+            <el-input v-model="newUser2.username" autocomplete="off"></el-input>
+          </el-form-item>
+          
+          <el-form-item label="密码" prop="password">
+            <el-input v-model="newUser2.password" autocomplete="off"></el-input>
+          </el-form-item>
+          
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="hideForm2();resetForm2('newUser2')">取 消</el-button>
+          <el-button type="primary" @click="submitForm2('newUser2')">确 定</el-button>
         </div>
       </el-dialog>
 
@@ -88,6 +106,7 @@
 import { 
   getUserList,
   resetUser,
+  createUser,
 
 } from '../../api/user.js'
 export default {
@@ -100,15 +119,21 @@ export default {
         pagesize: 10
       },
       userList: [],
-      // 所用订单的总数
+      // 商家用户总数
       total: 0,
       // 多选列表
       multipleSelection: [],
       // 弹出表单是否显示
-      dialogFormVisible: false,
+      dialogFormVisible1: false,
+      dialogFormVisible2: false,
       // 需要重置的用户的表单
       newUser: {
         id: '',
+        username: '',
+        password: '',
+      },
+      // 新增的用户的账号信息的表单
+      newUser2: {
         username: '',
         password: '',
       },
@@ -118,7 +143,7 @@ export default {
         username: [
           {
             required: true,
-            message: '请输入要更改的用户名',
+            message: '请输入用户名',
             trigger: 'blur'
           },
           {
@@ -131,7 +156,7 @@ export default {
         password: [
           {
             required: true,
-            message: '请输入要更改的密码',
+            message: '请输入密码',
             trigger: 'change'
           }
         ]
@@ -180,11 +205,17 @@ export default {
 
     // 显示弹出表单
     showForm() {
-      this.dialogFormVisible = true;
+      this.dialogFormVisible1 = true;
+    },
+    showForm2() {
+      this.dialogFormVisible2 = true;
     },
     // 隐藏弹出表单
     hideForm() {
-      this.dialogFormVisible = false;
+      this.dialogFormVisible1 = false;
+    },
+    hideForm2() {
+      this.dialogFormVisible2 = false;
     },
 
     
@@ -234,6 +265,58 @@ export default {
       });
     },
     resetForm(formName) {
+      this.$refs[formName].resetFields();
+    },
+
+    // 第二个表单的提交与清空(创建新用户)
+    submitForm2(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          // 验证成功将表单数据请求出去
+          console.log(this.newUser2)
+          createUser(JSON.stringify(this.newUser2)).then(res => {
+            // console.log(res)
+            // this.$message({
+            //   message: '新用户创建成功',
+            //   type: 'success'
+            // });
+            if(res.data.success){
+              this.$message({
+                message: '新账号创建成功',
+                type: 'success'
+              });
+            } else {
+              this.$message({
+                message: '新账号创建失败',
+                type: 'error'
+              });
+            }
+            
+            // 更新数据
+            this.getNewUserList();
+            // 隐藏弹出表单
+            this.hideForm2();
+            // 清空弹出表单中的数据
+            this.newUser2 = {
+              username: '',
+              password: '',
+            }
+          }).catch(err => {
+            this.$message({
+              message: '创建失败,请检查网络或稍后再试',
+              type: 'error'
+            });
+          })
+          // 成功提交后清空并隐藏表单
+          // this.hideForm();
+          // this.resetForm('newDishes');
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
+    },
+    resetForm2(formName) {
       this.$refs[formName].resetFields();
     },
     // 多选

@@ -89,7 +89,7 @@ export default {
               //   "userInfo",
               //   JSON.stringify(result.userInfo)
               // );
-              console.log(res.data)
+              // console.log(res.data)
               this.$store.dispatch("set_token", res.data.token);
               window.sessionStorage.setItem('token', res.data.token);
               // 保存用户类型

@@ -54,5 +54,6 @@ export const getUserList = () => axios.post('/CanteenWeb/User/Select')
 // 修改用户账号和密码
 export const resetUser = (user) => axios.post('/CanteenWeb/User/Update', {user}) 
 
-
+// 创建新的商家用户
+export const createUser = (user) => axios.post('/CanteenWeb/User/Insert', {user})
 
