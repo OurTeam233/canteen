@@ -16,7 +16,7 @@
           </el-input>
         </el-col>
         <el-col :span="4">
-          <el-button type="danger" @click="completeOrders()">取消选中的违规</el-button>
+          <el-button type="primary" @click="completeOrders()">+ 新增用户</el-button>
         </el-col>
       </el-row>
 
@@ -24,21 +24,15 @@
       <el-table :data="userList.filter(data => {
         // 查询不为空
         if(this.queryInfo.query != ''){
-          // 在这一行的菜品列表中遍历
-          for(let i = 0; i < data.userList.length; i++){
-            // 如果菜品名称中包含查询内容
-            if(data.userList[i].storeName.toLowerCase().includes(this.queryInfo.query.toLowerCase())){
-              // 返回true
-              return true;
-            }
+          // 查询用户名和店铺名
+          if(data.username.toLowerCase().includes(this.queryInfo.query.toLowerCase()) || data.storeName.toLowerCase().includes(this.queryInfo.query.toLowerCase())){
+            // 返回true
+            return true;
           }
           return false;
         }
         return true;
-        }).slice(
-              (queryInfo.pagenum - 1) * queryInfo.pagesize,
-              queryInfo.pagenum * queryInfo.pagesize
-            )" 
+        })" 
         ref="multipleTable"
         stripe border 
         style="width: 100%" 
@@ -51,10 +45,29 @@
         <el-table-column label="操作" width="110px">
           <template v-slot="scope">
             <!-- <el-button size="mini" type="primary" @click="finish(scope.row)">完成</el-button> -->
-            <el-button size="mini" type="warning" @click="resetPassword(scope.row)">重置密码</el-button>
+            <el-button size="mini" type="warning" @click="finish(scope.row);showForm()">重置密码</el-button>
           </template>
         </el-table-column>
       </el-table> 
+
+
+      <!-- 重置用户信息的表单 -->
+      <el-dialog class="newUser" title="账号信息重置" :visible.sync="dialogFormVisible">
+        <el-form :model="newUser" :rules="rules" ref="newUser">
+          <el-form-item label="用户名:" prop="username">
+            <el-input v-model="newUser.username" autocomplete="off"></el-input>
+          </el-form-item>
+          
+          <el-form-item label="密码" prop="password">
+            <el-input v-model="newUser.password" autocomplete="off"></el-input>
+          </el-form-item>
+          
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="hideForm();resetForm('newUser')">取 消</el-button>
+          <el-button type="primary" @click="submitForm('newUser')">确 定</el-button>
+        </div>
+      </el-dialog>
 
       <el-pagination
         @size-change="handleSizeChange"
@@ -74,6 +87,7 @@
 <script>
 import { 
   getUserList,
+  resetUser,
 
 } from '../../api/user.js'
 export default {
@@ -90,6 +104,38 @@ export default {
       total: 0,
       // 多选列表
       multipleSelection: [],
+      // 弹出表单是否显示
+      dialogFormVisible: false,
+      // 需要重置的用户的表单
+      newUser: {
+        id: '',
+        username: '',
+        password: '',
+      },
+
+      // 表单验证规则
+      rules:{
+        username: [
+          {
+            required: true,
+            message: '请输入要更改的用户名',
+            trigger: 'blur'
+          },
+          {
+            min: 1,
+            max: 11,
+            message: '长度在 1 到 11 个字符',
+            trigger: 'change'
+          }
+        ],
+        password: [
+          {
+            required: true,
+            message: '请输入要更改的密码',
+            trigger: 'change'
+          }
+        ]
+      }
 
     };
   },
@@ -103,6 +149,8 @@ export default {
     getNewUserList(){
       // 请求所有订单并进行筛选
       getUserList().then(res => {
+        // 清空数据
+        this.userList = [];
         // console.log(res.data)
         for(let i = 0; i < res.data.length; i++){
           let id = res.data[i].id;
@@ -125,85 +173,69 @@ export default {
       
     },
 
-    // 重置密码
-    resetPassword(){
+    // 重置用户的账号或者密码
+    resetUserInfo(){
 
     },
 
-    // 获取菜品列表(字符串拼接)
-    getDishesString(row){
-      let ans = ''
-      if(row.orderDetailsList){
-        row.orderDetailsList.forEach(item => {
-          if(ans != '') ans += '、';
-          ans += item.name + '*' + item.num;
-        });
-      }
-      return ans;
+    // 显示弹出表单
+    showForm() {
+      this.dialogFormVisible = true;
     },
+    // 隐藏弹出表单
+    hideForm() {
+      this.dialogFormVisible = false;
+    },
+
     
-    // 价格格式化
-    moneyFormat(row){
-      return row.totalPrice / 100
+
+    // 选中改行并将数据赋值到表单中
+    finish(row){
+      // console.log(row.username)
+      this.newUser.id = row.id;
+      this.newUser.username = row.username;
     },
 
-    // 格式化取餐时间
-    dateFormat(row){
-      return new Date(row.orderTime).toLocaleString();
-    },
-    
-    // 处理单个订单
-    completeOrder(row){
-      // 将订单状态改为历史
-      changeOrderType(row.id, 2).then(res => {
-        this.$message({
-          message: '成功处理该订单,请在历史订单中查看',
-          type: 'success'
-        });
-        // 刷新订单列表
-        this.getNewUserList();
-      }).catch(err => {
-        this.$message({
-          message: '处理失败,请重试',
-          type: 'error'
-        });
-      });
-      // // 更新数据
-      // this.getNewUserList();
-      
-    },
-
-    // 处理选中的订单
-    completeOrders(){
-      // 如果没有选中任何订单
-      if(this.multipleSelection.length == 0){
-        this.$message({
-          message: '请选择要完成的订单',
-          type: 'warning'
-        })
-        return;
-      }
-      // 如果选中了大于等于一个订单
-      if(this.multipleSelection.length >= 1){
-        // 存放所有要更新的promise
-        let all = [];
-        for(let i = 0; i < this.multipleSelection.length; i++){
-          // 将订单状态改为已完成
-          all.push(changeOrderType(this.multipleSelection[i].id, 2))
+    // 表单的提交与清空
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          // 验证成功将表单数据请求出去
+          console.log(this.newUser)
+          resetUser(JSON.stringify(this.newUser)).then(res => {
+            console.log(res)
+            this.$message({
+              message: '账号信息修改成功',
+              type: 'success'
+            });
+            // 更新数据
+            this.getNewUserList();
+            // 隐藏弹出表单
+            this.hideForm();
+            // 清空弹出表单中的数据
+            this.newUser = {
+              id: '',
+              username: '',
+              password: '',
+            }
+          }).catch(err => {
+            this.$message({
+              message: '更改失败,请检查网络或稍后再试',
+              type: 'error'
+            });
+          })
+          // 成功提交后清空并隐藏表单
+          // this.hideForm();
+          // this.resetForm('newDishes');
+        } else {
+          console.log('error submit!!');
+          return false;
         }
-        // 将所有promise执行完毕
-        Promise.all(all).then(res => {
-          // 更新数据
-          this.getNewUserList();
-        })
-        this.$message({
-          message: '所选订单已被取走',
-          type: 'success'
-        })
-        return;
-      }
+      });
     },
-
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
+    },
     // 多选
     toggleSelection(rows) {
       if (rows) {

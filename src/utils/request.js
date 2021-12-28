@@ -24,7 +24,7 @@ baseUrl.interceptors.request.use(
     // 序列化参数
     config.data = qs.stringify(config.data);
     // 配置请求头
-    config.headers["Content-Type"] = "application/x-www-form-urlencoded";
+    config.headers["Content-Type"] = "application/x-www-form-urlencoded;charset=UTF-8";
     // 返回配置
     return config;
 
