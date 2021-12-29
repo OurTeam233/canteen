@@ -10,7 +10,7 @@
           <p>Hi,已为您细分各版块数据。</p>
           <div class="data-plate">
 
-            <div v-for="n in 6" :key="n" class="test">
+            <div v-for="n in 6" :key="n" class="data-item">
               <div class="test-icon">
                 <i class="el-icon-user-solid" style="font-size:40px;"></i>
               </div>
@@ -228,6 +228,17 @@ p{
   margin:10px;
 }
 
+/*左下角的每个数据项的卡片 */
+.data-item{
+  /* background-color: rgb(250, 250, 250); */
+  background-color: rgb(87, 86, 86);
+  border-radius:10px;
+  /* background-color:gray; */
+  width:240px;
+  height:80px;
+  margin:10px;
+  display:flex;
+}
 
 
 
@@ -333,14 +344,6 @@ p{
   flex-wrap:wrap;
 }
 
-.test{
-  /* background-color:gray; */
-  width:30%;
-  height:80px;
-  margin:10px;
-  display:flex;
-  
-}
 
 .test-icon{
   /* background-color:red; */
