@@ -45,7 +45,7 @@
           <div class="list-index">{{ index+1 }}</div>
           <img :src="item.imgUrl" alt="" class="list-img">
           <div class="list-name">{{ item.name }}</div>
-          <div class="list-num">数量: {{ item.num }}</div>
+          <div class="list-num">{{ item.num }}份</div>
             
           
           
@@ -275,7 +275,7 @@ p{
   display: flex;
   background-color: rgb(250, 250, 250);
   /* justify-content: flex-end; */
-  border-radius: 10px;
+  border-radius: 30px;
   align-items: center;
   padding:5px 0;
   /* border-bottom:1px solid #eee; */
@@ -284,12 +284,12 @@ p{
 
 /*预定菜品列表项的索引 */
 .list-index{
-  font-size: 25px;
-  font-weight:bold;
+  font-size: 16px;
+  /* font-weight:bold; */
   font-family: "Comic Sans MS", "Comic Sans", cursive;
-  color: rgb(100, 100, 100);
+  color: rgb(199, 199, 199);
   margin-left: 5px;
-  width: 35px;
+  width: 15px;
   text-align: center;
 }
 /*预定菜品列表项中的图片 */
@@ -311,10 +311,10 @@ p{
 }
 /*菜品列表项中的菜品数量 */
 .list-num{
-  font-size: 16px;
+ font-size: 25px;
   font-weight:bold;
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
   color: rgb(100, 100, 100);
-  font-family: "Microsoft YaHei" , cursive;
   margin-left: auto;
   margin-right: 10px;
   /* align-self: flex-end; */
