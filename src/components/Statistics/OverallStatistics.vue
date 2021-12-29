@@ -182,7 +182,7 @@ export default {
     // 获取总营业额
     TotalPrice(){
       getTotalPrice().then(res => {
-        console.log(res)
+        // console.log(res)
         this.totalPrice = res.data.totalPrice / 100;
       })
     },
@@ -210,7 +210,7 @@ export default {
     // 获取违规订单数量
     IllegalOrderNum(){
       getIllegalOrderNum().then(res => {
-        console.log(res)
+        // console.log(res)
         this.illegalOrderNum = res.data.total;
       })
     },
