@@ -7,19 +7,56 @@
       </el-card> 
       <el-card class="concrete">
         <div id="data">
-          <p>Hi,已为您细分各版块数据。</p>
+          <p><b>Hi,已为您细分各版块数据。</b></p>
           <div class="data-plate">
 
-            <div v-for="n in 6" :key="n" class="data-item">
-              <div class="test-icon">
-                <i class="el-icon-user-solid" style="font-size:40px;"></i>
+            <div class="data-item">
+              <div class="data-iconbox">
+                <i class="iconfont icon-xinxi1 data-icon"></i>
               </div>
-              <div class="test-text">
-                <p style="width:130px">累计订单</p>
-                <div>
-                  <p style="float:left; font-size:22px; font-weight:bold;">300</p>
-                  <p style="float: right; color:green">新增 +91</p>
-                </div>
+              <div class="data-text">
+                <div class="data-title">累计订单数</div>
+                <div class="data-num">{{ orderNum }}</div>
+              </div>
+            </div>
+
+            <div class="data-item">
+              <div class="data-iconbox">
+                <i class="iconfont icon-youjian data-icon"></i>
+              </div>
+              <div class="data-text">
+                <div class="data-title">累计菜品数量</div>
+                <div class="data-num">{{ totalDishesNum }}</div>
+              </div>
+            </div>
+
+            <div class="data-item">
+              <div class="data-iconbox">
+                <i class="iconfont icon-yonghu data-icon"></i>
+              </div>
+              <div class="data-text">
+                <div class="data-title">累计用户量</div>
+                <div class="data-num">{{ userNum }}</div>
+              </div>
+            </div>
+
+            <div class="data-item">
+              <div class="data-iconbox">
+                <i class="iconfont icon-xin data-icon"></i>
+              </div>
+              <div class="data-text">
+                <div class="data-title">最受欢迎的菜品</div>
+                <div class="data-num">{{ popularDishes.name }}</div>
+              </div>
+            </div>
+
+            <div class="data-item">
+              <div class="data-iconbox">
+                <i class="iconfont icon-diannao data-icon"></i>
+              </div>
+              <div class="data-text">
+                <div class="data-title">违规订单次数</div>
+                <div class="data-num">{{ illegalOrderNum }}</div>
               </div>
             </div>
 
@@ -62,6 +99,12 @@ import * as Echarts from 'echarts';
 import { 
   getTomorrowDishes,
   getTodayDishes,
+  getTotalPrice,
+  getUserNum,
+  getOrderNum,
+  getStoreDishesNum,
+  getIllegalOrderNum,
+  getTotalDishesNum,
 } from '../../api/user.js'
 
 export default {
@@ -88,12 +131,34 @@ export default {
           num: 20,
         },
       ],
+      // 总营业额
+      totalPrice: 0,
+      // 总用户量
+      userNum: 0,
+      // 总订单数
+      orderNum: 0,
+      // 最受欢迎菜品名
+      popularDishes:{
+        name: '',
+        num: 0,
+      },
+      // 总菜品数量
+      totalDishesNum: 0,
+      // 违规订单数量
+      illegalOrderNum: 0, 
     };
   },
   mounted() {
     
     this.init();
     this.getToday();
+    this.TotalPrice();
+    this.UserNum();
+    this.OrderNum();
+    this.DishesCondition();
+    this.TotalDishesNum();
+    this.IllegalOrderNum();
+
   },
   methods: {
 
@@ -113,6 +178,52 @@ export default {
         // console.log(res);
       })
     },
+
+    // 获取总营业额
+    TotalPrice(){
+      getTotalPrice().then(res => {
+        console.log(res)
+        this.totalPrice = res.data.totalPrice / 100;
+      })
+    },
+    // 获取总用户量
+    UserNum(){
+      getUserNum().then(res => {
+        // console.log(res);
+        this.userNum = res.data.total;
+      })
+    },
+    // 获取总订单数
+    OrderNum(){
+      getOrderNum().then(res => {
+        this.orderNum = res.data.total;
+      })
+    },
+    // 获取菜品销售情况
+    DishesCondition(){
+      getStoreDishesNum().then(res => {
+        // console.log(res);
+        this.popularDishes.name = res.data[0].name;
+        this.popularDishes.num = res.data[0].num;
+      })
+    },
+    // 获取违规订单数量
+    IllegalOrderNum(){
+      getIllegalOrderNum().then(res => {
+        console.log(res)
+        this.illegalOrderNum = res.data.total;
+      })
+    },
+    // 获取菜品数量
+    TotalDishesNum(){
+      getTotalDishesNum().then(res => {
+        this.totalDishesNum = res.data.total;
+      })
+    },
+
+
+
+    // echarts初始化
     init() { 
       let chartDom = document.getElementById('charts');
       let myChart = Echarts.init(chartDom);
@@ -228,18 +339,55 @@ p{
   margin:10px;
 }
 
+
+
+.data-iconbox{
+  /* background-color:red; */
+  background-color: rgb(240, 240, 240);
+  border-radius: 20px;
+  width:65px;
+  height:65px;
+  margin:10px 20px 10px 15px;
+}
+
+/*图标 */
+.data-icon{
+  line-height: 65px;
+  font-size: 40px;
+}
+
 /*左下角的每个数据项的卡片 */
 .data-item{
   /* background-color: rgb(250, 250, 250); */
-  background-color: rgb(87, 86, 86);
+  /* background-color: rgb(173, 173, 173); */
   border-radius:10px;
   /* background-color:gray; */
   width:240px;
-  height:80px;
+  height:90px;
   margin:10px;
   display:flex;
 }
 
+/*小卡片中的数据区域 */
+.data-text{
+  padding: 10px 0;
+}
+
+/*小卡片中的数据标题 */
+.data-title{
+  color: rgb(100, 100, 100);
+  width: 130px;
+  text-align: left;
+}
+
+/*小卡片中的数据 */
+.data-num{
+  color: rgb(100, 100, 100);
+  margin-top: 10px;
+  text-align: left;
+  font-size:22px; 
+  font-weight:bold;
+}
 
 
 
@@ -345,16 +493,7 @@ p{
 }
 
 
-.test-icon{
-  /* background-color:red; */
-  width:60px;
-  height:60px;
-  margin:10px;
-}
 
-.test-text{
-  display:block;
-}
 
 
 

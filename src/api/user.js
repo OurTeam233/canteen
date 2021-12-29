@@ -69,4 +69,17 @@ export const getTodayDishes = () => axios.post('/CanteenWeb/Statistic/Dishes/Tod
 // 获取店铺的总营业额
 export const getTotalPrice = () => axios.post('/CanteenWeb/Statistic/TotalPrice')
 
+// 统计本店铺的用户数量
+export const getUserNum = () => axios.post('/CanteenWeb/Statistic/TotalStudent')
 
+// 统计本店的累计订单数
+export const getOrderNum = () => axios.post('/CanteenWeb/Statistic/OrderCount')
+
+// 统计本店的菜品销售情况
+export const getStoreDishesNum = () => axios.post('/CanteenWeb/Statistic/StoreDishes')
+
+// 统计本店的违规订单数量
+export const getIllegalOrderNum = () => axios.post('/CanteenWeb/Statistic/IllegalOrder')
+
+// 获取本店的菜品数量
+export const getTotalDishesNum = () => axios.post('/CanteenWeb/Statistic/TotalDishes')

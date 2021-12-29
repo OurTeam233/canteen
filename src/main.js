@@ -10,6 +10,8 @@ import store from './store/index.js';
 import echarts from "echarts";
 // Vue.prototype.$echarts = echarts;
 /* 让vue使用elementUI(懒得抽了) */
+/*导入阿里巴巴图标 */
+import "@/assets/iconfont/iconfont.css";
 Vue.use(ElementUI);
 
 // 使用vue-socket.io
