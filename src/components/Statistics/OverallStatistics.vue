@@ -276,6 +276,7 @@ p{
   font-size: 25px;
   font-weight:bold;
   font-family: "Comic Sans MS", "Comic Sans", cursive;
+  color: rgb(100, 100, 100);
   margin-left: 5px;
   width: 35px;
   text-align: center;
@@ -288,15 +289,24 @@ p{
   border: 1px solid #ccc;
   margin:0 10px 0 5px;
 }
-
+/*菜品列表项的菜品名 */
+.list-name{
+  font-size: 16px;
+  font-weight:bold;
+  color: rgb(100, 100, 100);
+  margin-left: 5px;
+  
+  text-align: left;
+}
 /*菜品列表项中的菜品数量 */
 .list-num{
-  /* width: 50px; */
-  /* text-align: right; */
+  font-size: 16px;
+  font-weight:bold;
+  color: rgb(100, 100, 100);
   font-family: "Microsoft YaHei" , cursive;
   margin-left: auto;
   margin-right: 10px;
-  align-self: flex-end;
+  /* align-self: flex-end; */
 }
 
 

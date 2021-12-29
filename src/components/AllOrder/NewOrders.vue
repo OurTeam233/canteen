@@ -55,8 +55,8 @@
             <img
               :src="scope.row.qrCode"
               alt=""
-              width="75px"
-              height="75px"/>
+              width="70px"
+              height="70px"/>
           </template>
         </el-table-column>
         <el-table-column prop="totalPrice" :formatter="moneyFormat" label="总价(元)" width="80px"></el-table-column>
