@@ -60,7 +60,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="totalPrice" :formatter="moneyFormat" label="总价(元)" width="80px"></el-table-column>
-        <el-table-column prop="orderTime" :formatter="dateFormat" label="取餐开始时间" width="200px"></el-table-column>
+        <el-table-column prop="orderTime" :formatter="dateFormat" sortable label="取餐开始时间" width="200px"></el-table-column>
         <el-table-column label="操作" width="80px">
           <template v-slot="scope">
             <!-- <el-button size="mini" type="primary" @click="finish(scope.row)">完成</el-button> -->

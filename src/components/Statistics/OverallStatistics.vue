@@ -42,12 +42,12 @@
         </div>
         <el-empty v-if="this.reserveDishesList.length == 0" description="暂无数据"></el-empty>
         <div v-for="(item, index) in reserveDishesList" :key="item.id" class="list-item">
-          <div class="list-index">{{ index }}</div>
+          <div class="list-index">{{ index+1 }}</div>
           <img :src="item.imgUrl" alt="" class="list-img">
-          <div >
-            <p class="name">{{ item.name }}</p>
-            <p class="num">{{ item.num }}</p>
-          </div>
+          <div class="list-name">{{ item.name }}</div>
+          <div class="list-num">数量: {{ item.num }}</div>
+            
+          
           
           
         </div>
@@ -215,10 +215,35 @@ p{
   /* float:left; */
   text-align: left;
   line-height: 20px;
-  font-size:16px;
+  font-size:20px;
   /* font-weight:bold; */
   margin:10px 0 5px 0;
 
+}
+
+/*左边的板块 */
+.left-box{
+  /* width:800px; */
+  width:70%;
+  margin:10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+/*右边的板块 */
+.right-box{
+  width:30%;
+  /* margin-right: auto; */
+  /* width: 400px; */
+  margin:10px 10px 10px 0;
 }
 
 /*预定菜品的标题菜单栏 */
@@ -237,8 +262,8 @@ p{
 /*预定菜品的列表项 */
 .list-item{
   display: flex;
-  /* background-color: gray; */
-  justify-content: space-between;
+  background-color: rgb(250, 250, 250);
+  /* justify-content: flex-end; */
   border-radius: 10px;
   align-items: center;
   padding:5px 0;
@@ -248,15 +273,30 @@ p{
 
 /*预定菜品列表项的索引 */
 .list-index{
-  width: 50px;
+  font-size: 25px;
+  font-weight:bold;
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+  margin-left: 5px;
+  width: 35px;
   text-align: center;
 }
 /*预定菜品列表项中的图片 */
 .list-img{
-  width:75px;
-  height:75px;
-  border-radius:5px;
+  width:43px;
+  height:43px;
+  border-radius:25px;
+  border: 1px solid #ccc;
   margin:0 10px 0 5px;
+}
+
+/*菜品列表项中的菜品数量 */
+.list-num{
+  /* width: 50px; */
+  /* text-align: right; */
+  font-family: "Microsoft YaHei" , cursive;
+  margin-left: auto;
+  margin-right: 10px;
+  align-self: flex-end;
 }
 
 
@@ -265,10 +305,7 @@ p{
   display:flex;
 }
 
-.left-box{
-  width:66%;
-  margin:10px;
-}
+
 
 .turnover{
   margin-bottom:10px;
@@ -307,12 +344,6 @@ p{
 }
 
 
-
-
-.right-box{
-  width:33%;
-  margin:10px 10px 10px 0;
-}
 
 
 
