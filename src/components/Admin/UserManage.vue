@@ -62,10 +62,10 @@
           </el-form-item>
           
         </el-form>
-        <div slot="footer" class="dialog-footer">
-          <el-button @click="hideForm();resetForm('newUser')">取 消</el-button>
-          <el-button type="primary" @click="submitForm('newUser')">确 定</el-button>
-        </div>
+        <!-- <div slot="footer" class="dialog-footer"> -->
+        <el-button class="dialog-button" @click="hideForm();resetForm('newUser')">取 消</el-button>
+        <el-button class="dialog-button" type="primary" @click="submitForm('newUser')">确 定</el-button>
+        <!-- </div> -->
       </el-dialog>
 
       <!-- 创建新的用户的表单 -->
@@ -80,10 +80,10 @@
           </el-form-item>
           
         </el-form>
-        <div slot="footer" class="dialog-footer">
-          <el-button @click="hideForm2();resetForm2('newUser2')">取 消</el-button>
-          <el-button type="primary" @click="submitForm2('newUser2')">确 定</el-button>
-        </div>
+        <!-- <div slot="footer" class="dialog-footer"> -->
+        <el-button class="dialog-button" @click="hideForm2();resetForm2('newUser2')">取 消</el-button>
+        <el-button class="dialog-button" type="primary" @click="submitForm2('newUser2')">确 定</el-button>
+        <!-- </div> -->
       </el-dialog>
 
       <el-pagination
@@ -345,3 +345,11 @@ export default {
   }
 };
 </script>
+
+<style scope>
+.dialog-button{
+  margin: -20px 10px 10px 10px;
+}
+
+
+</style>

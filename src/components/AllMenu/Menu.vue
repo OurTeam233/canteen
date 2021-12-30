@@ -46,10 +46,10 @@
             </el-upload>
           </el-form-item>
         </el-form>
-        <div slot="footer" class="dialog-footer">
-          <el-button @click="hideForm();resetForm('newDishes')">取 消</el-button>
-          <el-button type="primary" @click="submitForm('newDishes')">确 定</el-button>
-        </div>
+        <!-- <div slot="footer" class="dialog-footer"> -->
+        <el-button class="dialog-button" @click="hideForm();resetForm('newDishes')">取 消</el-button>
+        <el-button class="dialog-button" type="primary" @click="submitForm('newDishes')">确 定</el-button>
+        <!-- </div> -->
       </el-dialog>
 
 
@@ -448,5 +448,10 @@ export default {
 .dishesImg{
   width:148px;
   height:148px;
+}
+
+/*弹出表单的底部按钮 */
+.dialog-button{
+  margin: -20px 10px 10px 10px;
 }
 </style>
