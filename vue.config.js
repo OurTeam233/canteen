@@ -6,7 +6,7 @@
 //   hotOnly: false,
 //   proxy: {
 //     '/api': {
-//       target: 'http://121.43.56.241:8080/CanteenWeb',
+//       target: 'http://175.178.216.63:8888/CanteenWeb',
 //       changOrigin: true, // 允许跨域
 //       ws: true,
 //       pathRewrite: {
